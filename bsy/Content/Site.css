@@ -1,0 +1,1319 @@
+﻿/*  Layout Ayarları                              */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#head {
+    top: 0;
+    background: #4e7dd1;
+    position: absolute;
+    width: 100%;
+    height: 40px;
+}
+
+#main {
+    position: absolute;
+    top: 35px;
+    bottom: 0;
+    width: 100%;
+}
+
+#leftMenuArea {
+    background-color: #F9F8F7;
+    position: absolute;
+    width: 15%;
+    height: 95%;
+    overflow: scroll;
+}
+
+#container {
+    margin-left: 10%;
+    width: 90%;
+    height: 97%;
+    overflow: scroll;
+    min-height: 97%;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    padding: 0px 0px 2px 0px;
+}
+
+#containerRightMenu {
+    margin-left: 15%;
+    margin-right: 15%;
+    width: 70%;
+    height: 97%;
+    overflow: scroll;
+    min-height: 97%;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    padding: 0px 0px 2px 0px;
+}
+
+#divNav {
+    margin-left: 10%;
+    width: 90%;
+    height: 3%;
+}
+
+#govde {
+    background: #8f8;
+    margin-left: 15%;
+    margin-right: 15%;
+    width: 70%;
+    height: 100%;
+    overflow: scroll;
+}
+
+#rightMenuArea {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 15%; /* Width of right navigation frame */
+    height: 100%;
+    overflow: scroll; /* Disables scrollbars on the navigation frame. To enable scrollbars, change "hidden" to "scroll" */
+    background-color: #F9F8F7;
+}
+
+
+
+#foot {
+    background: #4e7dd1;
+    position: absolute;
+    bottom: 0;
+    width: 85%;
+}
+
+/** Styles for messages (Error,Warning,Notice)**/
+
+.messageContainer {
+    border: #88a4d7 1px solid;
+    background-color: #f7f7f7;
+    width: 100%;
+}
+
+.messageTitle {
+    font-size: 100%
+}
+
+.messageHeader * {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.messageItem {
+    padding-left: 2.5em;
+    font-size: 100%;
+    font-family: Verdana,Helvetica, sans-serif
+}
+/** End of styles for messages (Error,Warning,Notice)**/
+
+#mesajlarBaslik, #mesajlarBaslik * {
+    background-color: lightblue;
+    color: yellow;
+    font-size: small;
+    height: 24px;
+}
+
+    #mesajlarBaslik a * {
+        background-color: lightblue;
+        color: yellow;
+        font-size: small;
+        font-weight: 900;
+        height: 16px;
+    }
+
+    #mesajlarBaslik a * {
+    }
+
+#mesajlarBaslikMetin {
+    height: 12px;
+    top: 22%;
+    position: relative;
+}
+
+#mesajlarIcerik {
+    top: 6px;
+    background-color: #ffffff;
+    height: auto;
+    position: relative;
+}
+
+#divNav {
+    background: #4e7dd1;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 85%;
+    height: 35px;
+}
+
+/* Layout Ayarları Sonu                                         */
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+
+/* BYS JQGrid Ayarları*/
+
+.ui-jqgrid-row-even {
+    background-color: #fff;
+}
+/*row bg alternating color*/
+.ui-jqgrid-row-odd {
+    background-color: #E5E5E5;
+}
+/*row bg alternating color*/
+
+.ui-jqgrid .ui-widget-header {
+    background-color: lightgray;
+    background-image: none;
+    color: black;
+}
+
+/*
+.ui-jqgrid-titlebar-close {
+    background-color: lightgray;
+    background-image: none;
+    color: black;
+}
+*/
+
+.ui-jqgrid .ui-jqgrid-labels th.ui-th-column {
+    background-color: #4A4A4A;
+    background-image: none;
+    border-color: white;
+}
+
+.ui-jqgrid .ui-jqgrid-labels * {
+    background-color: #4A4A4A;
+    background-image: none;
+    border-color: white;
+}
+
+.ui-jqgridTaklit th * {
+    background-color: #4A4A4A;
+    background-image: none;
+    border-color: white;
+    color: white;
+}
+
+.ui-jqgrid .ui-jqgrid-btable, .ui-jqgrid-htable, .ui-jqgrid-ftable
+.ui-jqgrid .ui-jqgrid-sortable {
+    border-color: white;
+}
+
+.myAltRowClass {
+    background: #E5E5E5; 
+    !important;
+    border: 1px solid #DDDDDD;
+}
+
+.ui-jqgrid .ui-search-toolbar * {
+    background-color: white;
+    border-color: darkgray;
+    padding: 0px;
+    margin: 0px;
+    box-shadow: 0 0 0 10px white inset;
+}
+
+.ui-search-toolbar * {
+    border-color: black;
+    padding: 0px;
+}
+
+.ui-jqgrid tr.ui-search-toolbar input {
+    background-color: white !important
+}
+
+.ui-pager-control {
+    background-color: lightgray;
+    color: black;
+    font-weight: 200;
+}
+
+    .ui-pager-control icon {
+        color: black;
+        font-weight: 600;
+    }
+
+    .ui-pager-control input * {
+        color: black;
+        font-weight: 200;
+    }
+
+.ui-jqgrid .ui-jqgrid-btable, .ui-jqgrid-htable, .ui-jqgrid-ftable {
+    border-color: darkgray;
+    border-spacing: 0px 0px;
+}
+
+    .ui-jqgrid .ui-jqgrid-btable tr td, .ui-jqgrid-htable tr td, .ui-jqgrid-ftable th td, .ui-jqgrid-ftable tr td {
+        border-color: darkgray;
+        border-spacing: 0px 0px;
+    }
+
+.jqgrid * .solaYanasik * {
+    text-align: right;
+}
+
+.ui-jqgrid-sortable {
+    color: white;
+}
+
+.ui-jqgrid-sortable .classKonut {
+    text-align: right;
+}
+
+/** End of styles for jqGrid **/
+
+
+
+/*                                                  */
+/* BSY Menü Ayarları                                */
+/*                                                  */
+
+.divOrta {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: grey;
+    display: flex;
+    align-items: center;
+    vertical-align: central;
+    justify-content: flex-start;
+    height: 40px;
+}
+
+.divOrta-cell {
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    height: 40px;
+    border: 1px solid black;
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+    height: 35px;
+    background-color: #4A4A4A;
+    color: white;
+    padding: 8px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+a, a:visited, a:hover, a:active {
+    color: black;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    width: 200px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1;
+}
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: lightblue;
+}
+
+
+
+/* Eskiler */
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+
+/* Style The Dropdown Button */
+.dropbtn-eski {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content-eski {
+    display: none;
+    position: absolute;
+    background-color: #4A4A4A;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown-eski:hover .dropbtn-eski {
+    background-color: #3e8e41;
+}
+
+
+/* Cascaded Menu Styles*/
+
+#primary_nav_wrap {
+    margin-top: 15px
+}
+
+    #primary_nav_wrap ul {
+        list-style: none;
+        position: relative;
+        float: left;
+        margin: 0;
+        padding: 0
+    }
+
+        #primary_nav_wrap ul a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 32px;
+            padding: 0 15px;
+            font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
+        }
+
+        #primary_nav_wrap ul li {
+            position: relative;
+            float: left;
+            margin: 0;
+            padding: 0
+        }
+
+            #primary_nav_wrap ul li.current-menu-item {
+                background: #ddd
+            }
+
+            #primary_nav_wrap ul li:hover {
+                background-color: lightblue;
+                vertical-align: middle;
+            }
+
+        /*
+#primary_nav_wrap ul li:hover
+{
+	background:#f6f6f6
+}
+*/
+
+        #primary_nav_wrap ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            padding: 0
+        }
+
+            #primary_nav_wrap ul ul li {
+                float: none;
+                width: 200px
+            }
+
+            #primary_nav_wrap ul ul a {
+                line-height: 120%;
+                padding: 10px 15px
+            }
+
+            #primary_nav_wrap ul ul ul {
+                top: 0;
+                left: 100%
+            }
+
+        #primary_nav_wrap ul li:hover > ul {
+            display: block;
+            background-color: #f9f9f9;
+        }
+
+
+.beyazYazi {
+    color: white !important;
+}
+
+ul li a * {
+    color: white !important;
+}
+
+ul li a:hover * {
+    color: lightblue !important;
+}
+
+/** End of styles for menu**/
+
+
+
+/** Styles for messages (Error,Warning,Notice)**/
+
+.messageContainer {
+    border: #88a4d7 1px solid;
+    background-color: aliceblue; /*/#f7f7f7;*/
+    width: 100%;
+}
+
+.messageTitle {
+    font-size: 100%
+}
+
+.messageHeader {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.messageItem {
+    padding-left: 2.5em;
+    font-size: 100%;
+    font-family: Verdana,Helvetica, sans-serif
+}
+/** End of styles for messages (Error,Warning,Notice)**/
+
+
+/* Bu Programa Özgü Stiller*/
+
+body {
+    background-color: #333745;
+    padding: 5px 5px 5px 5px;
+    height: 100%;
+}
+
+#containerEski {
+    min-height: 100%;
+    position: relative;
+    margin: 0 auto;
+    background-color: #DAEDE2;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    padding: 0px 0px 2px 0px;
+}
+
+#ustbolum {
+    background-color: #77C4D3;
+    border-radius: 15px 15px 0px 0px / 15px 15px 0px 0px;
+    -moz-border-radius: 15px 15px 0px 0px / 15px 15px 0px 0px;
+    -webkit-border-radius: 15px 15px 0px 0px / 15px 15px 0px 0px;
+    height: 95px;
+    padding: 0px 100px 0px 100px;
+}
+
+#menuBilgi {
+    background-color: #77C4D3;
+    height: 20px;
+    padding: 0px 100px 0px 100px;
+}
+
+#icerik {
+    padding: 10px;
+    padding-top: 60px;
+    padding-bottom: 60px; /* Height of the footer */
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Height of the footer */
+    background: #77C4D3;
+    border-radius: 0px 0px 15px 15px / 0px 0px 15px 15px;
+    -moz-border-radius: 0px 0px 15px 15px / 0px 0px 15px 15px;
+    -webkit-border-radius: 0px 0px 15px 15px / 0px 0px 15px 15px;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+.textLabel {
+    border: 0;
+    background-color: #DAEDE2;
+    color: #EA2E49;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+[hidden] {
+    display: none;
+}
+
+textbox {
+    border: 0;
+}
+
+
+.teksatir {
+    display: inline;
+}
+
+.solLabel {
+    border: 0;
+    color: black;
+    text-align: left;
+}
+
+.genelLabel {
+    border: 0;
+    color: black;
+    text-align: right;
+    font-weight: bold;
+}
+
+.uzun {
+    width: 200px;
+}
+
+.solaYanasik {
+    text-align: left !important;
+}
+
+.genelLabelLeft {
+    border: 0;
+    color: black;
+    text-align: left;
+}
+
+.genelZorunluAlanLabel {
+    color: red;
+    font-size: x-large;
+}
+
+.genelZorunluAlanLabelRight {
+    color: red;
+    font-size: x-large;
+    text-align: right;
+}
+
+.genelLabelEski {
+    color: #B4886B;
+    font-weight: bold;
+}
+
+.genelIkiNoktaLabel {
+    border: 0;
+    color: black;
+}
+
+.genelIkiNoktaLabelEski {
+    color: #B4886B;
+    font-weight: bold;
+}
+
+.genelButton {
+    font-family: Verdana,Helvetica, sans-serif;
+    font-size: 110.0%;
+    margin: 1px 2px 1px 2px;
+    width: 100px;
+}
+
+.genelButtonOrta {
+    font-family: Verdana,Helvetica, sans-serif;
+    font-size: 110.0%;
+    margin: 1px 2px 1px 2px;
+    width: 125px;
+}
+
+.genelButtonOrtaYuksek {
+    font-family: Verdana,Helvetica, sans-serif;
+    font-size: 110.0%;
+    margin: 1px 2px 1px 2px;
+    width: 125px;
+    height: 60px;
+}
+
+.genelButtonBuyuk {
+    font-family: Verdana,Helvetica, sans-serif;
+    font-size: 110.0%;
+    margin: 1px 2px 1px 2px;
+    width: 150px;
+}
+
+
+.genelButtonEski {
+    background: #25A6E1;
+    background: -moz-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#25A6E1),color-stop(100%,#188BC0));
+    background: -webkit-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+    background: -o-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+    background: -ms-linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+    background: linear-gradient(top,#25A6E1 0%,#188BC0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#25A6E1',endColorstr='#188BC0',GradientType=0);
+    filter: progid:gradient(startColorstr='#25A6E1',endColorstr='#188BC0',GradientType=0);
+    padding: 3px 6px;
+    color: #fff;
+    font-family: 'Helvetica Neue',sans-serif;
+    font-size: 17px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #1A87B9;
+}
+
+.text-box single-line {
+    height: 30px;
+    width: 300px;
+    background-color: #CEEEFA;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    color: #636768;
+}
+
+    .text-box single-line:focus {
+        border: 2px solid green;
+    }
+
+    .text-box single-line:invalid {
+        border: 2px solid red;
+    }
+
+.field-validation-error {
+    color: #EA2E49;
+    font-size: 14px;
+}
+
+select, input, textarea, textbox {
+    font-family: Arial;
+    font-size: 12px;
+}
+
+legend {
+    padding: 0.2em 0.5em;
+    color: black;
+    font-size: 90%;
+    font-weight: bold;
+}
+
+legendEski {
+    padding: 0.2em 0.5em;
+    border: 1.5px solid #333745;
+    color: #333745;
+    font-size: 90%;
+    font-weight: bold;
+    background: #77C4D3;
+}
+
+
+fieldset {
+    border: 1.5px solid #333745;
+}
+
+.hidden {
+    display: none;
+}
+
+.nothidden {
+    display: block;
+}
+
+/* End Of Bu Programa Özgü Stiller */
+
+
+
+/** Fieldset ile ilgili stylelar **/
+
+fieldset.field_style {
+    padding: 0px;
+    border: 1px solid #CCCCCC;
+    display: block;
+    position: relative;
+    padding: 10px;
+    /*background-color: #f8f8f8;*/
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: aliceblue;
+}
+
+    fieldset.field_style legend {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: small;
+        font-weight: bold;
+        margin-left: 5px;
+        /*background-color:#e8e6e2;*/
+        padding: 2px;
+        /*border: 1px solid #CCCCCC;*/
+        position: relative;
+        top: -18px;
+        left: -10px;
+    }
+
+    fieldset.field_style table {
+        border: 1;
+    }
+
+        fieldset.field_style table td {
+            border: 1;
+        }
+
+
+    fieldset.field_style ol {
+        border: 0;
+        list-style-type: none;
+        margin-left: 0px;
+        padding-left: 5px;
+        /*border: 1px solid #ff0000;*/
+    }
+
+        fieldset.field_style ol li {
+            list-style-type: none;
+            margin-left: 1px;
+            /*border: 1px solid #ff0000;*/
+        }
+
+            fieldset.field_style ol li input {
+                /*text-align:left;*/
+                /*border: 1px solid #ff0000;*/
+            }
+
+            fieldset.field_style ol li label {
+                display: block;
+                float: left;
+                width: 150px;
+                text-align: right;
+                margin: 0px 5px 0px 0px;
+                /*border: 1px solid #CC66FF;*/
+            }
+
+legend {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 110%;
+    font-weight: bold;
+    /*	border: 1px solid #CCCCCC; 	*/
+}
+
+
+fieldset.cerceveMinik {
+    border-width: 2px !important;
+    width: 380px !important;
+}
+
+fieldset.cerceveKucuk {
+    border-width: 2px !important;
+    width: 500px !important;
+}
+
+fieldset.cerceveOrta {
+    border-width: 2px !important;
+    width: 750px !important;
+}
+
+fieldset.cerceveBuyuk {
+    border-width: 2px !important;
+    width: 1000px !important;
+}
+
+/** Rails hata veren alanlari <div class="fieldWithErrors">..</div>
+    wrap ettigi ve DIV block element oldugu icin alanlar asagi kayiyor
+    Asagidaki buna engel olmak icin eklendi.
+**/
+.fieldWithErrors {
+    display: inline;
+}
+
+.text_read {
+    background-color: #d1d9e8;
+}
+
+/** End of fieldset ile ilgili stylelar **/
+
+
+
+/*  BYS Common Styles I */
+
+.zeminGriAcik {
+    background-color: #F9F8F7;
+}
+
+.zeminGriOrta {
+    background-color: #F7F7F7;
+}
+
+.zeminGriKoyu {
+}
+
+.zeminBody {
+    background-color: #ffffff;
+}
+
+.metinSiyah {
+    color: black;
+}
+
+/* All font sizes in this file should be in percentage units. 
+   100% unit defaults to the font size of body element
+*/
+
+/* Set font-size to x-small in IE6, xx-small in IE4/5 and
+ * small in other browsers
+ */
+body {
+    /* for IE4/5 */
+    font-size: xx-small;
+    voice-family: "\"}\"";
+    voice-family: inherit;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    /* for IE6 */
+    font-size: xx-small;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+/* 
+ * Styles for pther browsers
+ */
+html > body {
+    font-size: x-small;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+
+table, input, textarea, button {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 100%;
+}
+
+/** select has a special font family to fix a problem in Simplified Chinese **/
+select, option {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 100%;
+}
+
+div, span, p, td, th {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+li {
+    margin-left: 75%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-family: Verdana, sans-serif;
+}
+
+ul {
+    margin-left: 0.75em;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 100%;
+    list-style-position: outside;
+    list-style-type: square;
+    color: #BCBCBC
+}
+
+pre {
+    font-family: monospace;
+    font-size: 100%;
+}
+
+a, .wpsLink, a:active, .wpsLink:active {
+    color: #3366CC;
+}
+
+    a:visited, .wpsLink:visited {
+        color: #3366CC;
+    }
+
+    a:hover, .wpsLink:hover {
+        color: #3366CC;
+    }
+
+    /* End Of BYS Common Styles I */
+
+
+
+/** Styles for table layout **/
+
+.button-section {
+    padding-top: 0em;
+    margin-top: 0em;
+    margin-left: 0em;
+    font-family: Verdana, sans-serif;
+    text-align: left;
+    font-weight: normal;
+    color: #000000;
+    background-color: #FFFFFF;
+    border-top: 1px solid #336699;
+    background-color: #d1d9e8;
+    border-left: 1px solid #88a4d7;
+    border-right: 1px solid #88a4d7;
+    border-top: 1px solid #88a4d7;
+    border-bottom: 1px solid #88a4d7;
+}
+
+.function-button-section {
+    font-size: 70.0%;
+    padding-left: 8px;
+    font-family: Verdana,Helvetica, sans-serif;
+    text-align: left;
+    color: #000000;
+    font-weight: normal;
+    background-color: #d1d9e8;
+    border-left: 1px solid #FFFFFF;
+    border-top: 1px solid #FFFFFF;
+    padding-top: 0.25em;
+}
+
+.framing-table {
+    background-color: #88a4d7;
+    background-image: none;
+}
+
+.table-row {
+    font-family: Verdana,Helvetica, sans-serif;
+    font-size: 100%;
+    background-color: #f7f7f7;
+}
+
+.column-head-name {
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    padding: 2px;
+    padding-left: .35em;
+    font-family: Verdana,Helvetica, sans-serif;
+    font-size: 100%;
+    font-weight: normal;
+    text-align: left;
+    color: #000000;
+    background-color: #d1d9e8;
+    background-image: none;
+}
+
+.collection-table-text {
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    padding: .35em;
+    font-family: Verdana,Helvetica, sans-serif;
+    font-weight: normal;
+    text-align: left;
+    overflow: visible;
+}
+
+.filter_section {
+    border: #88a4d7 1px solid;
+}
+
+.column-filter-expanded {
+    font-family: Verdana,Helvetica, sans-serif;
+    color: #000000;
+    background-color: #88a4d7;
+    padding-left: 1em;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #AABFDF;
+    border-top: 1px solid #AABFDF;
+}
+
+.paging-table {
+    background-color: #d1d9e8;
+    border-left: 1px solid #88a4d7;
+    border-right: 1px solid #88a4d7;
+    border-bottom: 1px solid #88a4d7;
+}
+
+.table-totals {
+    font-size: 1em;
+    border-top: 1px solid #ffffff;
+    padding-left: 1em;
+    font-family: Verdana,Helvetica, sans-serif;
+    text-align: left;
+    color: #000000;
+    background-color: #d1d9e8;
+    font-weight: normal;
+}
+
+.table-button {
+    border: none;
+    padding: 1px;
+    margin: 3px;
+    float: left;
+}
+
+    .table-button:hover {
+        border-top: 1px solid #ffffff;
+        border-left: 1px solid #ffffff;
+        border-bottom: 1px solid #000000;
+        border-right: 1px solid #000000;
+        margin: 1px;
+        padding: 2px;
+    }
+/** End of table layout styles **/
+
+
+/** Styles for banner links **/
+
+a.banner:link {
+    font-family: Verdana, serif;
+    font-size: 100%;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a.banner:visited {
+    font-family: Verdana, serif;
+    font-size: 100%;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a.banner:hover {
+    font-family: Verdana, serif;
+    font-size: 100%;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a.banner {
+    font-family: Verdana, serif;
+    font-size: 100%;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* End Of Styles For Banner Links */
+
+
+
+
+/* Diğer Stiller II */
+
+#simpleTable tbody th {
+    text-align: center
+}
+
+#dataTable tbody th {
+    text-align: center
+}
+
+#digerLisansTable tbody th {
+    text-align: center
+}
+
+th {
+    text-align: center
+}
+
+
+.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+tr.veri {
+    background-color: aliceblue;
+}
+
+input.veriGoster {
+    background-color: lightyellow;
+    border: none;
+}
+
+td.veri, input.veri, select.veri {
+    background-color: lightyellow;
+}
+
+tr.veriYasak {
+    background-color: pink;
+}
+
+.veriParlak {
+    background-color: yellow;
+}
+
+input.veriYasak, select.veriYasak {
+    background-color: lightpink;
+}
+
+td.etiket {
+    text-align: right;
+    background-color: ButtonFace;
+    font-weight: bold;
+}
+
+fieldset.field_style .etiket {
+    background-color: aliceblue;
+}
+
+td.etiketSabit {
+    text-align: right;
+    background-color: ButtonFace;
+    font-weight: bold;
+}
+
+.bosSatir {
+    height: 10px !important; /* overwrites any other rules */
+    background-color: aliceblue;
+}
+
+.buyukKolon {
+    width: 45% !important;
+}
+
+.uzunKolon {
+    width: 55% !important;
+}
+
+.buyukKolonCift {
+    width: 28% !important;
+}
+
+.uzunKolonCift {
+    width: 44% !important;
+}
+
+.dipNot {
+    text-align: right;
+    background-color: #F8F8F8;
+    font-weight: 900;
+}
+
+.cokKoyu {
+    font-weight: 900;
+}
+
+/* SonDurum Turnike Raporu */
+
+/*    
+    .icerde, .zeminMor 
+    {
+        background-color: lavender !important;
+    }
+*/
+.icerde, .zeminSari {
+    background-color: lemonchiffon !important;
+}
+
+.izinli, .zeminYesil {
+    background-color: lightgreen !important;
+}
+
+.gelmeyen, .zeminPembe {
+    background-color: lightpink !important;
+}
+
+.disarda, .zeminMavi {
+    background-color: aliceblue !important;
+}
+
+/*  Table Headers */
+.rowHeader {
+    background-color: #F8F8F8;
+    font-weight: bold;
+    /*width:250px;*/
+    text-align: right;
+}
+
+.tblSubHeader {
+    background-color: #EFEFEF !important;
+    font-weight: 900;
+    /*width:150px;*/
+    text-align: center;
+    line-height: 30px;
+}
+
+.tblMainHeader {
+    background-color: #4A4A4A !important;
+    font-weight: 900;
+    text-align: center;
+    color: white;
+    line-height: 35px;
+}
+
+/* Rapor Sayfası Ayarlama*/
+.outer {
+    position: relative;
+}
+
+.scaling-image {
+    position: relative;
+    visibility: hidden; /* make sure it's hidden */
+    width: 100%;
+    min-width: 100%;
+    height: 0%;
+}
+
+.inner {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+/* End Of Diğer Stiller II */

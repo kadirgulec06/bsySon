@@ -1,0 +1,97 @@
+﻿
+<script type="text/javascript">
+
+    $(window).bind('resize', function () {
+        $("#liste").jqGrid('destroyGroupHeader');
+        $("#liste").setGridWidth($(window).width() * shrinkFaktor, true);
+        setGridGroupHeaders();
+    }).trigger('resize');
+
+    function setGridGroupHeaders()
+    {
+
+    }
+
+    function rolSil(id) {
+        var agree = confirm("Rol Kaydını Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+            var frm = document.getElementById("frmRolSil");
+            document.getElementById("idSil").value = id;
+            frm.submit();
+        }
+        else
+            return false;
+    }
+
+    function rolSilHazirla(cellvalue, options, rowObject) {
+        return "<a href='#' onclick=rolSil(" + rowObject[0] + ");>Sil</a>"
+    }
+
+    function rolGunle(cellvalue, options, rowObject)
+    {
+        return "<a href='/Sozluk/YeniRol?id=" + rowObject[0] + "'>Değiştir</a>";
+    }
+
+    jQuery(document).ready(function () {
+
+        //alert("girdi");
+        jQuery("#liste").jqGrid({ //hangi tablo onun id si
+            url: '@Url.Action("ListeRol", "Sozluk")', //ilki action ikincisi controller
+            datatype: 'json',
+            mtype: 'POST',
+            autowidth: true,
+            colNames: ['id', 'Türü', 'Rol', 'Değiştir', 'Sil'],
+            colModel:
+            [
+              { name: 'id', index: 'id', hidden:true, width: 50, sortable: false },
+              { name: 'TURU', index: 'TURU', hidden: true, width: 50, sortable: false },
+              { name: 'ROL', index: 'ROL', width: 200, sortable: false },
+              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', sortable: false, formatter: rolGunle },
+              { name: 'Sil', index: 'Sil', width: 50, align: 'left', sortable: false, formatter: rolSilHazirla }
+            ],
+            gridComplete: function ()
+            {
+                //alert("rolgirdi");
+                gridCompleteOrtak("#liste", true);
+            },
+            shrinkToFit: true,
+            autowidth: true,
+            altRows: true,
+            altclass: "myAltRowClass",
+            toppager: true,
+            rowNum: 30,
+            rowList: [5, 10, 15, 20, 30],
+            sortname: 'adSoyad',
+            sortorder: "asc",
+            viewrecords: true,
+            height: '100%',
+            caption: 'Sistemde Tanımlı Roller',
+            postData:
+                {
+                    'ilkGiris': function () { return '@ViewBag.IlkGiris' }
+                }
+        });
+
+        setGridGroupHeaders();
+
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        @*$('#liste').jqGrid('setGridWidth', '1000');*@
+    });
+</script>
+
+<form method="get" action="@Url.Action("YeniRol", "Sozluk")" id="frmYeniRol">
+    <div id="divIslem">
+        <input type="submit" class="genelButtonOrta" value="Yeni Rol" />
+    </div>
+</form>
+
+<table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+<form method="post" hidden="hidden" action="@Url.Action("RolSil", "Sozluk")" id="frmRolSil">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />
+    </div>
+</form>

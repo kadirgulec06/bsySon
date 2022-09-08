@@ -1,0 +1,171 @@
+﻿@model bsy.Models.KULLANICI
+@{
+    ViewBag.Title = "Kullanıcı Giriş İşlemleri";
+}
+<style>
+</style>
+
+<script src="~/Scripts/spk-scripts.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function ()
+    {
+        /*
+        izinGorev = document.getElementById('IzinGorev').value;
+        */
+    });
+
+    function KullaniciClickHandler()
+    {
+        //document.getElementById("SicilNo").removeAttribute('disabled');
+
+        return true;
+
+    }
+
+    function KullaniciSil()
+    {
+        var agree = confirm("Kullanıcıyı Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("YeniKullanici", "Kullanicilar", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    @Html.HiddenFor(model => Model.id)
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style cerceveKucuk">
+            <table>
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model=>model.eposta)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.eposta)
+                        @Html.ValidationMessageFor(model => model.eposta)
+                    </td>
+                </tr>
+
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.Ad)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Ad)
+                        @Html.ValidationMessageFor(model => model.Ad)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.Soyad)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Soyad)
+                        @Html.ValidationMessageFor(model => model.Soyad)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.Telefon)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Telefon)
+                        @Html.ValidationMessageFor(model => model.Telefon)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.KimlikNo)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.KimlikNo)
+                        @Html.ValidationMessageFor(model => model.KimlikNo)
+                    </td>
+                </tr>
+
+                <tr>
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.KayitTarihi)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.KayitTarihi, "{0:dd-MM-yyyy}", new { @class = "datepicker veri" })
+                        @Html.ValidationMessageFor(model => model.KayitTarihi)
+                    </td>
+                </tr>
+                <tr>
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.DurumTarihi)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.DurumTarihi, "{0:dd-MM-yyyy}", new { @class = "datepicker veri" })
+                        @Html.ValidationMessageFor(model => model.DurumTarihi)
+                    </td>
+                </tr>
+                <tr>
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.Durum)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Durum, new { @size = 10, @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.Durum)
+                    </td>
+                </tr>
+                <tr>
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel"></td>
+                    <td class="genelIkiNoktaLabel"></td>
+                    <td>
+                            <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return KullaniciClickHandler();" />
+                            <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Kullanicilar")'" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+}

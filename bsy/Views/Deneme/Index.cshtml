@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Deneme</h2>
+
+<script type="text/javascript">
+
+    $(window).bind('resize', function () {
+        $("#liste").jqGrid('destroyGroupHeader');
+        $("#liste").setGridWidth($(window).width() * shrinkFaktor, true);
+        setGridGroupHeaders();
+    }).trigger('resize');
+
+    function setGridGroupHeaders() {
+
+    }
+
+    function submitForm()
+    {
+        var frm = document.getElementById("frmParametreleri");
+        frm.action = '@Url.Action("Bayramlar", "Bayramlar")';
+        frm.submit();
+    }
+
+    function bayramSil(id)
+    {
+        var agree = confirm("Bayram Kaydını Silmek İstediğinizden Emin misiniz?");
+        if (agree)
+        {
+            var frm = document.getElementById("frmBayramSil");
+            document.getElementById("idSil").value = id;
+            frm.submit();
+        }
+        else
+            return false;
+    }
+
+    function bayramSilHazirla(cellvalue, options, rowObject)
+    {
+        return "<a href='#' onclick=bayramSil(" + rowObject[0] + ");>Sil</a>"
+    }
+
+    function bayramGunle(cellvalue, options, rowObject)
+    {
+        return "<a href= '@Url.Action("YeniBayramlar", "Bayramlar", null)?id=" + rowObject[0] + "'>Değiştir</a>";
+    }
+
+    jQuery(document).ready(function () {
+        jQuery("#liste").jqGrid({ //hangi tablo onun id si
+            url: '@Url.Action("listeDeneme", "Deneme")', //ilki action ikincisi controller
+            datatype: 'json',
+            mtype: 'GET',
+            autowidth: true,
+            colNames: ['id', 'Tarih', 'Türü(1,2,3)', 'Sabah Başlama', 'Sabah Bitiş', 'Öğle Başlama', 'Öğle Bitiş', 'Değiştir', 'Sil'],
+            colModel: [
+          { name: 'id', index: 'id', hidden: true, width: 100, sortable: false },
+          { name: 'Tarih', index: 'Tarih', width: 100, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
+          { name: 'Turu', index: 'Turu', width: 100, sortable: false },
+          { name: 'BaslaSabah', index: 'BaslaSabah', width: 100, sortable: false },
+          { name: 'BitisSabah', index: 'BitisOgle', width: 100, sortable: false },
+          { name: 'BaslaOgle', index: 'BaslaSabah', width: 100, sortable: false },
+          { name: 'BitisOgle', index: 'BitisOgle', width: 100, sortable: false },
+          { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', sortable: false, formatter: bayramGunle },
+          { name: 'Sil', index: 'Sil', width: 50, align: 'left', sortable:false, formatter: bayramSilHazirla }
+            ],
+            gridComplete: function ()
+            {
+                gridCompleteOrtak("#liste", true);
+            },
+            shrinkToFit: true,
+            autowidth: true,
+            altRows: true,
+            altclass: "myAltRowClass",
+            toppager: true,
+            rowNum: 20,
+            rowList: [5, 10, 15, 20],
+            sortname: 'Tarih',
+            sortorder: "desc",
+            viewrecords: true,
+            height: '100%',
+            caption: ' Tam Gün Bayram(1), Arife(2), Özel Günler(3) Listesi '
+        });
+
+        setGridGroupHeaders();
+
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        @*$('#liste').jqGrid('setGridWidth', '1000');*@
+    });
+
+</script>
+
+

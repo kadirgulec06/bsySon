@@ -1,0 +1,54 @@
+﻿@model bsy.Models.SOZLUK
+
+<script type="text/javascript">
+
+</script>
+
+@using (Html.BeginForm("YeniRol", "Sozluk", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => Model.id)
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style" style="border-width:2px;width:600px">
+            <table>
+                <tr>
+                    <td class="genelLabel etiket uzun">
+                        Türü
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Turu, new { Value = Model.Turu, @class = "veri" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="genelLabel etiket uzun">
+                        Rol Adı
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Aciklama, new { Value = Model.Aciklama, @class = "veri" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="genelLabel etiket uzun"></td>
+                    <td class="genelIkiNoktaLabel"></td>
+                    <td>
+                        <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" />
+                        <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Rol", "Sozluk")'" />
+                    </td>
+                </tr>
+
+            </table>
+        </fieldset>
+    </div>
+}

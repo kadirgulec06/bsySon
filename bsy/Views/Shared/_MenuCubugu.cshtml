@@ -1,0 +1,65 @@
+﻿@using bsy.Models
+@model MENUNODE
+@using System.Text
+
+
+@helper createMenuTasks(MENUNODE root)
+{
+    @processChildren(root);
+}
+
+
+@helper processChildren(MENUNODE node)
+{
+    foreach (MENUNODE subnode in node.children)
+    {
+        @processNode(subnode);
+    }
+}
+
+@helper processNode(MENUNODE node)
+{
+    if (node.level == 1)
+    {
+        <li class="dropdown">
+            <label class="dropbtn">@node.bsyMenusu.aciklama</label>
+            <ul class="dropdown-content">
+                @processChildren(node)
+            </ul>
+        </li>
+    }
+    else if (!node.leaf)
+    {
+        <li>
+            <a href="#">@node.bsyMenusu.aciklama</a>
+            <ul class="dropdown-content">
+                @processChildren(node)
+            </ul>
+        </li>
+    }
+    else   // leaf
+    {
+        if (node.bsyMenusu.menuTuru == 1)
+        {
+            <li>
+                <a href="~/@node.bsyMenusu.controller/@node.bsyMenusu.metod?@(node.bsyMenusu.queryParam)">@node.bsyMenusu.aciklama</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@node.bsyMenusu.link" @node.bsyMenusu.queryParam>@node.bsyMenusu.aciklama</a>
+            </li>
+        }
+
+    }
+}
+
+<nav id="primary_nav_wrap">
+    <div class="divOrta" style="height:40px; background-color: #4A4A4A" ;>
+        <ul>
+            @createMenuTasks(Model)
+        </ul>
+    </div>
+</nav>
+

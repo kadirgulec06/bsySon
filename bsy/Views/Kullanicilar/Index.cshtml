@@ -1,0 +1,110 @@
+﻿
+<script type="text/javascript">
+
+    $(window).bind('resize', function () {
+        $("#liste").jqGrid('destroyGroupHeader');
+        $("#liste").setGridWidth($(window).width() * shrinkFaktor, true);
+        setGridGroupHeaders();
+    }).trigger('resize');
+
+    function setGridGroupHeaders()
+    {
+
+    }
+
+    function submitForm()
+    {
+        var frm = document.getElementById("frmTarihDaireSicil");
+        frm.action = '@Url.Action("OzetGunle", "AySonu")';
+        frm.submit();
+    }
+
+    function kullaniciSil(id) {
+        var agree = confirm("Kullanıcı Kaydını Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+            var frm = document.getElementById("frmKullaniciSil");
+            document.getElementById("idSil").value = id;
+            frm.submit();
+        }
+        else
+            return false;
+    }
+
+    function kullaniciSilHazirla(cellvalue, options, rowObject) {
+        return "<a href='#' onclick=kullaniciSil(" + rowObject[0] + ");>Sil</a>"
+    }
+
+    function kullaniciGunle(cellvalue, options, rowObject)
+    {
+        return "<a href='/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
+    }
+
+    jQuery(document).ready(function () {
+
+        jQuery("#liste").jqGrid({ //hangi tablo onun id si
+            url: '@Url.Action("ListeKullanicilar", "Kullanicilar")', //ilki action ikincisi controller
+            datatype: 'json',
+            mtype: 'POST',
+            autowidth: true,
+            colNames: ['id', 'EPosta', 'Adı', 'Soyadı', 'Telefonu', 'TC No', 'Kayıt Tarihi', 'Durumu', 'Durum Tarihi', 'Değiştir', 'Sil'],
+            colModel:
+            [
+              { name: 'id', index: 'id', hidden:true, width: 100, sortable: false },
+              { name: 'EPOSTA', index: 'EPOSTA', width: 200, sortable: false },
+              { name: 'AD', index: 'AD', width: 75, sortable: false },
+              { name: 'SOYAD', index: 'SOYAD', width: 75, sortable: false },
+              { name: 'TELEFON', index: 'TELEFON', width: 50, sortable: false },
+              { name: 'TCNO', index: 'TCNO', width: 50, sortable: false },
+              { name: 'KAYITTARIHI', index: 'KAYITTARIHI', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
+              { name: 'DURUM', index: 'DURUM', width: 100, sortable: false },
+              { name: 'DURUMTARIHI', index: 'DURUMTARIHI', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
+              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', sortable: false, formatter: kullaniciGunle },
+              { name: 'Sil', index: 'Sil', width: 50, align: 'left', sortable: false, formatter: kullaniciSilHazirla }
+            ],
+            gridComplete: function ()
+            {
+                alert("girdi");
+                gridCompleteOrtak("#liste", true);
+            },
+            shrinkToFit: true,
+            autowidth: true,
+            altRows: true,
+            altclass: "myAltRowClass",
+            toppager: true,
+            rowNum: 30,
+            rowList: [5, 10, 15, 20, 30],
+            sortname: 'AD',
+            sortorder: "asc",
+            viewrecords: true,
+            height: '100%',
+            caption: 'Tanımlı Portal Kullanıcıları',
+            postData:
+                {
+                    'ilkGiris': function () { return '@ViewBag.IlkGiris' }
+                }
+        });
+
+        setGridGroupHeaders();
+        gridCompleteOrtak("#liste", true);
+
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        @*$('#liste').jqGrid('setGridWidth', '1000');*@
+    });
+</script>
+
+<form method="get" action="@Url.Action("YeniKullanici", "Kullanicilar")" id="frmYeniKullanici">
+    <div id="divIslem">
+        <input type="submit" class="genelButtonOrta" value="Yeni Kullanıcı" />
+    </div>
+</form>
+
+<table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+<form method="post" hidden="hidden" action="@Url.Action("KullaniciSil", "Kullanicilar")" id="frmKullaniciSil">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />
+    </div>
+</form>
