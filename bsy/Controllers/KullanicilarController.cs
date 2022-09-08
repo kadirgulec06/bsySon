@@ -134,7 +134,7 @@ namespace bsy.Controllers
 
             if (!TCKimlikNoValidationAttribute.ValidateKimlikNo(yeniUser.KimlikNo.ToString()))
             {
-                m = new Mesaj("hata", "TC Kimlik Numarası Hatalı");
+                m = new Mesaj("hata", "TC Kimlik Numarası Hatalı"); 
                 mesajlar.Add(m);
                 Session["MESAJLAR"] = mesajlar;
                 return View(yeniUser);
