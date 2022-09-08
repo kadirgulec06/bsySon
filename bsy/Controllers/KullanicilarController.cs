@@ -201,6 +201,8 @@ namespace bsy.Controllers
             eskiUser.Durum = yeniUser.Durum;
             eskiUser.DurumTarihi = yeniUser.DurumTarihi;
 
+            eskiUser.Sifre = GenelHelper.CreateSHA512("123456789");
+
             return eskiUser;
         }
         public ActionResult KullaniciSil(int idSil)

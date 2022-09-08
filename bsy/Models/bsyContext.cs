@@ -259,6 +259,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new DenemeConfiguration());
             modelBuilder.Configurations.Add(new bsyMenusuConfiguration());
             modelBuilder.Configurations.Add(new SozlukConfiguration());
+            modelBuilder.Configurations.Add(new KullaniciConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

@@ -8,6 +8,19 @@ namespace bsy.Models
 {
     public class KULLANICI
     {
+        public KULLANICI()
+        {
+            id = 0;
+            eposta = "";
+            Ad = "";
+            Soyad = "";
+            Telefon = "";
+            KimlikNo = 0;
+            Sifre = "";
+            KayitTarihi = DateTime.Now;
+            Durum = "";
+            DurumTarihi = DateTime.Now;
+        }
         public long id { get; set; }
 
         [MaxLength(200)]
@@ -24,7 +37,7 @@ namespace bsy.Models
 
         public long KimlikNo { get; set; }
 
-        [MaxLength(100)]
+        [MaxLength(400)]
         public string Sifre { get; set; }
         public DateTime KayitTarihi { get; set; }
 

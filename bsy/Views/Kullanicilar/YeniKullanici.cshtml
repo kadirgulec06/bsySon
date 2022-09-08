@@ -59,7 +59,7 @@
                         :
                     </td>
                     <td>
-                        @Html.TextBoxFor(model => model.eposta)
+                        @Html.TextBoxFor(model => model.eposta, new { @size=120 })
                         @Html.ValidationMessageFor(model => model.eposta)
                     </td>
                 </tr>
