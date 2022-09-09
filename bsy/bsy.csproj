@@ -180,6 +180,7 @@
     <Compile Include="Controllers\DenemeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
+    <Compile Include="Controllers\RollerController.cs" />
     <Compile Include="Controllers\SozlukController.cs" />
     <Compile Include="Filters\ortakGenelFiltre.cs" />
     <Compile Include="Filters\YetkiFiltresi.cs" />
@@ -194,11 +195,14 @@
     <Compile Include="Models\BSYMENUSU.cs" />
     <Compile Include="Models\DENEME.cs" />
     <Compile Include="Models\KULLANICI.cs" />
+    <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MENUNODE.cs" />
     <Compile Include="Models\Mesaj.cs" />
+    <Compile Include="Models\ROLLER.cs" />
     <Compile Include="Models\SOZLUK.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Roller\RollerVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -363,10 +367,11 @@
     <Content Include="Views\Sozluk\YeniRol.cshtml" />
     <Content Include="Views\Kullanicilar\Index.cshtml" />
     <Content Include="Views\Kullanicilar\YeniKullanici.cshtml" />
+    <Content Include="Views\Roller\Index.cshtml" />
+    <Content Include="Views\Roller\YeniRolleri.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

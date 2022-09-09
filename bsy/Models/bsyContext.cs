@@ -189,6 +189,7 @@ namespace bsy.Models
         public DbSet<BSYMENUSU> tblBSYmenusu { get; set; }
         public DbSet<SOZLUK> tblSozluk { get; set; }
         public DbSet<KULLANICI> tblKullanicilar { get; set; }
+        public DbSet<ROLLER> tblRoller { get; set; }
 
         /*
         public override int SaveChanges()
@@ -260,6 +261,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new bsyMenusuConfiguration());
             modelBuilder.Configurations.Add(new SozlukConfiguration());
             modelBuilder.Configurations.Add(new KullaniciConfiguration());
+            modelBuilder.Configurations.Add(new RollerConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -304,6 +306,17 @@ namespace bsy.Models
                 HasKey(p => p.id);
                 Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 ToTable("Kullanicilar");
+            }
+        }
+
+        public class RollerConfiguration : EntityTypeConfiguration<ROLLER>
+        {
+            public RollerConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("Roller");
             }
         }
 

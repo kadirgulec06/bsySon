@@ -174,6 +174,7 @@ namespace bsy.Controllers
             try
             {
                 context.SaveChanges();
+                bool gonderildi = epostaGonder(eskiUser);
             }
             catch (Exception e)
             {
@@ -189,6 +190,14 @@ namespace bsy.Controllers
 
         }
 
+        private bool epostaGonder(KULLANICI user)
+        {
+            string mesaj = "BYS Portalına kaydınız yapılmıştır, şifreniz 12345678";
+            string konu = "BYS Portalı Üyeliği";
+            bool gonderildi = GenelHelper.sendMail(user.eposta, user.Ad + " " + user.Soyad, konu, mesaj);
+
+            return gonderildi;
+        }
         private KULLANICI UserYeniToEski(KULLANICI eskiUser, KULLANICI yeniUser)
         {
             eskiUser.id = yeniUser.id;
