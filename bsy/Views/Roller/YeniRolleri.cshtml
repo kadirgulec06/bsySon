@@ -194,91 +194,93 @@
     @Html.HiddenFor(model => Model.id)
     @Html.HiddenFor(model => Model.userID)
 
-    <div id="divAna">
-        <font size="3" color=black><b>@ViewBag.Title</b></font>
-        <br />
-        <br />
-        <fieldset class="field_style cerceveKucuk">
-            <table>
-                <tr class="veri">
-                    @*<td class="genelZorunluAlanLabel"></td>*@
-                    <td class="genelLabel etiket">
-                        @Html.LabelFor(model => model.eposta)
-                    </td>
-                    <td class="genelIkiNoktaLabel">
-                        :
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(model => model.eposta, new { @size = 120 })
-                        @Html.ValidationMessageFor(model => model.eposta)
-                    </td>
-                </tr>
+<div id="divAna">
+    <font size="3" color=black><b>@ViewBag.Title</b></font>
+    <br />
+    <br />
+    <fieldset class="field_style cerceveKucuk">
+        <table>
+            <tr class="veri">
+                @*<td class="genelZorunluAlanLabel"></td>*@
+                <td class="genelLabel etiket">
+                    @Html.LabelFor(model => model.eposta)
+                </td>
+                <td class="genelIkiNoktaLabel">
+                    :
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.eposta, new { @size = 120 })
+                    @Html.ValidationMessageFor(model => model.eposta)
+                </td>
+            </tr>
 
-                <tr class="veri">
-                    @*<td class="genelZorunluAlanLabel"></td>*@
-                    <td class="genelLabel etiket">
-                        @Html.LabelFor(model => model.Ad)
-                    </td>
-                    <td class="genelIkiNoktaLabel">
-                        :
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(model => model.Ad)
-                        @Html.ValidationMessageFor(model => model.Ad)
-                    </td>
-                </tr>
-                <tr class="veri">
-                    @*<td class="genelZorunluAlanLabel"></td>*@
-                    <td class="genelLabel etiket">
-                        @Html.LabelFor(model => model.Soyad)
-                    </td>
-                    <td class="genelIkiNoktaLabel">
-                        :
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(model => model.Soyad)
-                        @Html.ValidationMessageFor(model => model.Soyad)
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-        <br />
-        <h3>Seçilen Roller</h3>
-        <fieldset class="field_style cerceveKucuk">
-            <table id="rollerTablosu">
-                <tr>
-                    <td align="center" class="genelLabelLeft">Rol</td>
-                    <td align="center" class="genelLabelLeft">Seçili</td>
-                </tr>
-                @if (Model != null && Model.Roller.Count > 0)
+            <tr class="veri">
+                @*<td class="genelZorunluAlanLabel"></td>*@
+                <td class="genelLabel etiket">
+                    @Html.LabelFor(model => model.Ad)
+                </td>
+                <td class="genelIkiNoktaLabel">
+                    :
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Ad)
+                    @Html.ValidationMessageFor(model => model.Ad)
+                </td>
+            </tr>
+            <tr class="veri">
+                @*<td class="genelZorunluAlanLabel"></td>*@
+                <td class="genelLabel etiket">
+                    @Html.LabelFor(model => model.Soyad)
+                </td>
+                <td class="genelIkiNoktaLabel">
+                    :
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Soyad)
+                    @Html.ValidationMessageFor(model => model.Soyad)
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <br />
+    <h3>Seçilen Roller</h3>
+    <fieldset class="field_style cerceveKucuk">
+        <table id="rollerTablosu">
+            <tr>
+                <td align="center" class="genelLabelLeft">Rol</td>
+                <td align="center" class="genelLabelLeft">Seçili</td>
+            </tr>
+            @if (Model != null && Model.Roller.Count > 0)
+            {
+                for (int i = 0; i < Model.Roller.Count; i = i + 1)
                 {
-                    for (int i = 0; i < Model.Roller.Count; i = i + 1)
-                    {
-                        <tr>
-                            <td>
-                                @Html.TextBoxFor(model => model.Roller[i].Rol)
-                            </td>
-                            <td class="rollerTablosu">
-                                @if (Model.Roller[i].Secili == 1)
-                                {
-                                    <input type="checkbox" size="5" name="Roller[@i.ToString()].Secili" align="left" value="1" checked />
-                                }
-                                else
-                                {
-                                    <input type="checkbox" size="5" name="Roller[@i.ToString()].Secili" align="left" value="1" />
-                                }
-                            </td>
-                        </tr>
-                    }
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(model => model.Roller[i].Rol)
+                        </td>
+                        <td class="rollerTablosu">
+                            @if (Model.Roller[i].Secili == 1)
+                            {
+                                <input type="checkbox" size="5" name="Roller[@i.ToString()].Secili" align="left" value="1" checked />
+                            }
+                            else
+                            {
+                                <input type="checkbox" size="5" name="Roller[@i.ToString()].Secili" align="left" value="1" />
+                            }
+                        </td>
+                    </tr>
                 }
-                <tr>
-                    <td>
-                        <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return RollerClickHandler();" />
-                        <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Roller")'" />
-                    </td>
-                </tr>
+            }
+        </table>
+    </fieldset>
 
-            </table>
-        </fieldset>
-    </div>
+    <table>
+        <tr>
+            <td>
+                <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return RollerClickHandler();" />
+                <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Roller")'" />
+            </td>
+        </tr>
+    </table>
+</div>
 }
