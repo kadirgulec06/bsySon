@@ -103,5 +103,106 @@ namespace bsy.Helpers
 
             return false;
         }
+
+        public static string sifreUret()
+        {
+            Random rg = new Random();
+            string sifre = rg.Next(1000000, 9999999).ToString();
+
+            return sifre;
+        }
+
+        public static User KullaniciBilgileri(bsyContext ctx, LogIn li)
+        {
+            User user = new User();
+            KULLANICI kx = (from k in ctx.tblKullanicilar
+                            where k.eposta == li.userName
+                            select k).FirstOrDefault();
+            if (kx == null)
+            {
+                return null;
+            }
+
+            user.AdSoyad = kx.Ad + " " + kx.Soyad;
+            user.Eposta = li.userName;
+            user.KimlikNo = kx.KimlikNo.ToString();
+            user.menuRolleri = "";
+            user.UserName = user.Eposta;
+            user.Roller = KullaniciRolleri(ctx, kx.id);
+
+            return user;
+        }
+
+        public static string KullaniciRolleri(bsyContext ctx, long userID)
+        {
+            KULLANICIROL rolleri = (from kr in ctx.tblKullaniciRolleri
+                             where kr.userID == userID
+                             select kr).FirstOrDefault();
+            if (rolleri == null)
+            {
+                return "";
+            }
+
+            return rolleri.Rolleri;
+        }
+
+        public static bool GirisHakkiVar(bsyContext ctx, LogIn li)
+        {
+            DateTime sonAcmaTarihi = SonAcmaTarihi(ctx, li.ip);
+            DateTime sonGirisTarihi = SonGirisTarihi(ctx, li.ip);
+
+            int denemeSayisi = (from gdx in ctx.tblGirisDenemeleri
+                                where gdx.ip == li.ip && gdx.Durum == false &&
+                                gdx.Tarih > sonAcmaTarihi && gdx.Tarih > sonGirisTarihi
+                                select gdx).Count();
+
+            return denemeSayisi < SabitlerHelper.maxGirisDenemesi;
+
+        }
+
+        public static DateTime SonAcmaTarihi(bsyContext ctx, string ip)
+        {
+            GIRISEACMA sonAcma = (from gax in ctx.tblGiriseAcma
+                                  where gax.ip == ip
+                                  select gax).OrderByDescending(i => i.Tarih).FirstOrDefault();
+
+            DateTime sonAcmaTarihi = new DateTime(2001, 01, 01);
+            if (sonAcma != null)
+            {
+                sonAcmaTarihi = sonAcma.Tarih;
+            }
+
+            return sonAcmaTarihi;
+        }
+
+        public static DateTime SonGirisTarihi(bsyContext ctx, string ip)
+        {
+            GIRISDENEME sonGiris = (from gdx in ctx.tblGirisDenemeleri
+                                  where gdx.ip == ip && gdx.Durum == true
+                                  select gdx).OrderByDescending(i => i.Tarih).FirstOrDefault();
+
+            DateTime sonGirisTarihi = new DateTime(2001, 01, 01);
+            if (sonGiris != null)
+            {
+                sonGirisTarihi = sonGiris.Tarih;
+            }
+
+            return sonGirisTarihi;
+        }
+
+        public static bool DenemeKaydet(bsyContext ctx, LogIn li, bool durum)
+        {
+            GIRISDENEME gd = new GIRISDENEME();
+
+            gd.Durum = durum;
+            gd.eposta = li.userName;
+            gd.id = 0;
+            gd.ip = li.ip;
+            gd.Tarih = DateTime.Now;
+
+            ctx.tblGirisDenemeleri.Add(gd);
+            return true;
+        }
+
     }
 }

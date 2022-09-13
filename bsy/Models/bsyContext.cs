@@ -190,6 +190,10 @@ namespace bsy.Models
         public DbSet<SOZLUK> tblSozluk { get; set; }
         public DbSet<KULLANICI> tblKullanicilar { get; set; }
         public DbSet<ROLLER> tblRoller { get; set; }
+        public DbSet<GIRISDENEME> tblGirisDenemeleri { get; set; }
+        public DbSet<SIFREDEGISME> tblSifreDegisme { get; set; }
+        public DbSet<GIRISEACMA> tblGiriseAcma { get; set; }
+        public DbSet<KULLANICIROL> tblKullaniciRolleri { get; set; }
 
         /*
         public override int SaveChanges()
@@ -262,6 +266,10 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new SozlukConfiguration());
             modelBuilder.Configurations.Add(new KullaniciConfiguration());
             modelBuilder.Configurations.Add(new RollerConfiguration());
+            modelBuilder.Configurations.Add(new GiriseAcmaConfiguration());
+            modelBuilder.Configurations.Add(new GirisDenemeleriConfiguration());
+            modelBuilder.Configurations.Add(new SifreDegismeConfiguration());
+            modelBuilder.Configurations.Add(new KullaniciRolleriConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -320,6 +328,46 @@ namespace bsy.Models
             }
         }
 
-    }
+        public class GiriseAcmaConfiguration : EntityTypeConfiguration<GIRISEACMA>
+        {
+            public GiriseAcmaConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("GiriseAcma");
+            }
+        }
+        public class GirisDenemeleriConfiguration : EntityTypeConfiguration<GIRISDENEME>
+        {
+            public GirisDenemeleriConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("GirisDenemeleri");
+            }
+        }
+        public class SifreDegismeConfiguration : EntityTypeConfiguration<SIFREDEGISME>
+        {
+            public SifreDegismeConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("SifreDegisme");
+            }
+        }
+        public class KullaniciRolleriConfiguration : EntityTypeConfiguration<KULLANICIROL>
+        {
+            public KullaniciRolleriConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("KullaniciRolleri");
+            }
+        }
 
+    }
 }

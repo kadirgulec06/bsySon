@@ -1,0 +1,399 @@
+﻿html {
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: url('../Images/spkBina.jpg') no-repeat fixed center center;
+    font-family: 'Segoe UI', Candara, Calibri, "Helvetica Neue", Helvetica, Arial, Tahoma, sans-serif;
+    background-size: cover;
+    margin: 0;
+    font-size: 1.0em;
+}
+
+.logoContainer {
+    display: table;
+    margin: 0px auto;
+}
+
+.logo {
+    width: 500px;
+    background: url('../Images/spklogo.png') 0% 50% no-repeat;
+    font-weight: bold;
+    color: #fff;
+    display: table-cell;
+    vertical-align: middle;
+}
+/* screen */
+@media (min-width: 768px) {
+    .logo {
+        width: 500px;
+        height: 100px;
+        background-size: 100px 100px;
+        padding: 6px 0px 6px 110px;
+        font-size: 2em;
+    }
+}
+/* mobile */
+@media (max-width: 767px) {
+    .logo {
+        width: 300px;
+        height: 80px;
+        background-size: 80px 80px;
+        padding: 6px 0px 6px 90px;
+        font-size: 1.6em;
+    }
+}
+
+.login-block {
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    border-top: 5px solid #ff656c;
+    margin: 0px auto;
+}
+
+@media (min-width: 768px) {
+    .login-block {
+        width: 600px;
+    }
+}
+/* mobile */
+@media (max-width: 767px) {
+    .login-block {
+        width: 400px;
+    }
+}
+
+.login-block h1 {
+    text-align: center;
+    color: #000;
+    margin-top: 0;
+    font-size: 1.4em;
+    line-height: 1em !important;
+}
+
+.login-block input[type=text], .login-block input[type=number], .login-block textarea, .login-block input[type=password] {
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    /*padding: 0 20px 0 50px;*/
+    outline: none;
+    font-size: 14px;
+}
+
+.login-block input[type=button] {
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    /*padding: 0 20px 0 50px;*/
+    outline: none;
+}
+.login-block textarea {
+    font-size: 0.9em;
+    resize: none;
+    padding: 0px 6px;
+}
+
+.login-block input#TCKimlikNo {
+    background: #fff url('../Images/login-user.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+    .login-block input#TCKimlikNo:focus {
+        background: #fff url('../Images/login-user.png') 20px bottom no-repeat;
+        background-size: 16px 80px;
+    }
+
+.login-block input#CepTelefonu {
+    background: #fff url('../Images/login-lock.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+    .login-block input#CepTelefonu:focus {
+        background: #fff url('../Images/login-lock.png') 20px bottom no-repeat;
+        background-size: 16px 80px;
+    }
+
+.login-block input:active, .login-block input:focus {
+    border: 1px solid #ff656c;
+}
+
+.login-block button, .login-block input[type=button] {
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    outline: none;
+    padding: 0px;
+}
+
+.login-block label {
+    font-size: 0.9em;
+}
+
+/* override bootstrap */
+button,
+input,
+optgroup,
+select,
+textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    overflow: visible;
+}
+
+button,
+select {
+    text-transform: none;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+    .btn:focus,
+    .btn:active:focus,
+    .btn.active:focus,
+    .btn.focus,
+    .btn:active.focus,
+    .btn.active.focus {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+    }
+
+    .btn:hover,
+    .btn:focus,
+    .btn.focus {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .btn:active,
+    .btn.active {
+        background-image: none;
+        outline: 0;
+        -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    }
+
+#007bff
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.btn-danger:focus,
+.btn-danger.focus {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #761c19;
+}
+
+.btn-danger:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+
+.btn-danger:active,
+.btn-danger.active,
+.open > .dropdown-toggle.btn-danger {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #29176d;
+    border-color: #29176d;
+}
+
+    .btn-primary:focus,
+    .btn-primary.focus {
+        color: #fff;
+        background-color: #29176d;
+        border-color: #29176d;
+    }
+ 
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #29176d;
+        border-color: #29176d;
+    }
+   
+    .btn-primary:active,
+    .btn-primary.active,
+    .open > .dropdown-toggle.btn-primary {
+        color: #fff;
+        background-color: #29176d;
+        border-color: #29176d;
+    }
+
+.btn-danger:active:hover,
+.btn-danger.active:hover,
+.open > .dropdown-toggle.btn-danger:hover,
+.btn-danger:active:focus,
+.btn-danger.active:focus,
+.open > .dropdown-toggle.btn-danger:focus,
+.btn-danger:active.focus,
+.btn-danger.active.focus,
+.open > .dropdown-toggle.btn-danger.focus {
+    color: #fff;
+    background-color: #ac2925;
+    border-color: #761c19;
+}
+
+.btn-danger:active,
+.btn-danger.active,
+.open > .dropdown-toggle.btn-danger {
+    background-image: none;
+}
+
+.glyphicon.fast-right-spinner {
+    -webkit-animation: glyphicon-spin-r 1s infinite linear;
+    animation: glyphicon-spin-r 1s infinite linear;
+}
+
+.glyphicon.normal-right-spinner {
+    -webkit-animation: glyphicon-spin-r 2s infinite linear;
+    animation: glyphicon-spin-r 2s infinite linear;
+}
+
+.glyphicon.slow-right-spinner {
+    -webkit-animation: glyphicon-spin-r 3s infinite linear;
+    animation: glyphicon-spin-r 3s infinite linear;
+}
+
+.glyphicon.fast-left-spinner {
+    -webkit-animation: glyphicon-spin-l 1s infinite linear;
+    animation: glyphicon-spin-l 1s infinite linear;
+}
+
+.glyphicon.normal-left-spinner {
+    -webkit-animation: glyphicon-spin-l 2s infinite linear;
+    animation: glyphicon-spin-l 2s infinite linear;
+}
+
+.glyphicon.slow-left-spinner {
+    -webkit-animation: glyphicon-spin-l 3s infinite linear;
+    animation: glyphicon-spin-l 3s infinite linear;
+}
+
+@-webkit-keyframes glyphicon-spin-r {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes glyphicon-spin-r {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@-webkit-keyframes glyphicon-spin-l {
+    0% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes glyphicon-spin-l {
+    0% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+.well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+    .well blockquote {
+        border-color: #ddd;
+        border-color: rgba(0, 0, 0, .15);
+    }
+
+.well-lg {
+    padding: 24px;
+    border-radius: 30px;
+}
+
+.well-sm {
+    padding: 9px;
+    border-radius: 3px;
+}
+
+.applet-panel {
+    margin-left: 50px;
+}

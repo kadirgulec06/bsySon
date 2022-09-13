@@ -146,9 +146,9 @@ namespace bsy.Controllers
                 eskiUser = new KULLANICI();
             }
 
+            Mesaj mSifre = null;
             //yeniAO = YeniOzetHesapla(yeniAO, mao);
-            eskiUser = UserYeniToEski(eskiUser, yeniUser);
-
+            eskiUser = UserYeniToEski(eskiUser, yeniUser);           
             if (eskiUser.id == 0)
             {
                 KULLANICI user = context.tblKullanicilar.Where(kx => kx.eposta == eskiUser.eposta).FirstOrDefault();
@@ -161,8 +161,17 @@ namespace bsy.Controllers
                 }
                 else
                 {
+                    string sifre = GenelHelper.sifreUret();
+                    mSifre = new Mesaj("bilgi", "Kullanıcı şifresi " + sifre);
+
+                    string sifreliSifre = GenelHelper.CreateSHA512(sifre);
+                    eskiUser.Sifre = sifreliSifre;
                     context.tblKullanicilar.Add(eskiUser);
                     m = new Mesaj("tamam", "Kullanıcı Kaydı Eklenmiştir.");
+
+                    bool giriseAcildi = GiriseAcmaYarat(eskiUser);
+                    bool sifreDegisme = SifreDegismeYarat(user);
+
                 }
             }
             else
@@ -174,7 +183,7 @@ namespace bsy.Controllers
             try
             {
                 context.SaveChanges();
-                bool gonderildi = epostaGonder(eskiUser);
+                //bool gonderildi = epostaGonder(eskiUser);               
             }
             catch (Exception e)
             {
@@ -183,11 +192,43 @@ namespace bsy.Controllers
 
 
             mesajlar.Add(m);
+            if (mSifre != null)
+            {
+                mesajlar.Add(mSifre);
+            }
+
             Session["MESAJLAR"] = mesajlar;
 
             Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kullanicilar/Index", false);
             return Content("OK");
 
+        }
+
+        private bool GiriseAcmaYarat(KULLANICI user)
+        {
+            GIRISEACMA ga = new GIRISEACMA();
+
+            ga.Aciklama = "İlk kayıt";
+            ga.id = 0;
+            ga.eposta = user.eposta;
+            ga.ip = "";
+            ga.Tarih = user.KayitTarihi;
+
+            context.tblGiriseAcma.Add(ga);
+            return true;
+        }
+
+        private bool SifreDegismeYarat(KULLANICI user)
+        {
+            SIFREDEGISME sd = new SIFREDEGISME();
+
+            sd.Aciklama = "İlk kayıt";
+            sd.id = 0;
+            sd.Tarih = user.KayitTarihi;
+            sd.userID = user.id;
+
+            context.tblSifreDegisme.Add(sd);
+            return true;
         }
 
         private bool epostaGonder(KULLANICI user)

@@ -178,27 +178,35 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DenemeController.cs" />
+    <Compile Include="Controllers\GirisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
     <Compile Include="Controllers\RollerController.cs" />
     <Compile Include="Controllers\SozlukController.cs" />
     <Compile Include="Filters\ortakGenelFiltre.cs" />
+    <Compile Include="Filters\OturumAcikMI.cs" />
     <Compile Include="Filters\YetkiFiltresi.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GenelHelper.cs" />
     <Compile Include="Helpers\MenuBuilder.cs" />
+    <Compile Include="Helpers\SabitlerHelper.cs" />
     <Compile Include="Helpers\SozlukHelper.cs" />
     <Compile Include="Helpers\TCKimlikNoValidation.cs" />
     <Compile Include="Models\bsyContext.cs" />
     <Compile Include="Models\BSYMENUSU.cs" />
     <Compile Include="Models\DENEME.cs" />
+    <Compile Include="Models\GIRISDENEME.cs" />
+    <Compile Include="Models\GIRISEACMA.cs" />
     <Compile Include="Models\KULLANICI.cs" />
+    <Compile Include="Models\KULLANICIROL.cs" />
+    <Compile Include="Models\LogIn.cs" />
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MENUNODE.cs" />
     <Compile Include="Models\Mesaj.cs" />
     <Compile Include="Models\ROLLER.cs" />
+    <Compile Include="Models\SIFREDEGISME.cs" />
     <Compile Include="Models\SOZLUK.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -209,6 +217,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\girisIndex.css" />
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -369,6 +378,7 @@
     <Content Include="Views\Kullanicilar\YeniKullanici.cshtml" />
     <Content Include="Views\Roller\Index.cshtml" />
     <Content Include="Views\Roller\YeniRolleri.cshtml" />
+    <Content Include="Views\Giris\girisIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,18 @@
 ﻿var shrinkFaktor = 0.88
 var textAlign = "text-align";
 var alignGridCaption = "center"
+function showHidePassword(id) {
+    var tcNo = document.getElementById(id);
+    var tcType = tcNo.getAttribute("type");
+    //alert(tcType);
+    if (tcType == "password") {
+        tcNo.setAttribute("type", "text");
+    }
+    else {
+        tcNo.setAttribute("type", "password");
+    }
+}
+
 function gridCompleteOrtak(gridID, headerCursor) 
 {
     alignGridHeaders(jQuery(gridID));
