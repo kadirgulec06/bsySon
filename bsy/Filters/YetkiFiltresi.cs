@@ -28,8 +28,10 @@ namespace bsy.Filters
 
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
-                    action = "Index",
-                    controller = "Home",
+                    action = "girisIndex",
+                    controller = "Giris",
+                    //action = "Index",
+                    //controller = "Home",
                     area = ""
                 }));
             }

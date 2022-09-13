@@ -1,0 +1,21 @@
+﻿@Html.AntiForgeryToken()
+@model bsy.Models.ErrorModel
+@{
+    ViewBag.Title = "Hata Detayı";
+}
+
+<hgroup class="title">
+    <h1 class="error">@ViewBag.Title</h1>
+    <br />
+    <h2 class="error">Takip Numarası: <mark>@Html.DisplayFor(model => model.id)</mark></h2>
+    <br />
+    <h2 class="error">Raporlanma Zamanı: <mark>@Html.DisplayFor(model => model.time)</mark></h2>
+    <br />
+    <h3>Sonuç: </h3>
+    <p id="result">@Html.DisplayFor(model => model.result)</p>
+    <h3>Özet:</h3>
+    <p id="message">@Html.DisplayFor(model => model.message)</p>
+    <h3 onclick="$('#trace').toggle()">Detay:</h3>
+    <p id="trace" style="display:none;">@Html.DisplayFor(model => model.trace)</p>
+</hgroup>
+

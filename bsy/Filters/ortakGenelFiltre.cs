@@ -14,15 +14,18 @@ namespace bsy.Filters
         {
             User user = (User)filterContext.HttpContext.Session["USER"];
 
-            user = GenelHelper.getSabitUser();
+            //user = GenelHelper.getSabitUser();
 
-            filterContext.HttpContext.Session["USER"] = user;
+            //filterContext.HttpContext.Session["USER"] = user;
 
-            menuHazirla(user, filterContext);
+            if (user != null)
+            {
+                menuHazirla(user, filterContext);
 
-            oturumDegerleri(filterContext);
+                oturumDegerleri(filterContext);
 
-            filterContext.HttpContext.Session["USER"] = user;
+                filterContext.HttpContext.Session["USER"] = user;
+            }
 
             base.OnActionExecuting(filterContext);
         }

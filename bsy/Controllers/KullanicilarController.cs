@@ -1,15 +1,19 @@
-﻿using bsy.Helpers;
+﻿using bsy.Filters;
+using bsy.Helpers;
 using bsy.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 
 namespace bsy.Controllers
 {
+    //[OturumAcikMI]
+    [Yetkili(Roles = "YONETICI")]
     public class KullanicilarController : Controller
     {
         bsyContext context = new bsyContext();
@@ -148,48 +152,62 @@ namespace bsy.Controllers
 
             Mesaj mSifre = null;
             //yeniAO = YeniOzetHesapla(yeniAO, mao);
-            eskiUser = UserYeniToEski(eskiUser, yeniUser);           
-            if (eskiUser.id == 0)
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
             {
-                KULLANICI user = context.tblKullanicilar.Where(kx => kx.eposta == eskiUser.eposta).FirstOrDefault();
-                if (user != null)
+                try
                 {
-                    m = new Mesaj("hata", "Bu kullanıcı kaydı daha önce oluşturulmuş, tekrar eklenemez");
+                    eskiUser = UserYeniToEski(eskiUser, yeniUser);
+                    if (eskiUser.id == 0)
+                    {
+                        KULLANICI user = context.tblKullanicilar.Where(kx => kx.eposta == eskiUser.eposta).FirstOrDefault();
+                        if (user != null)
+                        {
+                            m = new Mesaj("hata", "Bu kullanıcı kaydı daha önce oluşturulmuş, tekrar eklenemez");
+                            mesajlar.Add(m);
+                            Session["MESAJLAR"] = mesajlar;
+                            return View(yeniUser);
+                        }
+                        else
+                        {
+                            string sifre = GenelHelper.sifreUret();
+                            sifre = "123";
+                            mSifre = new Mesaj("bilgi", "Kullanıcı şifresi " + sifre);
+
+                            string sifreliSifre = GenelHelper.CreateSHA512(sifre);
+                            eskiUser.Sifre = sifreliSifre;
+                            context.tblKullanicilar.Add(eskiUser);
+                            m = new Mesaj("tamam", "Kullanıcı Kaydı Eklenmiştir.");
+                            context.SaveChanges();
+
+                            bool giriseAcildi = GiriseAcmaYarat(eskiUser);
+                            bool sifreDegisme = SifreDegismeYarat(eskiUser);
+
+                        }
+                    }
+                    else
+                    {
+                        context.Entry(eskiUser).State = EntityState.Modified;
+                        m = new Mesaj("tamam", "Kullanıcı Kaydı Güncellenmiştir.");
+                    }
+
+                    try
+                    {
+                        context.SaveChanges();
+                        scope.Complete();
+                        //bool gonderildi = epostaGonder(eskiUser);               
+                    }
+                    catch (Exception e)
+                    {
+                        m = new Mesaj("hata", "Kullanıcı kaydı güncelleneMEdi");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    m = new Mesaj("hata", "Hata oluştu: " + GenelHelper.exceptionMesaji(ex));
                     mesajlar.Add(m);
                     Session["MESAJLAR"] = mesajlar;
-                    return View(yeniUser);
-                }
-                else
-                {
-                    string sifre = GenelHelper.sifreUret();
-                    mSifre = new Mesaj("bilgi", "Kullanıcı şifresi " + sifre);
-
-                    string sifreliSifre = GenelHelper.CreateSHA512(sifre);
-                    eskiUser.Sifre = sifreliSifre;
-                    context.tblKullanicilar.Add(eskiUser);
-                    m = new Mesaj("tamam", "Kullanıcı Kaydı Eklenmiştir.");
-
-                    bool giriseAcildi = GiriseAcmaYarat(eskiUser);
-                    bool sifreDegisme = SifreDegismeYarat(user);
-
                 }
             }
-            else
-            {
-                context.Entry(eskiUser).State = EntityState.Modified;
-                m = new Mesaj("tamam", "Kullanıcı Kaydı Güncellenmiştir.");
-            }
-
-            try
-            {
-                context.SaveChanges();
-                //bool gonderildi = epostaGonder(eskiUser);               
-            }
-            catch (Exception e)
-            {
-                m = new Mesaj("hata", "Kullanıcı kaydı güncelleneMEdi");
-            }
-
 
             mesajlar.Add(m);
             if (mSifre != null)

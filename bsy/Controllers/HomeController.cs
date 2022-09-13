@@ -1,4 +1,5 @@
-﻿using System;
+﻿using bsy.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,8 @@ using System.Web.Mvc;
 
 namespace bsy.Controllers
 {
+    //[OturumAcikMI]
+    [Yetkili(Roles = "YONETICI")]
     public class HomeController : Controller
     {
         public ActionResult Index()

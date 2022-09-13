@@ -1,4 +1,5 @@
-﻿using bsy.Helpers;
+﻿using bsy.Filters;
+using bsy.Helpers;
 using bsy.Models;
 using bsy.ViewModels.Roller;
 using System;
@@ -11,6 +12,8 @@ using System.Web.Mvc;
 
 namespace bsy.Controllers
 {
+    //[OturumAcikMI]
+    [Yetkili(Roles = "YONETICI")]
     public class RollerController : Controller
     {
         bsyContext context = new bsyContext();
@@ -69,7 +72,7 @@ namespace bsy.Controllers
 
             //pageSize = 5;
             var query = (from k in context.tblKullanicilar
-                         join r in context.tblRoller on k.id equals r.userID into rlj
+                         join r in context.tblKullaniciRolleri on k.id equals r.userID into rlj
                          from re in rlj.DefaultIfEmpty()
                          where 
                             (k.eposta + "").Contains(eposta) ||
@@ -185,7 +188,7 @@ namespace bsy.Controllers
         private string[] KullaniciRolleri(long id)
         {
             string birlesikRolleri = "";
-            var mevcutRolleri = context.tblRoller.Find(id);
+            var mevcutRolleri = context.tblKullaniciRolleri.Find(id);
             if (mevcutRolleri != null)
             {
                 birlesikRolleri = mevcutRolleri.Rolleri;
@@ -208,10 +211,10 @@ namespace bsy.Controllers
                 return View(yeniRolleri);
             }
 
-            ROLLER eskiRolleri = context.tblRoller.Find(yeniRolleri.id);
+            KULLANICIROL eskiRolleri = context.tblKullaniciRolleri.Find(yeniRolleri.id);
             if (eskiRolleri == null)
             {
-                eskiRolleri = new ROLLER();
+                eskiRolleri = new KULLANICIROL();
             }
 
             string birlesikRoller = birlesikRolleri(yeniRolleri.Roller);
@@ -221,7 +224,7 @@ namespace bsy.Controllers
 
             if (eskiRolleri.id == 0)
             {
-                context.tblRoller.Add(eskiRolleri);
+                context.tblKullaniciRolleri.Add(eskiRolleri);
                 m = new Mesaj("tamam", "Rol Kaydı Eklenmiştir.");
             }
             else
@@ -286,7 +289,7 @@ namespace bsy.Controllers
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
-            ROLLER roller = context.tblRoller.Find(id);
+            KULLANICIROL roller = context.tblKullaniciRolleri.Find(id);
             context.Entry(roller).State = EntityState.Deleted;
 
             try

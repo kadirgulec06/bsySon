@@ -24,7 +24,7 @@ namespace bsy.Controllers
 
             List<Mesaj> mesajlar = new List<Mesaj>();
 
-            Session["USER"] = null;
+            //Session["USER"] = null;
             Session["layout"] = 0;
             Session["MESAJLAR"] = mesajlar;
 
@@ -35,6 +35,8 @@ namespace bsy.Controllers
             }
 
             LogIn li = new LogIn();
+            li.girisAktif = true;
+            li.mesaj = "Lütfen eposta ve şifrenizle giriş yapınız...";
 
             return View(li);
         }
@@ -52,6 +54,7 @@ namespace bsy.Controllers
             bool hakkiVar = GenelHelper.GirisHakkiVar(context, li);
             if (!hakkiVar)
             {
+                li.mesaj = "Sisteme Giriş yapma hakkınız kalmamış, sistem yöneticisine bilgi veriniz";
                 m = new Mesaj("hata", "Sisteme Giriş yapma hakkınız kalmamış");
                 mesajlar.Add(m);
                 Session["MESAJLAR"] = mesajlar;
@@ -68,6 +71,7 @@ namespace bsy.Controllers
             }
 
             m = new Mesaj("hata", "Kullanıcı Adı veya Şifresi Hatalı");
+            li.mesaj = "Kullanıcı Adı veya Şifresi Hatalı";
             mesajlar.Add(m);
             Session["MESAJLAR"] = mesajlar;
             return View(li);

@@ -11,6 +11,7 @@ using bsy.Models;
 
 namespace bsy.Controllers
 {
+    //[OturumAcikMI]
     [Yetkili(Roles = "YONETICI")]
     public class SozlukController : Controller
     {

@@ -15,5 +15,6 @@ namespace bsy.Models
         public string sifre { get; set; }
         public bool girisAktif { get; set; }
         public string ip { get; set; }
+        public string mesaj { get; set; }
     }
 }

@@ -70,7 +70,7 @@ namespace bsy.Helpers
             foreach (string menuRol in menuRolleri)//bu foreach kullanıcın menü elemanına yetkisi olup olmadığını kontrol ediyor
             {
                 //if (user.rolYetki.Rol.Contains(menuRol))
-                if (user.menuRolleri.Contains(menuRol))
+                if (user.Roller.Contains(menuRol))
                 {
                     cnt = true;
                     break;

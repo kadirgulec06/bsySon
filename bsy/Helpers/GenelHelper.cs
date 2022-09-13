@@ -204,5 +204,18 @@ namespace bsy.Helpers
             return true;
         }
 
+        public static string exceptionMesaji(Exception ex)
+        {
+            string mesaj = ex.Message;
+            Exception ie = ex.InnerException;
+            while (ie != null)
+            {
+                mesaj = mesaj + "\\r\\n" + ie.Message;
+                ie = ie.InnerException;
+            }
+
+            return mesaj;
+        }
+
     }
 }

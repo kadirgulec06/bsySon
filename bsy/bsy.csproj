@@ -178,6 +178,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DenemeController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GirisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Models\bsyContext.cs" />
     <Compile Include="Models\BSYMENUSU.cs" />
     <Compile Include="Models\DENEME.cs" />
+    <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\GIRISDENEME.cs" />
     <Compile Include="Models\GIRISEACMA.cs" />
     <Compile Include="Models\KULLANICI.cs" />
@@ -379,6 +381,7 @@
     <Content Include="Views\Roller\Index.cshtml" />
     <Content Include="Views\Roller\YeniRolleri.cshtml" />
     <Content Include="Views\Giris\girisIndex.cshtml" />
+    <Content Include="Views\Error\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
