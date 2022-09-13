@@ -170,7 +170,7 @@ namespace bsy.Controllers
                         else
                         {
                             string sifre = GenelHelper.sifreUret();
-                            sifre = "123";
+                            sifre = "abc";
                             mSifre = new Mesaj("bilgi", "Kullanıcı şifresi " + sifre);
 
                             string sifreliSifre = GenelHelper.CreateSHA512(sifre);

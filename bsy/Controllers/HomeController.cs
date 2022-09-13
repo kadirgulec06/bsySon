@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace bsy.Controllers
 {
     //[OturumAcikMI]
-    [Yetkili(Roles = "YONETICI")]
+    [Yetkili(Roles = "YONETICI,SAHAGOREVLISI")]
     public class HomeController : Controller
     {
         public ActionResult Index()
