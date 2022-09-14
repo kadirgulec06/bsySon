@@ -473,6 +473,7 @@ namespace bsy.Controllers
             int pageSize = rows;
 
             var gdSonHata = from gdx in context.tblGirisDenemeleri
+                            join kx in context.tblKullanicilar on gdx.eposta equals kx.eposta
                             where gdx.Durum == false &&
                             (gdx.eposta + "").Contains(eposta)
                             group gdx by gdx.eposta into gdxGRP

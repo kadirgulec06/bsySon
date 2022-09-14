@@ -253,7 +253,8 @@ textarea {
 }
 
 .ui-jqgrid tr.ui-search-toolbar input {
-    background-color: white !important
+    background-color: white !important;
+    float: left;    
 }
 
 .ui-pager-control {
