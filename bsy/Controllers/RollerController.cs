@@ -282,9 +282,9 @@ namespace bsy.Controllers
             return eskiRolleri;
         }
         */
-        public ActionResult RolleriSil(int idSil)
+        public ActionResult RolleriSil(long idSil)
         {
-            int id = idSil;
+            long id = idSil;
 
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;

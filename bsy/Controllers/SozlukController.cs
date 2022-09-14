@@ -175,9 +175,9 @@ namespace bsy.Controllers
 
             return eskiSozluk;
         }
-        public ActionResult RolSil(int idSil)
+        public ActionResult RolSil(long idSil)
         {
-            int id = idSil;
+            long id = idSil;
 
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;

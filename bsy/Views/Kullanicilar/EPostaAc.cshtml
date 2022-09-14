@@ -37,7 +37,7 @@
             colModel:
             [
               { name: 'id', index: 'id', hidden: true, width: 100, sortable: false },
-              { name: 'EPOSTA', index: 'EPOSTA', width: 200, sortable: false },
+              { name: 'EPOSTA', index: 'EPOSTA', width: 200, sortable: false, search: true },
               { name: 'TARIH', index: 'TARIH', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
               { name: 'AC', index: 'AC', width: 50, align: 'left', sortable: false, formatter: hesapAcHazirla }
             ],
@@ -63,6 +63,8 @@
                     'ilkGiris': function () { return '@ViewBag.IlkGiris' }
                 }
         });
+
+        jQuery("#liste").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en', 'cn', 'nc'] });
 
         setGridGroupHeaders();
         gridCompleteOrtak("#liste", true);

@@ -272,9 +272,9 @@ namespace bsy.Controllers
 
             return eskiUser;
         }
-        public ActionResult KullaniciSil(int idSil)
+        public ActionResult KullaniciSil(long idSil)
         {
-            int id = idSil;
+            long id = idSil;
 
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
@@ -389,7 +389,6 @@ namespace bsy.Controllers
                       cell = new string[]
                       {
                                  k.id.ToString(),
-                                 k.eposta,
                                  k.ip,
                                  k.Tarih.ToShortDateString(),
                                  k.Ac.ToString()
@@ -400,9 +399,9 @@ namespace bsy.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult IPHesabiAc(int idAc)
+        public ActionResult IPHesabiAc(long idAc)
         {
-            int id = idAc;
+            long id = idAc;
 
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
@@ -482,17 +481,17 @@ namespace bsy.Controllers
             var gdsHataAcmali = (from gdy in gdSonHata
                                  join iax in context.tblEPostaAcma on gdy.eposta equals iax.eposta
                                  where iax.Tarih > gdy.Tarih
-                                 select gdy.ip).ToList();
+                                 select gdy.eposta).ToList();
 
             gdSonHata = from gdz in gdSonHata
-                        where !gdsHataAcmali.Contains(gdz.ip)
+                        where !gdsHataAcmali.Contains(gdz.eposta)
                         select gdz;
 
 
             int totalRecords = gdSonHata.Count();
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
-            var resultSetAfterOrderandPaging = gdSonHata.OrderBy("Tarih desc, ip").Skip(pageIndex * pageSize).Take(pageSize);
+            var resultSetAfterOrderandPaging = gdSonHata.OrderBy("Tarih desc, Eposta").Skip(pageIndex * pageSize).Take(pageSize);
 
             var resultSet = (from k in resultSetAfterOrderandPaging
                              select new
@@ -530,9 +529,9 @@ namespace bsy.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult EPostaHesabiAc(int idAc)
+        public ActionResult EPostaHesabiAc(long idAc)
         {
-            int id = idAc;
+            long id = idAc;
 
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
