@@ -192,7 +192,8 @@ namespace bsy.Models
         public DbSet<ROLLER> tblRoller { get; set; }
         public DbSet<GIRISDENEME> tblGirisDenemeleri { get; set; }
         public DbSet<SIFREDEGISME> tblSifreDegisme { get; set; }
-        public DbSet<GIRISEACMA> tblGiriseAcma { get; set; }
+        public DbSet<EPOSTAACMA> tblEPostaAcma { get; set; }
+        public DbSet<IPACMA> tblIPAcma { get; set; }
         public DbSet<KULLANICIROL> tblKullaniciRolleri { get; set; }
 
         /*
@@ -266,7 +267,8 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new SozlukConfiguration());
             modelBuilder.Configurations.Add(new KullaniciConfiguration());
             modelBuilder.Configurations.Add(new RollerConfiguration());
-            modelBuilder.Configurations.Add(new GiriseAcmaConfiguration());
+            modelBuilder.Configurations.Add(new EPostaAcmaConfiguration());
+            modelBuilder.Configurations.Add(new IPAcmaConfiguration());
             modelBuilder.Configurations.Add(new GirisDenemeleriConfiguration());
             modelBuilder.Configurations.Add(new SifreDegismeConfiguration());
             modelBuilder.Configurations.Add(new KullaniciRolleriConfiguration());
@@ -328,16 +330,28 @@ namespace bsy.Models
             }
         }
 
-        public class GiriseAcmaConfiguration : EntityTypeConfiguration<GIRISEACMA>
+        public class EPostaAcmaConfiguration : EntityTypeConfiguration<EPOSTAACMA>
         {
-            public GiriseAcmaConfiguration()
+            public EPostaAcmaConfiguration()
                 : base()
             {
                 HasKey(p => p.id);
                 Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-                ToTable("GiriseAcma");
+                ToTable("EPostaAcma");
             }
         }
+
+        public class IPAcmaConfiguration : EntityTypeConfiguration<IPACMA>
+        {
+            public IPAcmaConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("IPAcma");
+            }
+        }
+
         public class GirisDenemeleriConfiguration : EntityTypeConfiguration<GIRISDENEME>
         {
             public GirisDenemeleriConfiguration()

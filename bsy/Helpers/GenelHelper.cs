@@ -148,21 +148,29 @@ namespace bsy.Helpers
 
         public static bool GirisHakkiVar(bsyContext ctx, LogIn li)
         {
-            DateTime sonAcmaTarihi = SonAcmaTarihi(ctx, li.ip);
-            DateTime sonGirisTarihi = SonGirisTarihi(ctx, li.ip);
+            DateTime ipSonAcmaTarihi = SonAcmaTarihiIP(ctx, li.ip);
+            DateTime ipSonGirisTarihi = SonGirisTarihiIP(ctx, li.ip);
 
-            int denemeSayisi = (from gdx in ctx.tblGirisDenemeleri
+            DateTime epostaSonAcmaTarihi = SonAcmaTarihiEPosta(ctx, li.userName);
+            DateTime epostaSonGirisTarihi = SonGirisTarihiEPosta(ctx, li.userName);
+
+            int ipDenemeSayisi = (from gdx in ctx.tblGirisDenemeleri
                                 where gdx.ip == li.ip && gdx.Durum == false &&
-                                gdx.Tarih > sonAcmaTarihi && gdx.Tarih > sonGirisTarihi
+                                gdx.Tarih > ipSonAcmaTarihi && gdx.Tarih > ipSonGirisTarihi
                                 select gdx).Count();
 
-            return denemeSayisi < SabitlerHelper.maxGirisDenemesi;
+            int epostaDenemeSayisi = (from gdx in ctx.tblGirisDenemeleri
+                                  where gdx.eposta == li.userName && gdx.Durum == false &&
+                                  gdx.Tarih > epostaSonAcmaTarihi && gdx.Tarih > epostaSonGirisTarihi
+                                  select gdx).Count();
+
+            return ipDenemeSayisi <= SabitlerHelper.maxGirisDenemesi && epostaDenemeSayisi <= SabitlerHelper.maxGirisDenemesi; ;
 
         }
 
-        public static DateTime SonAcmaTarihi(bsyContext ctx, string ip)
+        public static DateTime SonAcmaTarihiIP(bsyContext ctx, string ip)
         {
-            GIRISEACMA sonAcma = (from gax in ctx.tblGiriseAcma
+            IPACMA sonAcma = (from gax in ctx.tblIPAcma
                                   where gax.ip == ip
                                   select gax).OrderByDescending(i => i.Tarih).FirstOrDefault();
 
@@ -175,11 +183,41 @@ namespace bsy.Helpers
             return sonAcmaTarihi;
         }
 
-        public static DateTime SonGirisTarihi(bsyContext ctx, string ip)
+        public static DateTime SonGirisTarihiIP(bsyContext ctx, string ip)
         {
             GIRISDENEME sonGiris = (from gdx in ctx.tblGirisDenemeleri
                                   where gdx.ip == ip && gdx.Durum == true
                                   select gdx).OrderByDescending(i => i.Tarih).FirstOrDefault();
+
+            DateTime sonGirisTarihi = new DateTime(2001, 01, 01);
+            if (sonGiris != null)
+            {
+                sonGirisTarihi = sonGiris.Tarih;
+            }
+
+            return sonGirisTarihi;
+        }
+
+        public static DateTime SonAcmaTarihiEPosta(bsyContext ctx, string eposta)
+        {
+            EPOSTAACMA sonAcma = (from gax in ctx.tblEPostaAcma
+                                  where gax.eposta == eposta
+                                  select gax).OrderByDescending(i => i.Tarih).FirstOrDefault();
+
+            DateTime sonAcmaTarihi = new DateTime(2001, 01, 01);
+            if (sonAcma != null)
+            {
+                sonAcmaTarihi = sonAcma.Tarih;
+            }
+
+            return sonAcmaTarihi;
+        }
+
+        public static DateTime SonGirisTarihiEPosta(bsyContext ctx, string eposta)
+        {
+            GIRISDENEME sonGiris = (from gdx in ctx.tblGirisDenemeleri
+                                    where gdx.eposta == eposta && gdx.Durum == true
+                                    select gdx).OrderByDescending(i => i.Tarih).FirstOrDefault();
 
             DateTime sonGirisTarihi = new DateTime(2001, 01, 01);
             if (sonGiris != null)

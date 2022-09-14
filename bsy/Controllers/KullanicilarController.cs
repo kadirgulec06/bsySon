@@ -224,15 +224,14 @@ namespace bsy.Controllers
 
         private bool GiriseAcmaYarat(KULLANICI user)
         {
-            GIRISEACMA ga = new GIRISEACMA();
+            EPOSTAACMA ga = new EPOSTAACMA();
 
             ga.Aciklama = "İlk kayıt";
             ga.id = 0;
             ga.eposta = user.eposta;
-            ga.ip = "";
             ga.Tarih = user.KayitTarihi;
 
-            context.tblGiriseAcma.Add(ga);
+            context.tblEPostaAcma.Add(ga);
             return true;
         }
 
@@ -299,5 +298,273 @@ namespace bsy.Controllers
             Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kullanicilar/Index", false);
             return Content("OK");
         }
+
+        public ActionResult IPAc()
+        {
+            ViewBag.IlkGiris = 1;
+
+            return View();
+        }
+
+        public ActionResult ListeKapaliIP(string sidx, string sord, int page, int rows, byte ilkGiris = 0)
+        {
+            // filtre parametrelerini hazırla
+
+            string eposta = "";
+            string ip = "";
+            if (Request.Params["_search"] == "true")
+            {
+                if (Request.Params["EPOSTA"] != null)
+                {
+                    eposta = Request.Params["EPOSTA"];
+                }
+
+                if (Request.Params["IP"] != null)
+                {
+                    ip = Request.Params["IP"];
+                }
+            }
+
+            int rapor = 2;
+            if (rapor == 0)
+            {
+                Session["filtreEPOSTA"] = eposta.ToUpper();
+                Session["filtreIP"] = ip.ToUpper();
+            }
+            else if (rapor == 1)
+            {
+                eposta = (string)Session["filtreEPOSTA"];
+                ip = (string)Session["filtreIP"];
+            }
+
+            int pageIndex = Convert.ToInt32(page) - 1;
+
+            int pageSize = rows;
+
+            var gdSonHata = from gdx in context.tblGirisDenemeleri
+                            where gdx.Durum == false &&
+                            ((gdx.eposta + "").Contains(eposta) || (gdx.ip + "").Contains(ip))
+                            group gdx by gdx.ip into gdxGRP
+                            select gdxGRP.OrderByDescending(gx => gx.Tarih).FirstOrDefault();
+
+            var gdsHataAcmali = (from gdy in gdSonHata
+                                 join iax in context.tblIPAcma on gdy.ip equals iax.ip
+                                 where iax.Tarih > gdy.Tarih
+                                 select gdy.ip).ToList();
+
+            gdSonHata = from gdz in gdSonHata
+                        where !gdsHataAcmali.Contains(gdz.ip)
+                        select gdz;
+
+
+            int totalRecords = gdSonHata.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            var resultSetAfterOrderandPaging = gdSonHata.OrderBy("Tarih desc, ip").Skip(pageIndex * pageSize).Take(pageSize);
+
+            var resultSet = (from k in resultSetAfterOrderandPaging
+                             select new
+                             {
+                                 k.id,
+                                 k.eposta,
+                                 k.ip,
+                                 k.Tarih,
+                                 Ac = 0
+                             }).ToList();
+
+
+            //int totalRecords = resultSet.Count();
+            //int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            //Data to sent grid
+            var jsonData = new
+            {
+                total = totalPages, //todo: calculate
+                page = page,
+                records = totalRecords,
+                rows = (
+                  from k in resultSet
+                  select new
+                  {
+                      cell = new string[]
+                      {
+                                 k.id.ToString(),
+                                 k.eposta,
+                                 k.ip,
+                                 k.Tarih.ToShortDateString(),
+                                 k.Ac.ToString()
+                       }
+                  }).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult IPHesabiAc(int idAc)
+        {
+            int id = idAc;
+
+            List<Mesaj> mesajlar = new List<Mesaj>();
+            Mesaj m = null;
+
+            GIRISDENEME gd = context.tblGirisDenemeleri.Find(id);
+            IPACMA ipa = new IPACMA();
+
+            User user = (User)Session["USER"];
+
+            ipa.Aciklama = user.AdSoyad + " tarafından girişlere açıldı";
+            ipa.id = 0;
+            ipa.ip = gd.ip;
+            ipa.Tarih = DateTime.Now;
+
+            context.tblIPAcma.Add(ipa);
+
+            try
+            {
+                context.SaveChanges();
+                m = new Mesaj("tamam", "IP Hesabı girişlere açılmıştır");
+            }
+            catch (Exception e)
+            {
+                m = new Mesaj("hata", "IP Hesabı açılamadı:" + GenelHelper.exceptionMesaji(e));
+            }
+
+            mesajlar.Add(m);
+            Session["MESAJLAR"] = mesajlar;
+
+            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kullanicilar/IPAc", false);
+            return Content("OK");
+        }
+
+
+
+        public ActionResult EPostaAc()
+        {
+            ViewBag.IlkGiris = 1;
+
+            return View();
+        }
+
+        public ActionResult ListeKapaliEPosta(string sidx, string sord, int page, int rows, byte ilkGiris = 0)
+        {
+            // filtre parametrelerini hazırla
+
+            string eposta = "";
+            string ip = "";
+            if (Request.Params["_search"] == "true")
+            {
+                if (Request.Params["EPOSTA"] != null)
+                {
+                    eposta = Request.Params["EPOSTA"];
+                }
+            }
+
+            int rapor = 2;
+            if (rapor == 0)
+            {
+                Session["filtreEPOSTA"] = eposta.ToUpper();
+            }
+            else if (rapor == 1)
+            {
+                eposta = (string)Session["filtreEPOSTA"];
+            }
+
+            int pageIndex = Convert.ToInt32(page) - 1;
+
+            int pageSize = rows;
+
+            var gdSonHata = from gdx in context.tblGirisDenemeleri
+                            where gdx.Durum == false &&
+                            (gdx.eposta + "").Contains(eposta)
+                            group gdx by gdx.eposta into gdxGRP
+                            select gdxGRP.OrderByDescending(gx => gx.Tarih).FirstOrDefault();
+
+            var gdsHataAcmali = (from gdy in gdSonHata
+                                 join iax in context.tblEPostaAcma on gdy.eposta equals iax.eposta
+                                 where iax.Tarih > gdy.Tarih
+                                 select gdy.ip).ToList();
+
+            gdSonHata = from gdz in gdSonHata
+                        where !gdsHataAcmali.Contains(gdz.ip)
+                        select gdz;
+
+
+            int totalRecords = gdSonHata.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            var resultSetAfterOrderandPaging = gdSonHata.OrderBy("Tarih desc, ip").Skip(pageIndex * pageSize).Take(pageSize);
+
+            var resultSet = (from k in resultSetAfterOrderandPaging
+                             select new
+                             {
+                                 k.id,
+                                 k.eposta,
+                                 k.Tarih,
+                                 Ac = 0
+                             }).ToList();
+
+
+            //int totalRecords = resultSet.Count();
+            //int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            //Data to sent grid
+            var jsonData = new
+            {
+                total = totalPages, //todo: calculate
+                page = page,
+                records = totalRecords,
+                rows = (
+                  from k in resultSet
+                  select new
+                  {
+                      cell = new string[]
+                      {
+                                 k.id.ToString(),
+                                 k.eposta,
+                                 k.Tarih.ToShortDateString(),
+                                 k.Ac.ToString()
+                       }
+                  }).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EPostaHesabiAc(int idAc)
+        {
+            int id = idAc;
+
+            List<Mesaj> mesajlar = new List<Mesaj>();
+            Mesaj m = null;
+
+            GIRISDENEME gd = context.tblGirisDenemeleri.Find(id);
+            EPOSTAACMA ipa = new EPOSTAACMA();
+
+            User user = (User)Session["USER"];
+
+            ipa.Aciklama = user.AdSoyad + " tarafından girişlere açıldı";
+            ipa.id = 0;
+            ipa.eposta = gd.eposta;
+            ipa.Tarih = DateTime.Now;
+
+            context.tblEPostaAcma.Add(ipa);
+
+            try
+            {
+                context.SaveChanges();
+                m = new Mesaj("tamam", "EPosta Hesabı girişlere açılmıştır");
+            }
+            catch (Exception e)
+            {
+                m = new Mesaj("hata", "EPosta Hesabı açılamadı:" + GenelHelper.exceptionMesaji(e));
+            }
+
+            mesajlar.Add(m);
+            Session["MESAJLAR"] = mesajlar;
+
+            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kullanicilar/EPostaAc", false);
+            return Content("OK");
+        }
+
     }
 }

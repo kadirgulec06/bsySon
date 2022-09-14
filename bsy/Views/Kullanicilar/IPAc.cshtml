@@ -1,0 +1,84 @@
+﻿<script type="text/javascript">
+
+    $(window).bind('resize', function () {
+        $("#liste").jqGrid('destroyGroupHeader');
+        $("#liste").setGridWidth($(window).width() * shrinkFaktor, true);
+        setGridGroupHeaders();
+    }).trigger('resize');
+
+    function setGridGroupHeaders()
+    {
+
+    }
+
+    function hesapAc(id) {
+        var agree = confirm("Hesabı açmak istediğinizden Emin misiniz?");
+        if (agree) {
+            var frm = document.getElementById("frmHesapAc");
+            document.getElementById("idAc").value = id;
+            frm.submit();
+        }
+        else
+            return false;
+    }
+
+    function hesapAcHazirla(cellvalue, options, rowObject) {
+        return "<a href='#' onclick=hesapAc(" + rowObject[0] + ");>Hesabı Aç</a>"
+    }
+
+    jQuery(document).ready(function () {
+
+        jQuery("#liste").jqGrid({ //hangi tablo onun id si
+            url: '@Url.Action("ListeKapaliIP", "Kullanicilar")', //ilki action ikincisi controller
+            datatype: 'json',
+            mtype: 'POST',
+            autowidth: true,
+            colNames: ['id', 'ip', 'Tarih', 'Aç'],
+            colModel:
+            [
+              { name: 'id', index: 'id', hidden: true, width: 100, sortable: false },
+              { name: 'IP', index: 'IP', width: 100, sortable: false },
+              { name: 'TARIH', index: 'TARIH', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
+              { name: 'AC', index: 'AC', width: 50, align: 'left', sortable: false, formatter: hesapAcHazirla }
+            ],
+            gridComplete: function ()
+            {
+                //alert("girdi");
+                gridCompleteOrtak("#liste", true);
+            },
+            shrinkToFit: true,
+            autowidth: true,
+            altRows: true,
+            altclass: "myAltRowClass",
+            toppager: true,
+            rowNum: 30,
+            rowList: [5, 10, 15, 20, 30],
+            sortname: 'AD',
+            sortorder: "asc",
+            viewrecords: true,
+            height: '100%',
+            caption: 'Başarısız Giriş Denemeleri',
+            postData:
+                {
+                    'ilkGiris': function () { return '@ViewBag.IlkGiris' }
+                }
+        });
+
+        setGridGroupHeaders();
+        gridCompleteOrtak("#liste", true);
+
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        @*$('#liste').jqGrid('setGridWidth', '1000');*@
+    });
+</script>
+
+<table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+<form method="post" hidden="hidden" action="@Url.Action("IPHesabiAc", "Kullanicilar")" id="frmHesapAc">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="idAc" name="idAc" value="" hidden="hidden" />
+    </div>
+</form>

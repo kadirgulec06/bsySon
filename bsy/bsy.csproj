@@ -200,7 +200,8 @@
     <Compile Include="Models\DENEME.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\GIRISDENEME.cs" />
-    <Compile Include="Models\GIRISEACMA.cs" />
+    <Compile Include="Models\EPOSTAACMA.cs" />
+    <Compile Include="Models\IPACMA.cs" />
     <Compile Include="Models\KULLANICI.cs" />
     <Compile Include="Models\KULLANICIROL.cs" />
     <Compile Include="Models\LogIn.cs" />
@@ -382,6 +383,8 @@
     <Content Include="Views\Roller\YeniRolleri.cshtml" />
     <Content Include="Views\Giris\girisIndex.cshtml" />
     <Content Include="Views\Error\Details.cshtml" />
+    <Content Include="Views\Kullanicilar\EPostaAc.cshtml" />
+    <Content Include="Views\Kullanicilar\IPAc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

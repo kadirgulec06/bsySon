@@ -208,7 +208,7 @@
                                             :
                                         </td>
                                         <td valign="baseline">
-                                            @Html.TextBoxFor(model => model.userName, new { Value = Model.userName, @class = "veri", size=100 })
+                                            @Html.TextBoxFor(model => model.userName, new { Value = Model.userName, @class = "veri", size=100, autocomplete="off" })
                                         </td>
                                     </tr>
                                     <tr>
@@ -221,11 +221,11 @@
                                         <td valign="baseline">
                                             @if (Model != null && Model.sifre != null)
                                             {
-                                                @Html.PasswordFor(model => model.sifre, new { @value = Model.sifre, @autocomplete = "off", @class = "veri", @id = "sifre" })
+                                                @Html.PasswordFor(model => model.sifre, new { @value = Model.sifre, autocomplete = "off", @class = "veri", @id = "sifre" })
                                             }
                                             else
                                             {
-                                                @Html.PasswordFor(model => model.sifre, new { @autocomplete = "off", @class = "veri", @id = "sifre" })
+                                                @Html.PasswordFor(model => model.sifre, new { autocomplete = "off", @class = "veri", @id = "sifre" })
                                             }
                                             &nbsp;&nbsp;
                                         </td>
@@ -242,10 +242,6 @@
                                             @if (Model.girisAktif)
                                             {
                                                 <input type="submit" name="btnSubmit" id="btnSubmit" value="Giriş Yap" class="genelButton" />
-                                            }
-                                            else
-                                            {
-                                                <input type="submit" name="btnSubmit" id="btnSubmit" value="Giriş Yap" class="genelButton" disabled="disabled" />
                                             }
                                         </td>
                                     </tr>

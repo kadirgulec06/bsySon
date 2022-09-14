@@ -51,8 +51,8 @@ namespace bsy.Controllers
 
             li.ip = HttpContext.Request.UserHostAddress;
 
-            bool hakkiVar = GenelHelper.GirisHakkiVar(context, li);
-            if (!hakkiVar)
+            li.girisAktif = GenelHelper.GirisHakkiVar(context, li);
+            if (!li.girisAktif)
             {
                 li.mesaj = "Sisteme Giriş yapma hakkınız kalmamış, sistem yöneticisine bilgi veriniz";
                 m = new Mesaj("hata", "Sisteme Giriş yapma hakkınız kalmamış");

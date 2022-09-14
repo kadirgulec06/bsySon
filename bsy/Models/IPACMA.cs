@@ -6,12 +6,9 @@ using System.Web;
 
 namespace bsy.Models
 {
-    public class GIRISEACMA
+    public class IPACMA
     {
         public long id { get; set; }
-
-        [MaxLength(200)]
-        public string eposta { get; set; }
 
         [MaxLength(40)]
         public string ip { get; set; }
