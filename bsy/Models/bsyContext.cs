@@ -192,6 +192,7 @@ namespace bsy.Models
         public DbSet<ROLLER> tblRoller { get; set; }
         public DbSet<GIRISDENEME> tblGirisDenemeleri { get; set; }
         public DbSet<SIFREDEGISME> tblSifreDegisme { get; set; }
+        public DbSet<SIFRESIFIRLA> tblSifreSifirla { get; set; }
         public DbSet<EPOSTAACMA> tblEPostaAcma { get; set; }
         public DbSet<IPACMA> tblIPAcma { get; set; }
         public DbSet<KULLANICIROL> tblKullaniciRolleri { get; set; }
@@ -271,6 +272,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new IPAcmaConfiguration());
             modelBuilder.Configurations.Add(new GirisDenemeleriConfiguration());
             modelBuilder.Configurations.Add(new SifreDegismeConfiguration());
+            modelBuilder.Configurations.Add(new SifreSifirlaConfiguration());
             modelBuilder.Configurations.Add(new KullaniciRolleriConfiguration());
 
             base.OnModelCreating(modelBuilder);
@@ -372,6 +374,18 @@ namespace bsy.Models
                 ToTable("SifreDegisme");
             }
         }
+
+        public class SifreSifirlaConfiguration : EntityTypeConfiguration<SIFRESIFIRLA>
+        {
+            public SifreSifirlaConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("SifreSifirla");
+            }
+        }
+
         public class KullaniciRolleriConfiguration : EntityTypeConfiguration<KULLANICIROL>
         {
             public KullaniciRolleriConfiguration()

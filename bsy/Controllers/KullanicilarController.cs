@@ -57,6 +57,7 @@ namespace bsy.Controllers
                                  k.KayitTarihi,
                                  k.Durum,
                                  k.DurumTarihi,
+                                 SifreSifirla=0,
                                  Degistir = 0,
                                  Sil = 0
                              }).ToList();
@@ -86,6 +87,7 @@ namespace bsy.Controllers
                                  k.KayitTarihi.ToShortDateString(),
                                  k.Durum,
                                  k.DurumTarihi.ToShortDateString(),
+                                 k.SifreSifirla.ToString(),
                                  k.Degistir.ToString(),
                                  k.Sil.ToString()
                        }
@@ -150,6 +152,7 @@ namespace bsy.Controllers
                 eskiUser = new KULLANICI();
             }
 
+            string sifre = "";
             Mesaj mSifre = null;
             //yeniAO = YeniOzetHesapla(yeniAO, mao);
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -169,18 +172,18 @@ namespace bsy.Controllers
                         }
                         else
                         {
-                            string sifre = GenelHelper.sifreUret();
+                            sifre = SifreHelper.sifreUret();
                             sifre = "abc";
                             mSifre = new Mesaj("bilgi", "Kullanıcı şifresi " + sifre);
 
-                            string sifreliSifre = GenelHelper.CreateSHA512(sifre);
+                            string sifreliSifre = SifreHelper.CreateSHA512(sifre);
                             eskiUser.Sifre = sifreliSifre;
                             context.tblKullanicilar.Add(eskiUser);
                             m = new Mesaj("tamam", "Kullanıcı Kaydı Eklenmiştir.");
                             context.SaveChanges();
 
                             bool giriseAcildi = GiriseAcmaYarat(eskiUser);
-                            bool sifreDegisme = SifreDegismeYarat(eskiUser);
+                            bool sifreSifirlama = SifreHelper.SifreSifirlamaYarat(context, eskiUser.eposta, "İlk Kayıt");
 
                         }
                     }
@@ -194,6 +197,7 @@ namespace bsy.Controllers
                     {
                         context.SaveChanges();
                         scope.Complete();
+                        epostaGonder(eskiUser, sifre);
                         //bool gonderildi = epostaGonder(eskiUser);               
                     }
                     catch (Exception e)
@@ -235,24 +239,9 @@ namespace bsy.Controllers
             return true;
         }
 
-        private bool SifreDegismeYarat(KULLANICI user)
+        private bool epostaGonder(KULLANICI user, string sifre)
         {
-            SIFREDEGISME sd = new SIFREDEGISME();
-
-            sd.Aciklama = "İlk kayıt";
-            sd.id = 0;
-            sd.Tarih = user.KayitTarihi;
-            sd.userID = user.id;
-
-            context.tblSifreDegisme.Add(sd);
-            return true;
-        }
-
-        private bool epostaGonder(KULLANICI user)
-        {
-            string mesaj = "BYS Portalına kaydınız yapılmıştır, şifreniz 12345678";
-            string konu = "BYS Portalı Üyeliği";
-            bool gonderildi = GenelHelper.sendMail(user.eposta, user.Ad + " " + user.Soyad, konu, mesaj);
+            bool gonderildi =  SifreHelper.sifrePostasiGonder(context, user.eposta, sifre);
 
             return gonderildi;
         }
@@ -268,10 +257,12 @@ namespace bsy.Controllers
             eskiUser.Durum = yeniUser.Durum;
             eskiUser.DurumTarihi = yeniUser.DurumTarihi;
 
-            eskiUser.Sifre = GenelHelper.CreateSHA512("123456789");
+            eskiUser.Sifre = SifreHelper.CreateSHA512("123456789");
 
             return eskiUser;
         }
+
+        [ValidateAntiForgeryToken]
         public ActionResult KullaniciSil(long idSil)
         {
             long id = idSil;
@@ -298,7 +289,6 @@ namespace bsy.Controllers
             Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kullanicilar/Index", false);
             return Content("OK");
         }
-
         public ActionResult IPAc()
         {
             ViewBag.IlkGiris = 1;

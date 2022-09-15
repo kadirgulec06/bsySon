@@ -183,6 +183,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
     <Compile Include="Controllers\RollerController.cs" />
+    <Compile Include="Controllers\SifreController.cs" />
     <Compile Include="Controllers\SozlukController.cs" />
     <Compile Include="Filters\ortakGenelFiltre.cs" />
     <Compile Include="Filters\OturumAcikMI.cs" />
@@ -191,8 +192,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GenelHelper.cs" />
+    <Compile Include="Helpers\KullaniciHelper.cs" />
     <Compile Include="Helpers\MenuBuilder.cs" />
     <Compile Include="Helpers\SabitlerHelper.cs" />
+    <Compile Include="Helpers\SifreHelper.cs" />
     <Compile Include="Helpers\SozlukHelper.cs" />
     <Compile Include="Helpers\TCKimlikNoValidation.cs" />
     <Compile Include="Models\bsyContext.cs" />
@@ -210,16 +213,20 @@
     <Compile Include="Models\Mesaj.cs" />
     <Compile Include="Models\ROLLER.cs" />
     <Compile Include="Models\SIFREDEGISME.cs" />
+    <Compile Include="Models\SIFRESIFIRLA.cs" />
     <Compile Include="Models\SOZLUK.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Roller\RollerVM.cs" />
+    <Compile Include="ViewModels\Sifre\SifreDegisVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\girisIndex.css" />
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
@@ -286,6 +293,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -297,6 +305,11 @@
     <Content Include="images\uyari.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\commonScripts.js" />
     <Content Include="Scripts\i18n\grid.locale-ar.js" />
@@ -385,6 +398,7 @@
     <Content Include="Views\Error\Details.cshtml" />
     <Content Include="Views\Kullanicilar\EPostaAc.cshtml" />
     <Content Include="Views\Kullanicilar\IPAc.cshtml" />
+    <Content Include="Views\Sifre\SifreDegistir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

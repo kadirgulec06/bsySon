@@ -19,6 +19,22 @@
         frm.submit();
     }
 
+    function sifreSifirla(userID) {
+        var agree = confirm("Kullanıcı Şifresini Sıfırlamak İstediğinizden Emin misiniz?");
+        if (agree) {
+            var frm = document.getElementById("frmSifreSifirla");
+            document.getElementById("userID").value = userID;
+            frm.submit();
+        }
+        else
+            return false;
+    }
+
+    function sifreSifirlaHazirla(cellvalue, options, rowObject) {
+        return "<a href='#' onclick=sifreSifirla(" + rowObject[0] + ");>Sil</a>"
+    }
+
+
     function kullaniciSil(id) {
         var agree = confirm("Kullanıcı Kaydını Silmek İstediğinizden Emin misiniz?");
         if (agree) {
@@ -46,7 +62,7 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'EPosta', 'Adı', 'Soyadı', 'Telefonu', 'TC No', 'Kayıt Tarihi', 'Durumu', 'Durum Tarihi', 'Değiştir', 'Sil'],
+            colNames: ['id', 'EPosta', 'Adı', 'Soyadı', 'Telefonu', 'TC No', 'Kayıt Tarihi', 'Durumu', 'Durum Tarihi', 'Şifre Sıfırla', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 100, sortable: false },
@@ -58,6 +74,7 @@
               { name: 'KAYITTARIHI', index: 'KAYITTARIHI', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
               { name: 'DURUM', index: 'DURUM', width: 100, sortable: false },
               { name: 'DURUMTARIHI', index: 'DURUMTARIHI', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
+              { name: 'Sifirla', index: 'Sifirla', width: 50, align: 'left', sortable: false, formatter: sifreSifirlaHazirla },
               { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', sortable: false, formatter: kullaniciGunle },
               { name: 'Sil', index: 'Sil', width: 50, align: 'left', sortable: false, formatter: kullaniciSilHazirla }
             ],
@@ -106,5 +123,12 @@
     @Html.AntiForgeryToken()
     <div id="divIslem">
         <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />
+    </div>
+</form>
+
+<form method="post" hidden="hidden" action="@Url.Action("SifreSifirlaYonetici", "Sifre")" id="frmSifreSifirla">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="userID" name="userID" value="" hidden="hidden" />
     </div>
 </form>

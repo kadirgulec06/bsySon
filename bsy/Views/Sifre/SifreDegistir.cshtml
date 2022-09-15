@@ -1,0 +1,135 @@
+﻿@model bsy.ViewModels.SifreDegisVM
+@{
+    ViewBag.Title = "Şifre Değiştirme";
+}
+<style>
+</style>
+
+<script src="~/Scripts/spk-scripts.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        /*
+        izinGorev = document.getElementById('IzinGorev').value;
+        */
+    });
+
+    function SifreDegistirClickHandler() {
+        //document.getElementById("SicilNo").removeAttribute('disabled');
+
+        return true;
+
+    }
+
+        function showPassword() {
+            //alert("giriyor");
+            showHidePassword("eskiSifre");
+            showHidePassword("yeniSifre");
+            showHidePassword("yeniSifreTekrar");
+        }
+</script>
+
+@using (Html.BeginForm("SifreDegistir", "Sifre", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => Model.userID)
+
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style cerceveKucuk">
+            <table>
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.eposta)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.eposta, new { @size = 120 })
+                        @Html.ValidationMessageFor(model => model.eposta)
+                    </td>
+                </tr>
+
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.AdSoyad)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.AdSoyad)
+                        @Html.ValidationMessageFor(model => model.AdSoyad)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <h3>Şifreler</h3>
+        <fieldset class="field_style cerceveKucuk">
+            <table id="sifrelerTablosu">
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.eskiSifre)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.PasswordFor(model => model.eskiSifre, new { @id = "eskiSifre", @size = 120 })
+                        @Html.ValidationMessageFor(model => model.eskiSifre)
+                    </td>
+                    <td align="left">
+                        <div style="padding-bottom:5px;">
+                            <span><img id="tcGoster" src="~/images/show-password-icon.png" cursor:grab" alt="Göster" width="30px" height="33px" onclick="showPassword();"></span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.yeniSifre)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.PasswordFor(model => model.yeniSifre, new { @id = "yeniSifre" })
+                        @Html.ValidationMessageFor(model => model.yeniSifre)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.yeniSifreTekrar)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.PasswordFor(model => model.yeniSifreTekrar, new { @id = "yeniSifreTekrar" })
+                        @Html.ValidationMessageFor(model => model.yeniSifreTekrar)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <table>
+            <tr>
+                <td>
+                    <input type="submit" value="Değiştir" class="genelButton" name="btnSubmit" onclick="return SifreDegistirClickHandler();" />
+                    <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Home")'" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}

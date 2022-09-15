@@ -7,6 +7,7 @@ namespace bsy.Models
 {
     public class User
     {
+        public long id { get; set; }
         public string UserName { get; set; }
         public string KimlikNo { get; set; }
         public string AdSoyad { get; set; }

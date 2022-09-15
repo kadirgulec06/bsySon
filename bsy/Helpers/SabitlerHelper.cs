@@ -7,6 +7,7 @@ namespace bsy.Helpers
 {
     public static class SabitlerHelper
     {
-        public static int maxGirisDenemesi = 5; 
+        public static int maxGirisDenemesi = 5;
+        public static int sifreBoyuMin = 3;
     }
 }

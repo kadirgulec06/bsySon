@@ -51,7 +51,7 @@ namespace bsy.Controllers
 
             li.ip = HttpContext.Request.UserHostAddress;
 
-            li.girisAktif = GenelHelper.GirisHakkiVar(context, li);
+            li.girisAktif = KullaniciHelper.GirisHakkiVar(context, li);
             if (!li.girisAktif)
             {
                 li.mesaj = "Sisteme Giriş yapma hakkınız kalmamış, sistem yöneticisine bilgi veriniz";
@@ -61,11 +61,12 @@ namespace bsy.Controllers
                 return View(li);
             }
 
-            bool sifreDogru = KullaniciSifreDogruMU(li);
+            bool sifreDogru = SifreHelper.GirisSifresiDogruMU(context, li);
             context.SaveChanges();
             if (sifreDogru)
             {
-                Session["USER"] = GenelHelper.KullaniciBilgileri(context, li);
+                Session["USER"] = KullaniciHelper.KullaniciBilgileri(context, li);
+                Session["SifreDegistir"] = 1;
                 Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Home/Index", false);
                 return Content("OK");
             }
@@ -76,24 +77,6 @@ namespace bsy.Controllers
             Session["MESAJLAR"] = mesajlar;
             return View(li);
 
-        }
-
-        private bool KullaniciSifreDogruMU(LogIn li)
-        {
-            string sifreliSifre = GenelHelper.CreateSHA512(li.sifre);
-            var user = (from ux in context.tblKullanicilar
-                        where ux.eposta == li.userName
-                        select ux).FirstOrDefault();
-
-            bool denemeKaydedildi = false;
-            if (user == null || sifreliSifre != user.Sifre)
-            {
-                denemeKaydedildi = GenelHelper.DenemeKaydet(context, li, false);
-                return false;
-            }
-
-            denemeKaydedildi = GenelHelper.DenemeKaydet(context, li, true);
-            return true;
         }
         private User sabitKullanici()
         {
