@@ -75,7 +75,7 @@ namespace bsy.Helpers
                                       gdx.Tarih > epostaSonAcmaTarihi && gdx.Tarih > epostaSonGirisTarihi
                                       select gdx).Count();
 
-            return ipDenemeSayisi <= SabitlerHelper.maxGirisDenemesi && epostaDenemeSayisi <= SabitlerHelper.maxGirisDenemesi; ;
+            return ipDenemeSayisi <= SabitlerHelper.maxIpDenemesi && epostaDenemeSayisi <= SabitlerHelper.maxGirisDenemesi; ;
 
         }
 
