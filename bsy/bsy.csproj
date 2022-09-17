@@ -181,6 +181,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GirisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IlceController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
     <Compile Include="Controllers\RollerController.cs" />
     <Compile Include="Controllers\SifreController.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\GIRISDENEME.cs" />
     <Compile Include="Models\EPOSTAACMA.cs" />
+    <Compile Include="Models\ILCE.cs" />
     <Compile Include="Models\IPACMA.cs" />
     <Compile Include="Models\KULLANICI.cs" />
     <Compile Include="Models\KULLANICIROL.cs" />
@@ -217,6 +219,7 @@
     <Compile Include="Models\SOZLUK.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Ilce\IlceVM.cs" />
     <Compile Include="ViewModels\Roller\RollerVM.cs" />
     <Compile Include="ViewModels\Sifre\SifreDegisVM.cs" />
   </ItemGroup>
@@ -401,6 +404,8 @@
     <Content Include="Views\Sifre\SifreDegistir.cshtml" />
     <Content Include="Views\Sozluk\Sehir.cshtml" />
     <Content Include="Views\Sozluk\YeniSehir.cshtml" />
+    <Content Include="Views\Ilce\Index.cshtml" />
+    <Content Include="Views\Ilce\YeniIlce.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -196,6 +196,7 @@ namespace bsy.Models
         public DbSet<EPOSTAACMA> tblEPostaAcma { get; set; }
         public DbSet<IPACMA> tblIPAcma { get; set; }
         public DbSet<KULLANICIROL> tblKullaniciRolleri { get; set; }
+        public DbSet<ILCE> tblIlceler { get; set; }
 
         /*
         public override int SaveChanges()
@@ -274,6 +275,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new SifreDegismeConfiguration());
             modelBuilder.Configurations.Add(new SifreSifirlaConfiguration());
             modelBuilder.Configurations.Add(new KullaniciRolleriConfiguration());
+            modelBuilder.Configurations.Add(new IlcelerConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -394,6 +396,16 @@ namespace bsy.Models
                 HasKey(p => p.id);
                 Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 ToTable("KullaniciRolleri");
+            }
+        }
+
+        public class IlcelerConfiguration : EntityTypeConfiguration<ILCE>
+        {
+            public IlcelerConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                ToTable("Ilceler");
             }
         }
 

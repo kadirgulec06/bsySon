@@ -8,6 +8,12 @@ namespace bsy.Models
 {
     public class LogIn
     {
+        public LogIn()
+        {
+            userName = "kgulec@spk.gov.tr";
+            sifre = "123";
+        }
+
         [Display(Name="EPosta Adresi")]
         public string userName { get; set; }
 
