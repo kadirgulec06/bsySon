@@ -4,7 +4,7 @@
 
 </script>
 
-@using (Html.BeginForm("YeniRol", "Sozluk", FormMethod.Post))
+@using (Html.BeginForm("YeniSehir", "Sozluk", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -29,18 +29,18 @@
                 </tr>
                 <tr>
                     <td class="genelLabel etiket uzun">
-                        Rol Kodu
+                        Şehir Kodu
                     </td>
                     <td class="genelIkiNoktaLabel">
                         :
                     </td>
                     <td>
-                        @Html.TextBoxFor(model => model.Kodu, new { Value = Model.Kodu, @class = "veri", @disabled = "disabled" })
+                        @Html.TextBoxFor(model => model.Kodu, new { Value = Model.Kodu, @class = "veri" })
                     </td>
                 </tr>
                 <tr>
                     <td class="genelLabel etiket uzun">
-                        Rol Adı
+                        Şehir Adı
                     </td>
                     <td class="genelIkiNoktaLabel">
                         :
@@ -54,7 +54,7 @@
                     <td class="genelIkiNoktaLabel"></td>
                     <td>
                         <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" />
-                        <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Rol", "Sozluk")'" />
+                        <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Sehir", "Sozluk")'" />
                     </td>
                 </tr>
 

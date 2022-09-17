@@ -10,5 +10,6 @@ namespace bsy.Helpers
         public static int maxIpDenemesi = 100;
         public static int maxGirisDenemesi = 5;
         public static int sifreBoyuMin = 3;
+        public static int SozlukKodBoyu = 12;
     }
 }

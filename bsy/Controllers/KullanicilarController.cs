@@ -154,6 +154,8 @@ namespace bsy.Controllers
 
             string sifre = "";
             Mesaj mSifre = null;
+            bool yeniKullanici = false;
+            bool kaydedildi = true;
             //yeniAO = YeniOzetHesapla(yeniAO, mao);
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
             {
@@ -162,6 +164,7 @@ namespace bsy.Controllers
                     eskiUser = UserYeniToEski(eskiUser, yeniUser);
                     if (eskiUser.id == 0)
                     {
+                        yeniKullanici = true;
                         KULLANICI user = context.tblKullanicilar.Where(kx => kx.eposta == eskiUser.eposta).FirstOrDefault();
                         if (user != null)
                         {
@@ -196,21 +199,27 @@ namespace bsy.Controllers
                     try
                     {
                         context.SaveChanges();
-                        scope.Complete();
-                        epostaGonder(eskiUser, sifre);
+                        scope.Complete();                        
                         //bool gonderildi = epostaGonder(eskiUser);               
                     }
                     catch (Exception e)
                     {
-                        m = new Mesaj("hata", "Kullanıcı kaydı güncelleneMEdi");
+                        kaydedildi = false;
+                        m = new Mesaj("hata", "Kullanıcı kaydı güncelleneMEdi=>" + GenelHelper.exceptionMesaji(e));
                     }
                 }
                 catch (Exception ex)
                 {
+                    kaydedildi = false;
                     m = new Mesaj("hata", "Hata oluştu: " + GenelHelper.exceptionMesaji(ex));
                     mesajlar.Add(m);
                     Session["MESAJLAR"] = mesajlar;
                 }
+            }
+
+            if (yeniKullanici && kaydedildi)
+            {
+                epostaGonder(eskiUser, sifre);
             }
 
             mesajlar.Add(m);
@@ -254,7 +263,7 @@ namespace bsy.Controllers
             eskiUser.Telefon = yeniUser.Telefon;
             eskiUser.KimlikNo = yeniUser.KimlikNo;
             eskiUser.KayitTarihi = yeniUser.KayitTarihi;
-            eskiUser.Durum = yeniUser.Durum;
+            eskiUser.Durum = "A"; // yeniUser.Durum;
             eskiUser.DurumTarihi = yeniUser.DurumTarihi;
 
             eskiUser.Sifre = SifreHelper.CreateSHA512("123456789");

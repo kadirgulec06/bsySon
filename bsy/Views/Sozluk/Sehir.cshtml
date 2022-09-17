@@ -1,5 +1,4 @@
-﻿
-<script type="text/javascript">
+﻿<script type="text/javascript">
 
     $(window).bind('resize', function () {
         $("#liste").jqGrid('destroyGroupHeader');
@@ -12,10 +11,10 @@
 
     }
 
-    function rolSil(id) {
-        var agree = confirm("Rol Kaydını Silmek İstediğinizden Emin misiniz?");
+    function sehirSil(id) {
+        var agree = confirm("Şehir Kaydını Silmek İstediğinizden Emin misiniz?");
         if (agree) {
-            var frm = document.getElementById("frmRolSil");
+            var frm = document.getElementById("frmSehirSil");
             document.getElementById("idSil").value = id;
             frm.submit();
         }
@@ -23,35 +22,35 @@
             return false;
     }
 
-    function rolSilHazirla(cellvalue, options, rowObject) {
-        return "<a href='#' onclick=rolSil(" + rowObject[0] + ");>Sil</a>"
+    function sehirSilHazirla(cellvalue, options, rowObject) {
+        return "<a href='#' onclick=sehirSil(" + rowObject[0] + ");>Sil</a>"
     }
 
-    function rolGunle(cellvalue, options, rowObject)
+    function sehirGunle(cellvalue, options, rowObject)
     {
-        var link = "<a href='@Url.Action("YeniRol", "Sozluk")?id=" + rowObject[0] + "'>Değiştir</a>";
+        var link = "<a href='@Url.Action("YeniSehir", "Sozluk")?id=" + rowObject[0] + "'>Değiştir</a>";
         //alert(link);
         return link;
-        return "<a href='~/Sozluk/YeniRol?id=" + rowObject[0] + "'>Değiştir</a>";
+        return "<a href='~/Sozluk/YeniSehir?id=" + rowObject[0] + "'>Değiştir</a>";
     }
 
     jQuery(document).ready(function () {
 
         //alert("girdi");
         jQuery("#liste").jqGrid({ //hangi tablo onun id si
-            url: '@Url.Action("ListeRol", "Sozluk")', //ilki action ikincisi controller
+            url: '@Url.Action("ListeSehir", "Sozluk")', //ilki action ikincisi controller
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Türü', 'Kodu', 'Rol', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Türü', 'Kodu', 'Şehir', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 50, sortable: false },
               { name: 'TURU', index: 'TURU', hidden: true, width: 50, sortable: false },
-              { name: 'ROLKODU', index: 'ROLKODU', width: 50, sortable: false },
-              { name: 'ROL', index: 'ROL', width: 200, sortable: false },
-              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', sortable: false, formatter: rolGunle },
-              { name: 'Sil', index: 'Sil', width: 50, align: 'left', sortable: false, formatter: rolSilHazirla }
+              { name: 'SEHIRKODU', index: 'SEHIRKODU', width: 50, sortable: false },
+              { name: 'SEHIR', index: 'SEHIR', width: 200, sortable: false },
+              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', sortable: false, formatter: sehirGunle },
+              { name: 'Sil', index: 'Sil', width: 50, align: 'left', sortable: false, formatter: sehirSilHazirla }
             ],
             gridComplete: function ()
             {
@@ -69,7 +68,7 @@
             sortorder: "asc",
             viewrecords: true,
             height: '100%',
-            caption: 'Sistemde Tanımlı Roller',
+            caption: 'Sistemde Tanımlı Şehirler',
             postData:
                 {
                     'ilkGiris': function () { return '@ViewBag.IlkGiris' }
@@ -84,16 +83,16 @@
     });
 </script>
 
-<form method="get" action="@Url.Action("YeniRol", "Sozluk")" id="frmYeniRol">
+<form method="get" action="@Url.Action("YeniSehir", "Sozluk")" id="frmYeniSehir">
     <div id="divIslem">
-        <input type="submit" class="genelButtonOrta" value="Yeni Rol" />
+        <input type="submit" class="genelButtonOrta" value="Yeni Şehir" />
     </div>
 </form>
 
 <table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
 <div id="pager" class="scroll" style="text-align:center;"></div>
 
-<form method="post" hidden="hidden" action="@Url.Action("RolSil", "Sozluk")" id="frmRolSil">
+<form method="post" hidden="hidden" action="@Url.Action("SehirSil", "Sozluk")" id="frmSehirSil">
     @Html.AntiForgeryToken()
     <div id="divIslem">
         <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />

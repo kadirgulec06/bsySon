@@ -87,5 +87,20 @@ namespace bsy.Helpers
             return mesaj;
         }
 
+        public static string repeat(string metin, int tekrar)
+        {
+            if (tekrar <= 0)
+            {
+                return "";
+            }
+
+            string tekrarlanan = "";
+            for (int ix = 1;ix <= tekrar;ix++)
+            {
+                tekrarlanan = tekrarlanan + metin;
+            }
+
+            return tekrarlanan;
+        }
     }
 }

@@ -13,6 +13,9 @@ namespace bsy.Models
         [MaxLength(20)]
         public string Turu { get; set; }
 
+        [MaxLength(20)]
+        public string Kodu { get; set; }
+
         [MaxLength(400)]
         public string Aciklama { get; set; }
     }

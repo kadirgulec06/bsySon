@@ -52,6 +52,9 @@
 
     function kullaniciGunle(cellvalue, options, rowObject)
     {
+        var link = "<a href='@Url.Action("YeniKullanici", "Kullanicilar")?id=" + rowObject[0] + "'>Değiştir</a>";
+        return link;
+
         return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
     }
 
