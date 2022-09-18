@@ -220,3 +220,9 @@ C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\obj\Debug\bsy.csproj.CopyComplete
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\obj\Debug\bsy.dll
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\obj\Debug\bsy.pdb
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\obj\Debug\bsy.csprojAssemblyReference.cache
+C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\ICSharpCode.SharpZipLib.dll
+C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.dll
+C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.OOXML.dll
+C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.OpenXml4Net.dll
+C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.OpenXmlFormats.dll
+C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.xml
