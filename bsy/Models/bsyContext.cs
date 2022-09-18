@@ -196,6 +196,8 @@ namespace bsy.Models
         public DbSet<EPOSTAACMA> tblEPostaAcma { get; set; }
         public DbSet<IPACMA> tblIPAcma { get; set; }
         public DbSet<KULLANICIROL> tblKullaniciRolleri { get; set; }
+        public DbSet<BOLGE> tblBolgeler { get; set; }
+        public DbSet<SEHIR> tblSehirler { get; set; }
         public DbSet<ILCE> tblIlceler { get; set; }
         public DbSet<MAHALLE> tblMahalleler { get; set; }
 
@@ -276,6 +278,8 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new SifreDegismeConfiguration());
             modelBuilder.Configurations.Add(new SifreSifirlaConfiguration());
             modelBuilder.Configurations.Add(new KullaniciRolleriConfiguration());
+            modelBuilder.Configurations.Add(new BolgelerConfiguration());
+            modelBuilder.Configurations.Add(new SehirlerConfiguration());
             modelBuilder.Configurations.Add(new IlcelerConfiguration());
             modelBuilder.Configurations.Add(new MahallelerConfiguration());
 
@@ -398,6 +402,26 @@ namespace bsy.Models
                 HasKey(p => p.id);
                 Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 ToTable("KullaniciRolleri");
+            }
+        }
+
+        public class BolgelerConfiguration : EntityTypeConfiguration<BOLGE>
+        {
+            public BolgelerConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                ToTable("Bolgeler");
+            }
+        }
+
+        public class SehirlerConfiguration : EntityTypeConfiguration<SEHIR>
+        {
+            public SehirlerConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                ToTable("Sehirler");
             }
         }
 

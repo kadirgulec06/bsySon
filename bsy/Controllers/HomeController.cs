@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace bsy.Controllers
 {
-    //[OturumAcikMI]
+    [OturumAcikMI]
     [Yetkili(Roles = "YONETICI,SAHAGOREVLISI")]
     public class HomeController : Controller
     {

@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace bsy.Controllers
 {
-    //[OturumAcikMI]
+    [OturumAcikMI]
     [Yetkili(Roles = "YONETICI")]
     public class RollerController : Controller
     {

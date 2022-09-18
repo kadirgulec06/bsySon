@@ -10,6 +10,7 @@ namespace bsy.Helpers
     public static class SozlukHelper
     {
         public static string rolKodu = "ROL";
+        public static string bolgeKodu = "BOLGE";
         public static string sehirKodu = "SEHIR";
         public static string ilceKodu = "ILCE";
         public static string mahalleKodu = "MAHALLE";

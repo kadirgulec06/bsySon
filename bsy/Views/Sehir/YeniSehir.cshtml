@@ -1,0 +1,121 @@
+﻿@model bsy.ViewModels.Sehir.SehirVM
+@{
+    ViewBag.Title = "Sistem Şehirleri";
+}
+<style>
+</style>
+
+<script src="~/Scripts/spk-scripts.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function bolgeDegisti(control) {
+        return;
+        var bolge = control.value;
+        var frm = document.getElementById("frmSehirIndex");
+        document.getElementById("ilID").value = bolge;
+        frm.submit();
+    }
+
+    $(document).ready(function () {
+        /*
+        izinGorev = document.getElementById('IzinGorev').value;
+        */
+    });
+
+    function SehirClickHandler() {
+        //document.getElementById("SicilNo").removeAttribute('disabled');
+
+        return true;
+
+    }
+
+    function SehirSil() {
+        var agree = confirm("Şehri Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("YeniSehir", "Sehir", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => Model.sozluk.id)
+    @Html.HiddenFor(model => Model.sozluk.Turu)
+    @Html.HiddenFor(model => Model.sehir.id)
+
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style cerceveKucuk">
+            <table>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Bölge :
+                    </td>
+                    <td align="left">
+                        @Html.DropDownListFor(model => model.sehir.bolgeID, new SelectList(Model.bolgeler, "Value", "Text"), new { @style = "width:340px", @onchange = "bolgeDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.sehir.bolgeID)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <h3>Şehir Bilgileri</h3>
+        <fieldset class="field_style cerceveKucuk">
+            <table id="sehirTablosu">
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Şehir Kodu :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.sozluk.Kodu)
+                        @Html.ValidationMessageFor(model => model.sozluk.Kodu)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Şehir Adı :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.sozluk.Aciklama, new { @size = 80 })
+                        @Html.ValidationMessageFor(model => model.sozluk.Aciklama)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Şehir Bilgileri :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.sehir.Aciklama, new { @size = 120 })
+                        @Html.ValidationMessageFor(model => model.sehir.Aciklama)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <table>
+            <tr>
+                <td>
+                    <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return SehirClickHandler();" />
+                    <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Sehir")'" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+<form method="post" hidden="hidden" action="@Url.Action("Index", "Sehir")" id="frmSehirIndex">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="bolgeID" name="bolgeID" value="" hidden="hidden" />
+    </div>
+</form>

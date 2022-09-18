@@ -13,6 +13,7 @@ using System.Data.Entity;
 
 namespace bsy.Controllers
 {
+    [OturumAcikMI]
     [Yetkili(Roles = "YONETICI")]
     public class IlceController : Controller
     {

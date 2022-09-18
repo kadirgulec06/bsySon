@@ -11,6 +11,8 @@ using System.Web.Mvc;
 
 namespace bsy.Controllers
 {
+    [OturumAcikMI]
+    [Yetkili(Roles = "YONETICI,SAHAGOREVLISI")]
     public class SifreController : Controller
     {
         private bsyContext context = new bsyContext();

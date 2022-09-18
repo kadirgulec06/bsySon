@@ -1,4 +1,5 @@
-﻿using bsy.Helpers;
+﻿using bsy.Filters;
+using bsy.Helpers;
 using bsy.Models;
 using bsy.ViewModels.Mahalle;
 using System;
@@ -12,6 +13,8 @@ using System.Web.Mvc;
 
 namespace bsy.Controllers
 {
+    [OturumAcikMI]
+    [Yetkili(Roles = "YONETICI,SAHAGOREVLISI")]
     public class MahalleController : Controller
     {
         bsyContext context = new bsyContext();
@@ -312,7 +315,7 @@ namespace bsy.Controllers
                 eskiMahalle = new MAHALLE();
             }
 
-            eskiSozluk.Turu = SozlukHelper.ilceKodu;
+            eskiSozluk.Turu = SozlukHelper.mahalleKodu;
 
             mahalleVM.mahalle = eskiMahalle;
             mahalleVM.sozluk = eskiSozluk;
@@ -333,7 +336,7 @@ namespace bsy.Controllers
         private SOZLUK SozlukYeniToEski(SOZLUK eskiSozluk, SOZLUK yeniSozluk)
         {
             eskiSozluk.id = yeniSozluk.id;
-            eskiSozluk.Turu = SozlukHelper.ilceKodu;
+            eskiSozluk.Turu = SozlukHelper.mahalleKodu;
             eskiSozluk.Kodu = yeniSozluk.Kodu;
             eskiSozluk.Aciklama = yeniSozluk.Aciklama;
 

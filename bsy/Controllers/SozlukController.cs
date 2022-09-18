@@ -12,7 +12,7 @@ using bsy.Models;
 
 namespace bsy.Controllers
 {
-    //[OturumAcikMI]
+    [OturumAcikMI]
     [Yetkili(Roles = "YONETICI")]
     public class SozlukController : Controller
     {
