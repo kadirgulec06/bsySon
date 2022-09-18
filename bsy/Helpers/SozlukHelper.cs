@@ -41,27 +41,54 @@ namespace bsy.Helpers
 
         }
 
-        public static IEnumerable<SelectListItem> sozlukKalemleriListesi(bsyContext ctx, string turu, long secilen = 0 )
+        public static IEnumerable<SelectListItem> sozlukKalemleriListesi(bsyContext ctx, string turu, long secilen = 0, bool hepsiEkle = false )
         {
-            IEnumerable<SelectListItem> sozlukListesi = ctx.tblSozluk.Where(item => item.Turu == turu).OrderBy(item => item.Aciklama)
+            IEnumerable<SelectListItem> sozlukListesi = (ctx.tblSozluk.Where(item => item.Turu == turu).OrderBy(item => item.Aciklama)
               .Select(s => new SelectListItem
               {
                   Value = s.id.ToString(),
                   Text = s.Aciklama,
                   Selected = s.id.Equals(secilen)
-              });
+              })).ToList();
+
+            if (hepsiEkle)
+            {
+                sozlukListesi.Prepend(new SelectListItem{ Value =  "0", Text = "_Bütün Hepsi", Selected=false });
+            }
 
             return sozlukListesi;
         }
 
         public static IEnumerable<SelectListItem> sehrinIlceleri(bsyContext ctx, long sehirID, long secilen = 0)
         {
-            var ilceler = from sx in ctx.tblSozluk
+            var ilceler = (from sx in ctx.tblSozluk
                           join icx in ctx.tblIlceler on sx.id equals icx.id
                           where icx.sehirID == sehirID
-                          select new { sx.id, sx.Aciklama };
-                          
-            IEnumerable <SelectListItem> sozlukListesi = ilceler.OrderBy(item => item.Aciklama)
+                          select new { sx.id, sx.Aciklama }).ToList();
+
+            ilceler.Add(new { id = (long)0, Aciklama = "_Bütün İlçeler" });
+
+            IEnumerable<SelectListItem> sozlukListesi = ilceler.OrderBy(item => item.Aciklama)
+              .Select(s => new SelectListItem
+              {
+                  Value = s.id.ToString(),
+                  Text = s.Aciklama,
+                  Selected = s.id.Equals(secilen)
+              }).ToList();
+
+            return sozlukListesi;
+        }
+
+        public static IEnumerable<SelectListItem> IlceninMahalleleri(bsyContext ctx, long ilceID, long secilen = 0)
+        {
+            var mahalleler = (from sx in ctx.tblSozluk
+                          join icx in ctx.tblMahalleler on sx.id equals icx.id
+                          where icx.ilceID == ilceID
+                          select new { sx.id, sx.Aciklama }).ToList();
+
+            mahalleler.Add(new { id = (long)0, Aciklama = "_Bütün Mahalleler" });
+
+            IEnumerable<SelectListItem> sozlukListesi = mahalleler.OrderBy(item => item.Aciklama)
               .Select(s => new SelectListItem
               {
                   Value = s.id.ToString(),
@@ -96,6 +123,21 @@ namespace bsy.Helpers
             return soz.id;
         }
 
+        public static string sozlukKalemi(bsyContext ctx, long id)
+        {
+            if (id == 0)
+            {
+                return "Bütün Hepsi";
+            }
+
+            SOZLUK sozluk = ctx.tblSozluk.Find(id);
+            if (sozluk == null)
+            {
+                return "Tanımlanmamış";
+            }
+
+            return sozluk.Aciklama;
+        }
     }
 
 

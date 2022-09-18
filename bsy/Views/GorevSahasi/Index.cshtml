@@ -1,0 +1,119 @@
+﻿<script type="text/javascript">
+
+    $(window).bind('resize', function () {
+        $("#liste").jqGrid('destroyGroupHeader');
+        $("#liste").setGridWidth($(window).width() * shrinkFaktor, true);
+        setGridGroupHeaders();
+    }).trigger('resize');
+
+    function setGridGroupHeaders()
+    {
+
+    }
+
+    function gorevSahasiSil(id) {
+        var agree = confirm("Kullanıcı Görev Sahası Kaydını Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+            var frm = document.getElementById("frmGorevSahasiSil");
+            document.getElementById("idSil").value = id;
+            frm.submit();
+        }
+        else
+            return false;
+    }
+
+    function gorevSahasiSilHazirla(cellvalue, options, rowObject) {
+        if (rowObject[0] == 0) {
+            return "";
+        }
+        return "<a href='#' onclick=gorevSahasiSil(" + rowObject[0] + ");>Sil</a>"
+    }
+
+    function gorevSahasiEkle(cellvalue, options, rowObject)
+    {
+        return "<a href='@Url.Action("YeniGorevSahasi","GorevSahasi")?id=0" + "&userID=" + rowObject[1] + "'>Ekle</a>";
+
+    }
+
+    function gorevSahasiGunle(cellvalue, options, rowObject)
+    {
+        var mesaj = "Değiştir";
+        if (rowObject[0] == 0) {
+            mesaj = "Ekle";
+        }
+        //return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
+
+        //return "<a href='~/GorevSahasi/YeniGorevSahasi?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
+        return "<a href='@Url.Action("YeniGorevSahasi","GorevSahasi")?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
+
+    }
+
+    jQuery(document).ready(function () {
+
+        jQuery("#liste").jqGrid({ //hangi tablo onun id si
+            url: '@Url.Action("ListeGorevSahasi", "GorevSahasi")', //ilki action ikincisi contgorevSahasi
+            datatype: 'json',
+            mtype: 'POST',
+            autowidth: true,
+            colNames: ['id', 'Kullanıcı ID', 'EPosta', 'Adı', 'Soyadı', 'Şehir', 'İlçe', 'Mahalle', 'Ekle', 'Değiştir', 'Sil'],
+            colModel:
+            [
+              { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
+              { name: 'userID', index: 'userID', hidden: true, width: 10, sortable: false },
+              { name: 'EPOSTA', index: 'EPOSTA', width: 200, search: true, sortable: false },
+              { name: 'AD', index: 'AD', width: 75, search: true, sortable: false },
+              { name: 'SOYAD', index: 'SOYAD', width: 75, search: true, sortable: false },
+              { name: 'SEHIR', index: 'SEHIR', width: 75, search: false, sortable: false },
+              { name: 'ILCE', index: 'ILCE', width: 75, search: false, sortable: false },
+              { name: 'MAHALLE', index: 'MAHALLE', width: 75, search: false, sortable: false },
+              { name: 'Ekle', index: 'Ekle', width: 50, align: 'left', search: false, sortable: false, formatter: gorevSahasiEkle },
+              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: gorevSahasiGunle },
+              { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: gorevSahasiSilHazirla }
+            ],
+            gridComplete: function ()
+            {
+                //alert("girdi");
+                gridCompleteOrtak("#liste", true);
+            },
+            shrinkToFit: true,
+            autowidth: true,
+            altRows: true,
+            altclass: "myAltRowClass",
+            toppager: true,
+            rowNum: 30,
+            rowList: [5, 10, 15, 20, 30],
+            sortname: 'AD',
+            sortorder: "asc",
+            viewrecords: true,
+            height: '100%',
+            caption: 'Kullanıcı Görev Sahaları',
+            postData:
+                {
+                    'ilkGiris': function () { return '@ViewBag.IlkGiris' }
+                }
+        });
+
+        setGridGroupHeaders();
+        gridCompleteOrtak("#liste", true);
+
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        @*$('#liste').jqGrid('setGridWidth', '1000');*@
+    });
+</script>
+
+<form method="get" action="@Url.Action("YeniGorevSahasi", "GorevSahasi")" id="frmYeniGorevSahasi">
+    <div id="divIslem">
+        <input type="submit" class="genelButtonOrta" value="Yeni Görev Sahası" />
+    </div>
+</form>
+
+<table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+<form method="post" hidden="hidden" action="@Url.Action("GorevSahasiSil", "GorevSahasi")" id="frmGorevSahasiSil">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />
+    </div>
+</form>

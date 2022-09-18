@@ -180,7 +180,9 @@
     <Compile Include="Controllers\BolgeController.cs" />
     <Compile Include="Controllers\DenemeController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GenelController.cs" />
     <Compile Include="Controllers\GirisController.cs" />
+    <Compile Include="Controllers\GorevSahasiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IlceController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\GIRISDENEME.cs" />
     <Compile Include="Models\EPOSTAACMA.cs" />
+    <Compile Include="Models\GOREVSAHASI.cs" />
     <Compile Include="Models\ILCE.cs" />
     <Compile Include="Models\IPACMA.cs" />
     <Compile Include="Models\KULLANICI.cs" />
@@ -226,6 +229,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Bolge\BolgeVM.cs" />
+    <Compile Include="ViewModels\GorevSahasi\GorevSahasiVM.cs" />
     <Compile Include="ViewModels\Ilce\IlceVM.cs" />
     <Compile Include="ViewModels\Mahalle\MahalleVM.cs" />
     <Compile Include="ViewModels\Roller\RollerVM.cs" />
@@ -421,9 +425,12 @@
     <Content Include="Views\Sehir\YeniSehir.cshtml" />
     <Content Include="Views\Bolge\Index.cshtml" />
     <Content Include="Views\Bolge\YeniBolge.cshtml" />
+    <Content Include="Views\GorevSahasi\Index.cshtml" />
+    <Content Include="Views\GorevSahasi\YeniGorevSahasi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Genel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

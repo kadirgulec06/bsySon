@@ -200,6 +200,7 @@ namespace bsy.Models
         public DbSet<SEHIR> tblSehirler { get; set; }
         public DbSet<ILCE> tblIlceler { get; set; }
         public DbSet<MAHALLE> tblMahalleler { get; set; }
+        public DbSet<GOREVSAHASI> tblGorevSahasi { get; set; }
 
         /*
         public override int SaveChanges()
@@ -282,6 +283,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new SehirlerConfiguration());
             modelBuilder.Configurations.Add(new IlcelerConfiguration());
             modelBuilder.Configurations.Add(new MahallelerConfiguration());
+            modelBuilder.Configurations.Add(new GorevSahasiConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -445,6 +447,16 @@ namespace bsy.Models
             }
         }
 
+        public class GorevSahasiConfiguration : EntityTypeConfiguration<GOREVSAHASI>
+        {
+            public GorevSahasiConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("GorevSahasi");
+            }
+        }
 
     }
 }

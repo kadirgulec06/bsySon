@@ -1,0 +1,211 @@
+﻿@model bsy.ViewModels.GorevSahasi.GorevSahasiVM
+@{
+    ViewBag.Title = "Kullanıcı Görev Sahası";
+}
+<style>
+</style>
+
+<script src="~/Scripts/spk-scripts.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function sehirDegisti(control) {
+        var sehir = control.value;
+        //alert(sehir);
+        $.ajax({
+            type: "POST",
+            data: { sehirID: sehir },
+            url: '@Url.Action("SehrinIlceleri", "Genel")',
+            dataType: 'json',
+            success: function (json) {
+
+                //alert("girdi");
+                var $el = $("#ilcelerSelect");
+                $el.empty(); // remove old options
+
+                $el.append($("<option></option>")
+                    .attr("value", '0').text('_Bütün İlçeler'));
+
+                $.each(json, function (value, key) {
+                    //alert(value);
+                    //alert(key.text);
+                    //alert(key.value);
+                    $el.append($("<option></option>")
+                        .attr("value", key.value).text(key.text));
+                });
+            }
+        });
+
+        return;
+    }
+
+    function ilceDegisti(control) {
+        var ilce = control.value;
+        //alert(ilce);
+        $.ajax({
+            type: "POST",
+            data: { ilceID: ilce },
+            url: '@Url.Action("IlceninMahalleleri", "Genel")',
+            dataType: 'json',
+            success: function (json) {
+
+                //alert("girdi");
+                var $el = $("#mahallelerSelect");
+                $el.empty(); // remove old options
+
+                $el.append($("<option></option>")
+                    .attr("value", '0').text('_Bütün Mahalleler'));
+
+                $.each(json, function (value, key) {
+                    //alert(value);
+                    //alert(key.text);
+                    //alert(key.value);
+                    $el.append($("<option></option>")
+                        .attr("value", key.value).text(key.text));
+                });
+            }
+        });
+
+        return;
+    }
+
+    function mahalleDegisti(control) {
+        return;
+        var mahalle = control.value;
+        var frm = document.getElementById("frmMahalleIndex");
+        document.getElementById("mahalleID").value = mahalle;
+        frm.submit();
+    }
+
+    $(".yDilDropDown").change(function (e) {
+
+    });
+
+
+    $(document).ready(function () {
+        /*
+        izinGorev = document.getElementById('IzinGorev').value;
+        */
+    });
+
+    function GorevSahasiClickHandler() {
+        //document.getElementById("SicilNo").removeAttribute('disabled');
+
+        return true;
+
+    }
+
+    function GorevSahasiSil() {
+        var agree = confirm("Görev Sahasını Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("YeniGorevSahasi", "GorevSahasi", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => Model.id)
+    @Html.HiddenFor(model => Model.userID)
+    @Html.HiddenFor(model => Model.SehirID)
+    @Html.HiddenFor(model => Model.IlceID)
+    @Html.HiddenFor(model => Model.MahalleID)
+
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style cerceveKucuk">
+            <table>
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.eposta)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.eposta, new { @size = 120 })
+                        @Html.ValidationMessageFor(model => model.eposta)
+                    </td>
+                </tr>
+
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.Ad)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Ad)
+                        @Html.ValidationMessageFor(model => model.Ad)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    @*<td class="genelZorunluAlanLabel"></td>*@
+                    <td class="genelLabel etiket">
+                        @Html.LabelFor(model => model.Soyad)
+                    </td>
+                    <td class="genelIkiNoktaLabel">
+                        :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Soyad)
+                        @Html.ValidationMessageFor(model => model.Soyad)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <h3>Seçilen GorevSahasi</h3>
+        <fieldset class="field_style cerceveKucuk">
+            <table id="gorevSahasiTablosu">
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Şehir :
+                    </td>
+                    <td align="left">
+                        @Html.DropDownListFor(model => model.SehirID, new SelectList(Model.sehirler, "Value", "Text"), new { @style = "width:340px", @onchange = "sehirDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.SehirID)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        İlçe :
+                    </td>
+                    <td align="left">
+                        @Html.DropDownListFor(model => model.IlceID, new SelectList(Model.ilceler, "Value", "Text"), new { id = "ilcelerSelect", @style = "width:340px", @onchange = "ilceDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.IlceID)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Mahalle :
+                    </td>
+                    <td align="left">
+                        @Html.DropDownListFor(model => model.MahalleID, new SelectList(Model.mahalleler, "Value", "Text"), new { id = "mahallelerSelect", @style = "width:340px", @onchange = "mahalleDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.MahalleID)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <table>
+            <tr>
+                <td>
+                    <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return GorevSahasiClickHandler();" />
+                    <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "GorevSahasi")'" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}

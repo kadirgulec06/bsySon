@@ -383,15 +383,5 @@ namespace bsy.Controllers
             return Content("OK");
 
         }
-
-        public JsonResult SehrinIlceleri(long sehirID)
-        {
-            IEnumerable<SelectListItem> ilceler = SozlukHelper.sehrinIlceleri(context, sehirID);
-            var query = from ix in ilceler
-                        select new { text = ix.Text, value = ix.Value };
-
-            return Json(query, JsonRequestBehavior.AllowGet);
-        }
-
     }
 }
