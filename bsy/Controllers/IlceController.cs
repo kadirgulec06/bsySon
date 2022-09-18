@@ -20,27 +20,27 @@ namespace bsy.Controllers
         // GET: Ilce
         public ActionResult Index()
         {
-            Session["ilID"] = 0;
+            Session["sehirID"] = 0;
 
             ViewBag.IlkGiris = 1;
-            ViewBag.ilID = 0;
+            ViewBag.sehirID = 0;
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(long ilID = 0)
+        public ActionResult Index(long sehirID = 0)
         {
             ViewBag.IlkGiris = 0;
-            ViewBag.ilID = ilID;
+            ViewBag.sehirID = sehirID;
 
-            Session["ilID"] = ilID;
+            Session["sehirID"] = sehirID;
 
             return View();
         }
 
-        public ActionResult ListeIlceler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long ilID = 0)
+        public ActionResult ListeIlceler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long sehirID = 0)
         {
             // filtre parametrelerini hazırla
 
@@ -48,40 +48,40 @@ namespace bsy.Controllers
             string sehir = "";
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["ILCE"] != null)
-                {
-                    ilce = Request.Params["ILCE"];
-                }
-
                 if (Request.Params["SEHIR"] != null)
                 {
                     sehir = Request.Params["SEHIR"];
+                }
+
+                if (Request.Params["ILCE"] != null)
+                {
+                    ilce = Request.Params["ILCE"];
                 }
             }
 
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreILCE"] = ilce.ToUpper();
                 Session["filtreSEHIR"] = sehir.ToUpper();
+                Session["filtreILCE"] = ilce.ToUpper();
             }
             else if (rapor == 1)
             {
-                ilce = (string)Session["filtreILCE"];
                 sehir = (string)Session["filtreSEHIR"];
+                ilce = (string)Session["filtreILCE"];
             }
 
             int pageIndex = Convert.ToInt32(page) - 1;
 
             int pageSize = rows;
 
-            //long ilID = (long)Session["ilID"];
+            //long sehirID = (long)Session["sehirID"];
             //pageSize = 5;
             var query = (from ic in context.tblIlceler
                          join sx in context.tblSozluk on ic.id equals sx.id
-                         join sy in context.tblSozluk on ic.ilID equals sy.id
+                         join sy in context.tblSozluk on ic.sehirID equals sy.id
                          where
-                            (ic.ilID == ilID || ilID == 0) &&
+                            (ic.sehirID == sehirID || sehirID == 0) &&
                             (sx.Aciklama + "").Contains(ilce) &&
                             (sy.Aciklama + "").Contains(sehir)
                          select new
@@ -89,7 +89,8 @@ namespace bsy.Controllers
                              ic.id,
                              ilceKODU = sx.Kodu,
                              ilceADI = sx.Aciklama,
-                             ic.ilID,
+                             ic.sehirID,
+                             sehirKodu = sy.Kodu,
                              sehirADI = sy.Aciklama,
                              ic.Aciklama
                          });
@@ -105,8 +106,9 @@ namespace bsy.Controllers
                                  icx.id,
                                  icx.ilceKODU,
                                  icx.ilceADI,
-                                 icx.ilID,
+                                 icx.sehirID,
                                  icx.sehirADI,
+                                 icx.sehirKodu,
                                  icx.Aciklama,
                                  Degistir = 0,
                                  Sil = 0
@@ -129,10 +131,11 @@ namespace bsy.Controllers
                       cell = new string[]
                       {
                                  kr.id.ToString(),
-                                 kr.ilceKODU,
-                                 kr.ilceADI,
-                                 kr.ilID.ToString(),
+                                 kr.sehirID.ToString(),
+                                 kr.sehirKodu,
                                  kr.sehirADI,
+                                 kr.ilceKODU,
+                                 kr.ilceADI,                                 
                                  kr.Aciklama,
                                  kr.Degistir.ToString(),
                                  kr.Sil.ToString()
@@ -170,7 +173,7 @@ namespace bsy.Controllers
             IlceVM ilceVM = new IlceVM();
             ilceVM = ilceHazirla(soz, ilce);
 
-            Session["ilID"] = 0;
+            Session["sehirID"] = 0;
 
             return View(ilceVM);
         }
@@ -183,7 +186,7 @@ namespace bsy.Controllers
             ilceVM.ilce = ilce;
 
             ilceVM.sehirler = SozlukHelper.sozlukKalemleriListesi(context, "SEHIR", 0);
-            ilceVM.ilADI = SozlukHelper.sozlukAciklama(context, ilce.ilID);
+            ilceVM.sehirADI = SozlukHelper.sozlukAciklama(context, ilce.sehirID);
 
             return ilceVM;
         }
@@ -218,8 +221,8 @@ namespace bsy.Controllers
                         yeniIlce = true;
                         var ilceKaydi = (from sz in context.tblSozluk
                                          join ic in context.tblIlceler on sz.id equals ic.id
-                                         select new { sz.id, sz.Aciklama, ic.ilID }).FirstOrDefault();
-                        if (ilceKaydi != null && eskiIlceVM.sozluk.Aciklama == ilceKaydi.Aciklama && eskiIlceVM.ilce.ilID == ilceKaydi.ilID)
+                                         select new { sz.id, sz.Aciklama, ic.sehirID }).FirstOrDefault();
+                        if (ilceKaydi != null && eskiIlceVM.sozluk.Aciklama == ilceKaydi.Aciklama && eskiIlceVM.ilce.sehirID == ilceKaydi.sehirID)
                         {
                             m = new Mesaj("hata", "Bu ilçe kaydı daha önce oluşturulmuş, tekrar eklenemez");
                             mesajlar.Add(m);
@@ -288,7 +291,7 @@ namespace bsy.Controllers
 
             ilceVM.ilce = eskiIlce;
             ilceVM.sozluk = eskiSozluk;
-            ilceVM.ilADI = SozlukHelper.sozlukAciklama(context, eskiIlce.ilID);
+            ilceVM.sehirADI = SozlukHelper.sozlukAciklama(context, eskiIlce.sehirID);
 
             return ilceVM;
 
@@ -297,7 +300,7 @@ namespace bsy.Controllers
         {
             eskiVM.sozluk = SozlukYeniToEski(eskiVM.sozluk, yeniVM.sozluk);
             eskiVM.ilce = IlceYeniToEski(eskiVM.ilce, yeniVM.ilce);
-            eskiVM.ilADI = yeniVM.ilADI;
+            eskiVM.sehirADI = yeniVM.sehirADI;
 
             return eskiVM;
         }
@@ -315,7 +318,7 @@ namespace bsy.Controllers
         private ILCE IlceYeniToEski(ILCE eskiIlce, ILCE yeniIlce)
         {
             eskiIlce.id = yeniIlce.id;
-            eskiIlce.ilID = yeniIlce.ilID;
+            eskiIlce.sehirID = yeniIlce.sehirID;
             eskiIlce.Aciklama = yeniIlce.Aciklama;
 
             return eskiIlce;

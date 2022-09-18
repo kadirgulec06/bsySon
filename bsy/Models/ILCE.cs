@@ -13,7 +13,7 @@ namespace bsy.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long id { get; set; }
 
-        public long ilID { get; set; }
+        public long sehirID { get; set; }
         public string Aciklama { get; set; }
     }
 }

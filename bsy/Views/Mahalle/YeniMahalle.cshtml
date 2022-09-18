@@ -1,0 +1,161 @@
+﻿@model bsy.ViewModels.Mahalle.MahalleVM
+@{
+    ViewBag.Title = "Sistem Mahalleleri";
+}
+<style>
+</style>
+
+<script src="~/Scripts/spk-scripts.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function sehirDegisti(control) {
+        var sehir = control.value;
+        //alert(sehir);
+        $.ajax({
+            type: "POST",
+            data: { sehirID: sehir },
+            url: '@Url.Action("SehrinIlceleri", "Mahalle")',
+            dataType: 'json',
+            success: function (json) {
+
+                //alert("girdi");
+                var $el = $("#ilcelerSelect");
+                $el.empty(); // remove old options
+
+                //$el.append($("<option></option>")
+                //    .attr("value", '').text('_Bütün İlçeler'));
+
+                $.each(json, function (value, key) {
+                    //alert(value);
+                    //alert(key.text);
+                    //alert(key.value);
+                    $el.append($("<option></option>")
+                        .attr("value", key.value).text(key.text));
+                });
+            }
+        });
+
+        return;
+    }
+
+    function ilceDegisti(control) {
+        return;
+        var ilce = control.value;
+        var frm = document.getElementById("frmMahalleIndex");
+        document.getElementById("ilceID").value = ilce;
+        frm.submit();
+    }
+
+    $(document).ready(function () {
+        /*
+        izinGorev = document.getElementById('IzinGorev').value;
+        */
+    });
+
+    function MahalleClickHandler() {
+        //document.getElementById("SicilNo").removeAttribute('disabled');
+
+        return true;
+
+    }
+
+    function MahalleSil() {
+        var agree = confirm("Mahalleyi Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("YeniMahalle", "Mahalle", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => Model.sozluk.id)
+    @Html.HiddenFor(model => Model.sozluk.Turu)
+    @Html.HiddenFor(model => Model.mahalle.id)
+
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style cerceveKucuk">
+            <table>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Şehir :
+                    </td>
+                    <td align="left">
+                        @Html.DropDownListFor(model => model.sehirID, new SelectList(Model.sehirler, "Value", "Text"), new { @style = "width:340px", @onchange = "sehirDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.sehirID)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        İlçe :
+                    </td>
+                    <td align="left">
+                        @Html.DropDownListFor(model => model.mahalle.ilceID, new SelectList(Model.ilceler, "Value", "Text"), new { id = "ilcelerSelect", @style = "width:340px", @onchange = "ilceDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.mahalle.ilceID)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <h3>Mahalle Bilgileri</h3>
+        <fieldset class="field_style cerceveKucuk">
+            <table id="mahalleTablosu">
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Mahalle Kodu :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.sozluk.Kodu)
+                        @Html.ValidationMessageFor(model => model.sozluk.Kodu)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Mahalle Adı :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.sozluk.Aciklama, new { @size = 80 })
+                        @Html.ValidationMessageFor(model => model.sozluk.Aciklama)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Mahalle Bilgileri :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.mahalle.Aciklama, new { @size = 120 })
+                        @Html.ValidationMessageFor(model => model.mahalle.Aciklama)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <table>
+            <tr>
+                <td>
+                    <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return MahalleClickHandler();" />
+                    <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Mahalle")'" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+<form method="post" hidden="hidden" action="@Url.Action("Index", "Mahalle")" id="frmMahalleIndex">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="sehirID" name="sehirID" value="" hidden="hidden" />
+        <input type="text" id="ilceID" name="ilceID" value="" hidden="hidden" />
+    </div>
+</form>

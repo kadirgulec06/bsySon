@@ -12,6 +12,7 @@ namespace bsy.Helpers
         public static string rolKodu = "ROL";
         public static string sehirKodu = "SEHIR";
         public static string ilceKodu = "ILCE";
+        public static string mahalleKodu = "MAHALLE";
 
         public static string RolKoduBul(long id, string rolKodu)
         {
@@ -48,6 +49,24 @@ namespace bsy.Helpers
                   Text = s.Aciklama,
                   Selected = s.id.Equals(secilen)
               });
+
+            return sozlukListesi;
+        }
+
+        public static IEnumerable<SelectListItem> sehrinIlceleri(bsyContext ctx, long sehirID, long secilen = 0)
+        {
+            var ilceler = from sx in ctx.tblSozluk
+                          join icx in ctx.tblIlceler on sx.id equals icx.id
+                          where icx.sehirID == sehirID
+                          select new { sx.id, sx.Aciklama };
+                          
+            IEnumerable <SelectListItem> sozlukListesi = ilceler.OrderBy(item => item.Aciklama)
+              .Select(s => new SelectListItem
+              {
+                  Value = s.id.ToString(),
+                  Text = s.Aciklama,
+                  Selected = s.id.Equals(secilen)
+              }).ToList();
 
             return sozlukListesi;
         }

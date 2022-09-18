@@ -197,6 +197,7 @@ namespace bsy.Models
         public DbSet<IPACMA> tblIPAcma { get; set; }
         public DbSet<KULLANICIROL> tblKullaniciRolleri { get; set; }
         public DbSet<ILCE> tblIlceler { get; set; }
+        public DbSet<MAHALLE> tblMahalleler { get; set; }
 
         /*
         public override int SaveChanges()
@@ -276,6 +277,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new SifreSifirlaConfiguration());
             modelBuilder.Configurations.Add(new KullaniciRolleriConfiguration());
             modelBuilder.Configurations.Add(new IlcelerConfiguration());
+            modelBuilder.Configurations.Add(new MahallelerConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -408,6 +410,17 @@ namespace bsy.Models
                 ToTable("Ilceler");
             }
         }
+
+        public class MahallelerConfiguration : EntityTypeConfiguration<MAHALLE>
+        {
+            public MahallelerConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                ToTable("Mahalleler");
+            }
+        }
+
 
     }
 }

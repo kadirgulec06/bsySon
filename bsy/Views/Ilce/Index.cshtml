@@ -48,14 +48,15 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'İlçe Kodu', 'Ilçe Adı', 'İl ID', 'Şehir Adı', 'Açıklama', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Şehir ID', 'Şehir Kodu', 'Şehir', 'İlçe Kodu', 'Ilçe Adı', 'Açıklama', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
+              { name: 'sehirID', index: 'sehirID', hidden: true, width: 10, sortable: false },
+              { name: 'SEHIRKODU', index: 'SEHIRKODU', width: 50, search: false, sortable: false },
+              { name: 'SEHIR', index: 'SEHIR', width: 75, search: true, sortable: false },
               { name: 'ILCEKODU', index: 'ILCEKODU', width: 50, search: false, sortable: false },
               { name: 'ILCE', index: 'ILCE', width: 200, search:true, sortable: false },
-              { name: 'ilID', index: 'ilID', hidden: true, width: 10, sortable: false },
-              { name: 'SEHIR', index: 'SEHIR', width: 75, search: true, sortable: false },
               { name: 'ACIKLAMA', index: 'ACIKLAMA', width: 75, search: false, sortable: false },
               { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: ilceGunle },
               { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: ilceSilHazirla }
@@ -80,7 +81,7 @@
             postData:
                 {
                    'ilkGiris': function () { return '@ViewBag.IlkGiris' },
-                   'ilID': function () { return '@ViewBag.ilID' }
+                   'sehirID': function () { return '@ViewBag.sehirID' }
                 }
         });
 

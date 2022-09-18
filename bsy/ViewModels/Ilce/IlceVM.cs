@@ -12,6 +12,6 @@ namespace bsy.ViewModels.Ilce
         public SOZLUK sozluk { get; set; }
         public ILCE ilce { get; set; }
         public IEnumerable<SelectListItem> sehirler { get; set; }
-        public string ilADI { get; set; }
+        public string sehirADI { get; set; }
     }
 }

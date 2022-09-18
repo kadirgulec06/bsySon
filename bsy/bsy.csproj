@@ -183,6 +183,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IlceController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
+    <Compile Include="Controllers\MahalleController.cs" />
     <Compile Include="Controllers\RollerController.cs" />
     <Compile Include="Controllers\SifreController.cs" />
     <Compile Include="Controllers\SozlukController.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Models\KULLANICI.cs" />
     <Compile Include="Models\KULLANICIROL.cs" />
     <Compile Include="Models\LogIn.cs" />
+    <Compile Include="Models\MAHALLE.cs" />
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MENUNODE.cs" />
     <Compile Include="Models\Mesaj.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Ilce\IlceVM.cs" />
+    <Compile Include="ViewModels\Mahalle\MahalleVM.cs" />
     <Compile Include="ViewModels\Roller\RollerVM.cs" />
     <Compile Include="ViewModels\Sifre\SifreDegisVM.cs" />
   </ItemGroup>
@@ -406,6 +409,8 @@
     <Content Include="Views\Sozluk\YeniSehir.cshtml" />
     <Content Include="Views\Ilce\Index.cshtml" />
     <Content Include="Views\Ilce\YeniIlce.cshtml" />
+    <Content Include="Views\Mahalle\Index.cshtml" />
+    <Content Include="Views\Mahalle\YeniMahalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
