@@ -29,5 +29,14 @@ namespace bsy.Controllers
 
             return View();
         }
+
+        public ActionResult Cikis()
+        {
+            Session["USER"] = null;
+
+            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Giris/girisIndex", false);
+            return Content("OK");
+        }
+
     }
 }

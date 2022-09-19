@@ -122,6 +122,9 @@
             document.cookie = name + '=,expires=Thu, 01 Jan 1900 00:00:01 GMT,';
         }
 
+        @{
+            var user = Session["USER"] == null ? "" : ((User)Session["USER"]).AdSoyad;
+        }
     </script>
 
 </head>
@@ -130,7 +133,9 @@
         <table width="100%" cellpadding=2 cellspacing=5 bgcolor="#4e7dd1">
             <tr>
                 <td width="0%" nowrap valign="middle" align="left">
-                    <img src="~/images/spklogo.gif" height="30" width="180" />
+                    <p style="padding-bottom:10px;">
+                        <img src="~/images/spklogo.gif" height="30" width="180" />
+                    </p>
                 </td>
                 <td width="1%" nowrap valign="middle" align="left"></td>
                 <td width="6%" nowrap valign="middle" align="left">
@@ -150,13 +155,18 @@
                     <h3 style="font-weight:bold;vertical-align:middle;margin-top:5px;">SPK - BİED        </h3>
                 </td>
                 <td width="35%" valign="middle" align="center"></td>
+                <td width="3%" align="right">
+                    <p style="color:white; font-weight:bold; padding-top:15px;" ;>
+                       <a href='@Url.Action("Cikis","Home")' style="color:white; font-weight:bold">Çıkış</a>
+                    </p>>
+                </td>
                 <td width="10%" align="right">
-                    <p style="color:white; font-weight:bold" ;>@(((User)Session["USER"]).AdSoyad)</p>
+                    <p style="color:white; font-weight:bold" ;>@user</p>
                 </td>
                 @*
-                    <td width="0%" nowrap valign="middle" align="left">
-                        <img src="~/images/spklogo.gif" height="30" width="180" />
-                    </td>
+        <td width="0%" nowrap valign="middle" align="left">
+            <img src="~/images/spklogo.gif" height="30" width="180" />
+        </td>
                 *@
             </tr>
         </table>

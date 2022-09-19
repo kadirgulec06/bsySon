@@ -334,6 +334,7 @@
     <Content Include="images\arrow_expanded.gif" />
     <Content Include="images\bilgi.gif" />
     <Content Include="images\hata.gif" />
+    <Content Include="images\spklogo.gif" />
     <Content Include="images\tamam.gif" />
     <Content Include="images\uyari.gif" />
     <Content Include="Scripts\bootstrap.js" />
