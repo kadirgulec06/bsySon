@@ -8,6 +8,23 @@ namespace bsy.ViewModels.GorevSahasi
 {
     public class GorevSahasiVM
     {
+        public GorevSahasiVM()
+        {
+            id = 0;
+            userID = 0;
+            eposta = "";
+            Ad = "";
+            Soyad = "";
+            BasTar = DateTime.Now;
+            BitTar = new DateTime(3000, 1, 1);
+            SehirID = 0;
+            IlceID = 0;
+            MahalleID = 0;
+
+            Sehir = "";
+            Ilce = "";
+            Mahalle = "";                        
+        }
         public long id { get; set; }   // Roller id
         public long userID { get; set; }
         public string eposta { get; set; }
