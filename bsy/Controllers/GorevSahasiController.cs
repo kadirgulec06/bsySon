@@ -14,7 +14,7 @@ namespace bsy.ContgorevSahasis
 {
     [OturumAcikMI]
     [Yetkili(Roles = "YONETICI")]
-    public class GorevSahasiContgorevSahasi : Controller
+    public class GorevSahasiController : Controller
     {
         bsyContext context = new bsyContext();
 
@@ -141,9 +141,6 @@ namespace bsy.ContgorevSahasis
                       {
                                  kr.id.ToString(),
                                  kr.userID.ToString(),
-                                 kr.SehirID.ToString(),
-                                 kr.IlceID.ToString(),
-                                 kr.MahalleID.ToString(),
                                  kr.eposta,
                                  kr.Ad,
                                  kr.Soyad,
@@ -184,17 +181,31 @@ namespace bsy.ContgorevSahasis
                 gorevSahasiVM.eposta = user.eposta;
                 gorevSahasiVM.Soyad = user.Soyad;
 
+                long sehirID = 0;
+                long ilceID = 0;
+                long mahalleID = 0;
                 var gorevSahasi = context.tblGorevSahasi.Find(id);
                 if (gorevSahasi != null)
                 {
-                    gorevSahasiVM.Sehir = SozlukHelper.sozlukKalemi(context, gorevSahasi.SehirID);
-                    gorevSahasiVM.Ilce = SozlukHelper.sozlukKalemi(context, gorevSahasi.IlceID);
-                    gorevSahasiVM.Mahalle = SozlukHelper.sozlukKalemi(context, gorevSahasi.MahalleID);
+                    sehirID = gorevSahasi.SehirID;
+                    ilceID = gorevSahasi.IlceID;
+                    mahalleID = gorevSahasi.MahalleID;
+
+                    gorevSahasiVM.BasTar = gorevSahasi.BasTar;
+                    gorevSahasiVM.BitTar = gorevSahasi.BitTar;
                 }
 
-                gorevSahasiVM.sehirler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.sehirKodu, 0, true);
-                gorevSahasiVM.ilceler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.ilceKodu, 0, true);
-                gorevSahasiVM.mahalleler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.mahalleKodu, 0, true);
+                gorevSahasiVM.SehirID = sehirID;
+                gorevSahasiVM.IlceID = ilceID;
+                gorevSahasiVM.MahalleID = mahalleID;
+
+                gorevSahasiVM.Sehir = SozlukHelper.sozlukKalemi(context, sehirID);
+                gorevSahasiVM.Ilce = SozlukHelper.sozlukKalemi(context, ilceID);
+                gorevSahasiVM.Mahalle = SozlukHelper.sozlukKalemi(context, mahalleID);
+
+                gorevSahasiVM.sehirler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.sehirKodu, sehirID, true);
+                gorevSahasiVM.ilceler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.ilceKodu, ilceID, true);
+                gorevSahasiVM.mahalleler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.mahalleKodu, mahalleID, true);
             }
             catch
             {

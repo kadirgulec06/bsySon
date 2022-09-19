@@ -114,9 +114,6 @@
 
     @Html.HiddenFor(model => Model.id)
     @Html.HiddenFor(model => Model.userID)
-    @Html.HiddenFor(model => Model.SehirID)
-    @Html.HiddenFor(model => Model.IlceID)
-    @Html.HiddenFor(model => Model.MahalleID)
 
     <div id="divAna">
         <font size="3" color=black><b>@ViewBag.Title</b></font>
@@ -197,6 +194,25 @@
                         @Html.ValidationMessageFor(model => model.MahalleID)
                     </td>
                 </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Başlangıç Tarihi :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.BasTar, "{0:dd-MM-yyyy}", new { @class = "datepicker veri", @style = "width:125px" })
+                        @Html.ValidationMessageFor(model => model.BasTar)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Bitiş Tarihi :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.BitTar, "{0:dd-MM-yyyy}", new { @class = "datepicker veri", @style = "width:125px" })
+                        @Html.ValidationMessageFor(model => model.BitTar)
+                    </td>
+                </tr>
+
             </table>
         </fieldset>
         <table>

@@ -53,8 +53,9 @@ namespace bsy.Helpers
 
             if (hepsiEkle)
             {
-                sozlukListesi.Prepend(new SelectListItem{ Value =  "0", Text = "_Bütün Hepsi", Selected=false });
+                sozlukListesi = sozlukListesi.Prepend(new SelectListItem{ Value =  "0", Text = "_Bütün Hepsi", Selected=false });
             }
+            sozlukListesi.Append(new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false });
 
             return sozlukListesi;
         }
