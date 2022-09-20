@@ -14,11 +14,11 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Collections;
 using Npgsql;
+using bsy.Helpers;
 
 namespace bsy.Models
 
 {
-    /*
     public class AuditTrailFactory
     {
         private readonly DbContext context;        
@@ -27,9 +27,9 @@ namespace bsy.Models
             this.context = context;
         }
 
-        public Audit GetAudit(DbEntityEntry entry)
+        public AUDIT GetAudit(DbEntityEntry entry)
         {
-            var audit = new Audit();
+            var audit = new AUDIT();
             audit.UserId = HttpContext.Current != null ? HttpContext.Current.User.Identity.Name : "";
             //Change this line according to your needs
             audit.TableName = GetTableName(entry);
@@ -151,9 +151,8 @@ namespace bsy.Models
         U,
         D
     }
-*/
 
-    using Npgsql;
+    //using Npgsql;
     class NpgSqlConfiguration : DbConfiguration
     {
         public NpgSqlConfiguration()
@@ -174,7 +173,7 @@ namespace bsy.Models
     {
         private readonly IList auditList = new List<object>();
         private readonly IList list = new List<object>();
-        //private AuditTrailFactory auditFactory;
+        private AuditTrailFactory auditFactory;
         private string[] dahilOlmayanlar = new string[] { "LogModel" };
         public bsyContext()
             : base("name=BSYContext")
@@ -201,8 +200,8 @@ namespace bsy.Models
         public DbSet<ILCE> tblIlceler { get; set; }
         public DbSet<MAHALLE> tblMahalleler { get; set; }
         public DbSet<GOREVSAHASI> tblGorevSahasi { get; set; }
+        public DbSet<AUDIT> tblAudits { get; set; }
 
-        /*
         public override int SaveChanges()
         {
             auditList.Clear();
@@ -244,27 +243,25 @@ namespace bsy.Models
             }
             catch (Exception ex)
             {
-                string mesaj = DebugHelper.exceptionMesaji(ex);
+                string mesaj = GenelHelper.exceptionMesaji(ex);
                 Debug.Write(mesaj);
             }
 
             if (auditList.Count > 0)
             {
                 var i = 0;
-                foreach (Audit audit in auditList)
+                foreach (AUDIT audit in auditList)
                 {
                     if (audit.Actions == AuditActions.I.ToString())
                         audit.TableIdValue = auditFactory.GetKeyValue(list[i] as DbEntityEntry);
-                    Audits.Add(audit);
+                    tblAudits.Add(audit);
                     i++;
                 }
                 base.SaveChanges();
             }
 
             return retVal;
-        }
-
-        */
+        }        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -284,7 +281,8 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new IlcelerConfiguration());
             modelBuilder.Configurations.Add(new MahallelerConfiguration());
             modelBuilder.Configurations.Add(new GorevSahasiConfiguration());
-
+            modelBuilder.Configurations.Add(new AuditConfiguration());
+            
             base.OnModelCreating(modelBuilder);
         }
 
@@ -455,6 +453,17 @@ namespace bsy.Models
                 HasKey(p => p.id);
                 Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 ToTable("GorevSahasi");
+            }
+        }
+
+        public class AuditConfiguration : EntityTypeConfiguration<AUDIT>
+        {
+            public AuditConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("Audits");
             }
         }
 

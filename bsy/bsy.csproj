@@ -220,6 +220,7 @@
     <Compile Include="Helpers\SifreHelper.cs" />
     <Compile Include="Helpers\SozlukHelper.cs" />
     <Compile Include="Helpers\TCKimlikNoValidation.cs" />
+    <Compile Include="Models\AUDIT.cs" />
     <Compile Include="Models\BOLGE.cs" />
     <Compile Include="Models\bsyContext.cs" />
     <Compile Include="Models\BSYMENUSU.cs" />
