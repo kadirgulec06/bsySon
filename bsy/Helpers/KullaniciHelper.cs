@@ -40,6 +40,7 @@ namespace bsy.Helpers
             user.menuRolleri = "";
             user.UserName = user.Eposta;
             user.Roller = KullaniciRolleri(ctx, kx.id);
+            user.gy = gorevYerleriHazirla(ctx, user.id);
 
             return user;
         }
@@ -151,6 +152,120 @@ namespace bsy.Helpers
 
             ctx.tblGirisDenemeleri.Add(gd);
             return true;
+        }
+
+        public static GorevYerleri gorevYerleriHazirla(bsyContext ctx, long userID)
+        {
+            GorevYerleri gyx = new GorevYerleri();
+            List<GorevYeri> gy = gorevYerleri(ctx, userID);
+            int gyt = gorevYeriTuru(gy);
+            if (gyt <= 0)
+            {
+                return gyx;
+            }
+
+            if (gyt == 1)
+            {
+                gyx.butunTurkiye = true;
+                return gyx;
+            }
+
+            gyx.mahalleler = gorevMahalleleri(ctx, gy);
+            return gyx;
+
+        }
+        public static List<GorevYeri> gorevYerleri(bsyContext ctx, long userID)
+        {
+            List<GorevYeri> gy = (from gs in ctx.tblGorevSahasi
+                                  where gs.userID == userID
+                                  select new GorevYeri
+                                  {
+                                      sehirID = gs.SehirID,
+                                      ilceID = gs.IlceID,
+                                      mahalleID = gs.MahalleID
+                                  }).Distinct().ToList();
+            return gy;
+        }
+
+        public static int gorevYeriTuru(List<GorevYeri> gy)
+        {
+            var gyt = (from gz in gy
+                       where gz.sehirID == 0 && gz.ilceID == 0 && gz.mahalleID == 0
+                       select gz).FirstOrDefault();
+
+            var gyd = (from gx in gy
+                       where gx.sehirID != 0 || gx.ilceID != 0 || gx.mahalleID != 0
+                       select gx).FirstOrDefault();
+
+            if (gyt != null && gyd != null)
+            {
+                return -1;
+            }
+
+            if (gyt == null && gyd == null)
+            {
+                return 0;
+            }
+
+            if (gyt != null && gyd == null)
+            {
+                return 1;
+            }
+
+            return 2;
+        }
+
+        public static List<long> gorevMahalleleri(bsyContext ctx, List<GorevYeri> gy)
+        {
+            List<long> mahalleler = null;
+            List<long> gm = new List<long>();
+            foreach (GorevYeri gyx in gy)
+            {
+                if (gyx.sehirID != 0)
+                {
+                    if (gyx.ilceID == 0)
+                    {
+                        mahalleler = sehrinMahalleleri(ctx, gyx.sehirID);
+                    }
+
+                    if (gyx.sehirID != 0 && gyx.ilceID != 0 && gyx.mahalleID == 0)
+                    {
+                        mahalleler = ilceninMahalleleri(ctx, gyx.ilceID);
+                    }
+
+                    if (gyx.sehirID != 0 && gyx.ilceID != 0 && gyx.mahalleID != 0)
+                    {
+                        mahalleler.Add(gyx.mahalleID);
+                    }
+
+                    foreach (long mx in mahalleler)
+                    {
+                        gm.Add(mx);
+                    }
+
+                }
+            }
+
+            return gm;
+        }
+
+        public static List<long> sehrinMahalleleri(bsyContext ctx, long sehirID)
+        {
+            List<long> sm = (from ix in ctx.tblIlceler
+                  join mx in ctx.tblMahalleler on ix.id equals mx.ilceID
+                  where ix.sehirID == sehirID
+                  select mx.id).ToList();
+
+            return sm;
+        }
+
+        public static List<long> ilceninMahalleleri(bsyContext ctx, long ilceID)
+        {
+            List<long> im = (from mx in ctx.tblMahalleler
+                             where mx.ilceID == ilceID
+                             select mx.id).ToList();
+
+            return im;
         }
 
     }

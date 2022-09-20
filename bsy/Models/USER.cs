@@ -14,5 +14,6 @@ namespace bsy.Models
         public string Eposta { get; set; }
         public string menuRolleri { get; set; }
         public string Roller { get; set; }
+        public GorevYerleri gy { get; set; }
     }
 }

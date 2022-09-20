@@ -229,6 +229,8 @@
     <Compile Include="Models\GIRISDENEME.cs" />
     <Compile Include="Models\EPOSTAACMA.cs" />
     <Compile Include="Models\GOREVSAHASI.cs" />
+    <Compile Include="Models\GorevYeri.cs" />
+    <Compile Include="Models\GorevYerleri.cs" />
     <Compile Include="Models\ILCE.cs" />
     <Compile Include="Models\IPACMA.cs" />
     <Compile Include="Models\KULLANICI.cs" />
