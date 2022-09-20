@@ -225,4 +225,3 @@ C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.OOXML.dll
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.OpenXml4Net.dll
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.OpenXmlFormats.dll
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\NPOI.xml
-C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\obj\Debug\bsy.csprojAssemblyReference.cache

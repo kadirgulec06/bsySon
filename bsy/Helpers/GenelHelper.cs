@@ -32,13 +32,26 @@ namespace bsy.Helpers
         {
             return true;
 
-            var fromAddress = new MailAddress("kadirgulec59@gmail.com", "BSY Portalı");
+            //var fromAddress = new MailAddress("kadirgulec59@gmail.com", "BSY Portalı");
+            var fromAddress = new MailAddress("IzinTakip @spk.gov.tr", "BSY Portalı");
+
             var toAddress = new MailAddress(to, toName);
-            const string fromPassword = "homhrjgdsnimmsyz";
+            //const string fromPassword = "homhrjgdsnimmsyz";
             //const string fromPassword = "Kato36Zato34Nato36.34";
             string subject = konu;
             string body = mesaj;
 
+            System.Security.Principal.WindowsIdentity usrEPosta = System.Security.Principal.WindowsIdentity.GetCurrent();
+            SmtpClient client = null;
+
+            client = new SmtpClient("kurye.local.spk.gov.tr", 587);
+            client.EnableSsl = false;
+            client.UseDefaultCredentials = true; // false olursa gitmez
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("izintakip", "Zovirax123T");
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            /*
             var smtp = new SmtpClient
             {                
                 Timeout = 10000,
@@ -49,6 +62,8 @@ namespace bsy.Helpers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
             };
+            */
+
             using (var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
@@ -57,8 +72,9 @@ namespace bsy.Helpers
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
             })
             {
-                smtp.Send(message);
+                client.Send(message);
             }
+
             return true;
         }
 
