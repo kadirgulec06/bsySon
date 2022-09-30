@@ -14,6 +14,8 @@ namespace bsy.Helpers
         public static string sehirKodu = "SEHIR";
         public static string ilceKodu = "ILCE";
         public static string mahalleKodu = "MAHALLE";
+        public static string haneKodu = "HANE";
+        public static string kisiKodu = "KISI";
 
         public static string RolKoduBul(long id, string rolKodu)
         {
@@ -113,6 +115,7 @@ namespace bsy.Helpers
             return aciklama;
         }
 
+        /*
         public static long sozlukID(bsyContext ctx, SOZLUK sozluk)
         {
             SOZLUK soz = ctx.tblSozluk.Where(sx => sx.Kodu == sozluk.Kodu && sx.Aciklama == sozluk.Aciklama).FirstOrDefault();
@@ -123,6 +126,7 @@ namespace bsy.Helpers
 
             return soz.id;
         }
+        */
 
         public static string sozlukKalemi(bsyContext ctx, long id)
         {
@@ -138,6 +142,52 @@ namespace bsy.Helpers
             }
 
             return sozluk.Aciklama;
+        }
+
+        public static Kunye KunyeHazirla(bsyContext ctx, long id)
+        {
+            Kunye kunye = new Kunye();
+            long birimID = id;
+            long yeniBirim = 0;
+
+            SOZLUK soz = ctx.tblSozluk.Find(birimID);
+            while (soz != null)
+            {
+                yeniBirim = soz.BabaID;
+                switch (soz.Turu)
+                {
+                    case "KISI":
+                        kunye.KisiID = birimID;
+                        kunye.AdSoyad = soz.Aciklama;
+                        kunye.TCNo = soz.Parametre;
+                        break;
+                    case "HANE":
+                        kunye.HaneID = birimID;
+                        kunye.HaneKODU = soz.Parametre;
+                        kunye.haneBilgileri = soz.Aciklama;
+                        break;
+                    case "MAHALLE":
+                        kunye.MahalleID = birimID;
+                        kunye.Mahalle = soz.Aciklama;
+                        kunye.MahalleKodu = soz.Parametre;
+                        break;
+                    case "ILCE":
+                        kunye.IlceID = birimID;
+                        kunye.Ilce = soz.Aciklama;
+                        break;
+                    case "SEHIR":
+                        kunye.SehirID = birimID;
+                        kunye.Sehir = soz.Aciklama;
+                        break;
+                    default:
+                        break;
+                }
+
+                birimID = yeniBirim;
+                soz = ctx.tblSozluk.Find(birimID);
+            }
+
+            return kunye;
         }
     }
 

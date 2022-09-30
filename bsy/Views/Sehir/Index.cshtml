@@ -48,14 +48,12 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Bölge ID', 'Bölge Kodu', 'Bölge', 'Şehir Kodu', 'Şehir Adı', 'Açıklama', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Bölge ID', 'Bölge', 'Şehir Adı', 'Açıklama', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
               { name: 'bolgeID', index: 'bolgeID', hidden: true, width: 10, sortable: false },
-              { name: 'BOLGEKODU', index: 'BOLGEKODU', width: 50, search: false, sortable: false },
               { name: 'BOLGE', index: 'BOLGE', width: 75, search: true, sortable: false },
-              { name: 'SEHIRKODU', index: 'SEHIRKODU', width: 50, search: false, sortable: false },
               { name: 'SEHIR', index: 'SEHIR', width: 200, search:true, sortable: false },
               { name: 'ACIKLAMA', index: 'ACIKLAMA', width: 75, search: false, sortable: false },
               { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: sehirGunle },

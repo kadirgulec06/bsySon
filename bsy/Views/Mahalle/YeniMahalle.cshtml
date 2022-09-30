@@ -110,16 +110,16 @@
         <br />
         <h3>Mahalle Bilgileri</h3>
         <fieldset class="field_style cerceveKucuk">
-            <table id="mahalleTablosu">
+            <table id="mahalleTablosu">                
                 <tr>
                     <td align="right" class="etiketSabit">
                         Mahalle Kodu :
                     </td>
                     <td>
-                        @Html.TextBoxFor(model => model.sozluk.Kodu)
-                        @Html.ValidationMessageFor(model => model.sozluk.Kodu)
+                        @Html.TextBoxFor(model => model.mahalle.MahalleKodu)
+                        @Html.ValidationMessageFor(model => model.mahalle.MahalleKodu)
                     </td>
-                </tr>
+                </tr>                
                 <tr>
                     <td align="right" class="etiketSabit">
                         Mahalle Adı :

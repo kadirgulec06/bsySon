@@ -69,7 +69,6 @@ namespace bsy.Controllers
                          select new
                          {
                              ic.id,
-                             bolgeKODU = sx.Kodu,
                              bolgeADI = sx.Aciklama,
                              ic.Aciklama
                          });
@@ -83,7 +82,7 @@ namespace bsy.Controllers
                              select new
                              {
                                  icx.id,
-                                 icx.bolgeKODU,
+                                 //icx.bolgeKODU,
                                  icx.bolgeADI,
                                  icx.Aciklama,
                                  Degistir = 0,
@@ -107,7 +106,7 @@ namespace bsy.Controllers
                       cell = new string[]
                       {
                                  kr.id.ToString(),
-                                 kr.bolgeKODU,
+                                 //kr.bolgeKODU,
                                  kr.bolgeADI,
                                  kr.Aciklama,
                                  kr.Degistir.ToString(),
@@ -275,8 +274,8 @@ namespace bsy.Controllers
         {
             eskiSozluk.id = yeniSozluk.id;
             eskiSozluk.Turu = SozlukHelper.bolgeKodu;
-            eskiSozluk.Kodu = yeniSozluk.Kodu;
             eskiSozluk.Aciklama = yeniSozluk.Aciklama;
+            eskiSozluk.BabaID = 0;
 
             return eskiSozluk;
         }

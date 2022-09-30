@@ -105,13 +105,13 @@ namespace bsy.Controllers
                          select new
                          {
                              mh.id,
-                             mahalleKODU = sx.Kodu,
+                             mahalleKODU = mh.MahalleKodu,
                              mahalleADI = sx.Aciklama,
                              mh.ilceID,
-                             ilceKODU = sy.Kodu,
+                             //ilceKODU = sy.Kodu,
                              ilceADI = sy.Aciklama,
                              ic.sehirID,
-                             sehirKodu = sh.Kodu,
+                             //sehirKodu = sh.Kodu,
                              sehirADI = sh.Aciklama,
                              mh.Aciklama
                          });
@@ -128,10 +128,10 @@ namespace bsy.Controllers
                                  mhx.mahalleKODU,
                                  mhx.mahalleADI,
                                  mhx.ilceID,
-                                 mhx.ilceKODU,
+                                 //mhx.ilceKODU,
                                  mhx.ilceADI,
                                  mhx.sehirID,
-                                 mhx.sehirKodu,
+                                 //mhx.sehirKodu,
                                  mhx.sehirADI,
                                  mhx.Aciklama,
                                  Degistir = 0,
@@ -157,9 +157,9 @@ namespace bsy.Controllers
                                  mhx.id.ToString(),
                                  mhx.ilceID.ToString(),
                                  mhx.sehirID.ToString(),
-                                 mhx.sehirKodu,
+                                 //mhx.sehirKodu,
                                  mhx.sehirADI,
-                                 mhx.ilceKODU,
+                                 //mhx.ilceKODU,
                                  mhx.ilceADI,
                                  mhx.mahalleKODU,
                                  mhx.mahalleADI,
@@ -209,6 +209,7 @@ namespace bsy.Controllers
         {
             MahalleVM mahalleVM = new MahalleVM();
 
+            mahalleVM.sozluk.BabaID = mahalle.ilceID;
             mahalleVM.sozluk = soz;
             mahalleVM.mahalle = mahalle;
 
@@ -327,6 +328,7 @@ namespace bsy.Controllers
         private MahalleVM VMYeniToEski(MahalleVM eskiVM, MahalleVM yeniVM)
         {
             eskiVM.sozluk = SozlukYeniToEski(eskiVM.sozluk, yeniVM.sozluk);
+            eskiVM.sozluk.BabaID = yeniVM.mahalle.ilceID;
             eskiVM.mahalle = MahalleYeniToEski(eskiVM.mahalle, yeniVM.mahalle);
             eskiVM.ilceADI = yeniVM.ilceADI;
 
@@ -337,7 +339,7 @@ namespace bsy.Controllers
         {
             eskiSozluk.id = yeniSozluk.id;
             eskiSozluk.Turu = SozlukHelper.mahalleKodu;
-            eskiSozluk.Kodu = yeniSozluk.Kodu;
+            //eskiSozluk.Kodu = yeniSozluk.Kodu;
             eskiSozluk.Aciklama = yeniSozluk.Aciklama;
 
             return eskiSozluk;

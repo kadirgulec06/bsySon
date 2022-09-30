@@ -44,7 +44,6 @@ namespace bsy.Controllers
                              {
                                  s.id,
                                  s.Turu,
-                                 s.Kodu,
                                  rol=s.Aciklama,
                                  Degistir = 0,
                                  Sil = 0
@@ -68,7 +67,6 @@ namespace bsy.Controllers
                       {
                                  s.id.ToString(),
                                  s.Turu,
-                                 s.Kodu,
                                  s.rol,                                 
                                  s.Degistir.ToString(),
                                  s.Sil.ToString()
@@ -164,7 +162,7 @@ namespace bsy.Controllers
                         context.SaveChanges();
                         if (yeniRol)
                         {
-                            eskiSozluk.Kodu = SozlukHelper.RolKoduHazirla(eskiSozluk.id);
+                            //eskiSozluk.Kodu = SozlukHelper.RolKoduHazirla(eskiSozluk.id);
                             context.Entry(eskiSozluk).State = EntityState.Modified;
                             context.SaveChanges();
                         }
@@ -193,7 +191,7 @@ namespace bsy.Controllers
         {
             eskiSozluk.id = yeniSozluk.id;
             eskiSozluk.Turu = SozlukHelper.rolKodu;
-            eskiSozluk.Kodu = SozlukHelper.RolKoduBul(yeniSozluk.id, eskiSozluk.Kodu);
+            //eskiSozluk.Kodu = SozlukHelper.RolKoduBul(yeniSozluk.id, eskiSozluk.Kodu);
             eskiSozluk.Aciklama = yeniSozluk.Aciklama;
 
             return eskiSozluk;
@@ -252,7 +250,6 @@ namespace bsy.Controllers
                              {
                                  s.id,
                                  s.Turu,
-                                 s.Kodu,
                                  sehir = s.Aciklama,
                                  Degistir = 0,
                                  Sil = 0
@@ -276,7 +273,6 @@ namespace bsy.Controllers
                       {
                                  s.id.ToString(),
                                  s.Turu,
-                                 s.Kodu,
                                  s.sehir,
                                  s.Degistir.ToString(),
                                  s.Sil.ToString()
@@ -312,7 +308,7 @@ namespace bsy.Controllers
             {
                 soz = new SOZLUK();
                 soz.Turu = SozlukHelper.sehirKodu;
-                soz.Kodu = SozlukHelper.sehirKodu;
+                //soz.Kodu = SozlukHelper.sehirKodu;
             }
 
             return View(soz);
@@ -396,7 +392,7 @@ namespace bsy.Controllers
         {
             eskiSozluk.id = yeniSozluk.id;
             eskiSozluk.Turu = SozlukHelper.sehirKodu;
-            eskiSozluk.Kodu = yeniSozluk.Kodu;
+            //eskiSozluk.Kodu = yeniSozluk.Kodu;
             eskiSozluk.Aciklama = yeniSozluk.Aciklama;
 
             return eskiSozluk;

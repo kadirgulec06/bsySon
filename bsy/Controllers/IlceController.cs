@@ -88,10 +88,10 @@ namespace bsy.Controllers
                          select new
                          {
                              ic.id,
-                             ilceKODU = sx.Kodu,
+                             //ilceKODU = sx.Kodu,
                              ilceADI = sx.Aciklama,
                              ic.sehirID,
-                             sehirKodu = sy.Kodu,
+                             //sehirKodu = sy.Kodu,
                              sehirADI = sy.Aciklama,
                              ic.Aciklama
                          });
@@ -105,11 +105,11 @@ namespace bsy.Controllers
                              select new
                              {
                                  icx.id,
-                                 icx.ilceKODU,
+                                 //icx.ilceKODU,
                                  icx.ilceADI,
                                  icx.sehirID,
                                  icx.sehirADI,
-                                 icx.sehirKodu,
+                                 //icx.sehirKodu,
                                  icx.Aciklama,
                                  Degistir = 0,
                                  Sil = 0
@@ -133,9 +133,9 @@ namespace bsy.Controllers
                       {
                                  kr.id.ToString(),
                                  kr.sehirID.ToString(),
-                                 kr.sehirKodu,
+                                 //kr.sehirKodu,
                                  kr.sehirADI,
-                                 kr.ilceKODU,
+                                 //kr.ilceKODU,
                                  kr.ilceADI,                                 
                                  kr.Aciklama,
                                  kr.Degistir.ToString(),
@@ -183,6 +183,7 @@ namespace bsy.Controllers
         {
             IlceVM ilceVM = new IlceVM();
 
+            ilceVM.sozluk.BabaID = ilce.sehirID;
             ilceVM.sozluk = soz;
             ilceVM.ilce = ilce;
 
@@ -301,6 +302,7 @@ namespace bsy.Controllers
         {
             eskiVM.sozluk = SozlukYeniToEski(eskiVM.sozluk, yeniVM.sozluk);
             eskiVM.ilce = IlceYeniToEski(eskiVM.ilce, yeniVM.ilce);
+            eskiVM.sozluk.BabaID = yeniVM.ilce.sehirID;
             eskiVM.sehirADI = yeniVM.sehirADI;
 
             return eskiVM;
@@ -310,7 +312,7 @@ namespace bsy.Controllers
         {
             eskiSozluk.id = yeniSozluk.id;
             eskiSozluk.Turu = SozlukHelper.ilceKodu;
-            eskiSozluk.Kodu = yeniSozluk.Kodu;
+            //eskiSozluk.Kodu = yeniSozluk.Kodu;
             eskiSozluk.Aciklama = yeniSozluk.Aciklama;
 
             return eskiSozluk;

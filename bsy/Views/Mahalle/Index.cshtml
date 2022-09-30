@@ -48,15 +48,13 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'İlçe ID', 'Şehir ID', 'Şehir Kodu', 'Şehir Adı', 'İlçe Kodu', 'Ilçe Adı', 'Mahalle Kodu', 'Mahalle Adı', 'Açıklama', 'Değiştir', 'Sil'],
+            colNames: ['id', 'İlçe ID', 'Şehir ID', 'Şehir Adı', 'Ilçe Adı', 'Mahalle Kodu', 'Mahalle Adı', 'Açıklama', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
               { name: 'ilceID', index: 'ilceID', hidden: true, width: 10, sortable: false },
               { name: 'sehirID', index: 'sehirID', hidden: true, width: 10, sortable: false },
-              { name: 'SEHIRKODU', index: 'SEHIRKODU', width: 50, search: false, sortable: false },
               { name: 'SEHIR', index: 'SEHIR', width: 75, search: true, sortable: false },
-              { name: 'ILCEKODU', index: 'ILCEKODU', width: 50, search: false, sortable: false },
               { name: 'ILCE', index: 'ILCE', width: 75, search:true, sortable: false },
               { name: 'MAHALLEKODU', index: 'MAHALLEKODU', width: 50, sortable: false },
               { name: 'MAHALLE', index: 'MAHALLE', width: 75, search: true, sortable: false },

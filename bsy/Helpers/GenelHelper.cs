@@ -30,7 +30,7 @@ namespace bsy.Helpers
 
         public static bool sendMail(string to, string toName, string konu, string mesaj)
         {
-            return true;
+            //return true;
 
             //var fromAddress = new MailAddress("kadirgulec59@gmail.com", "BSY Portalı");
             var fromAddress = new MailAddress("IzinTakip @spk.gov.tr", "BSY Portalı");

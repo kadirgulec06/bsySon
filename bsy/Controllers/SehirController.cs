@@ -89,9 +89,9 @@ namespace bsy.Controllers
                          {
                              il.id,
                              il.bolgeID,
-                             bolgeKODU = sy.Kodu,
+                             //bolgeKODU = sy.Kodu,
                              bolgeADI = sy.Aciklama,
-                             sehirKODU = sx.Kodu,
+                             //sehirKODU = sx.Kodu,
                              sehirADI = sx.Aciklama,
                              il.Aciklama
                          });
@@ -106,9 +106,9 @@ namespace bsy.Controllers
                              {
                                  icx.id,
                                  icx.bolgeID,
-                                 icx.bolgeKODU,
+                                 //icx.bolgeKODU,
                                  icx.bolgeADI,
-                                 icx.sehirKODU,
+                                 //icx.sehirKODU,
                                  icx.sehirADI,
                                  icx.Aciklama,
                                  Degistir = 0,
@@ -133,9 +133,9 @@ namespace bsy.Controllers
                       {
                                  kr.id.ToString(),
                                  kr.bolgeID.ToString(),
-                                 kr.bolgeKODU,
+                                 //kr.bolgeKODU,
                                  kr.bolgeADI,
-                                 kr.sehirKODU,
+                                 //kr.sehirKODU,
                                  kr.sehirADI,
                                  kr.Aciklama,
                                  kr.Degistir.ToString(),
@@ -183,6 +183,7 @@ namespace bsy.Controllers
         {
             SehirVM sehirVM = new SehirVM();
 
+            sehirVM.sozluk.BabaID = sehir.bolgeID;
             sehirVM.sozluk = soz;
             sehirVM.sehir = sehir;
 
@@ -300,6 +301,7 @@ namespace bsy.Controllers
         private SehirVM VMYeniToEski(SehirVM eskiVM, SehirVM yeniVM)
         {
             eskiVM.sozluk = SozlukYeniToEski(eskiVM.sozluk, yeniVM.sozluk);
+            eskiVM.sozluk.BabaID = yeniVM.sehir.bolgeID;
             eskiVM.sehir = SehirYeniToEski(eskiVM.sehir, yeniVM.sehir);
             eskiVM.bolgeADI = yeniVM.bolgeADI;
 
@@ -310,7 +312,7 @@ namespace bsy.Controllers
         {
             eskiSozluk.id = yeniSozluk.id;
             eskiSozluk.Turu = SozlukHelper.sehirKodu;
-            eskiSozluk.Kodu = yeniSozluk.Kodu;
+            //eskiSozluk.Kodu = yeniSozluk.Kodu;
             eskiSozluk.Aciklama = yeniSozluk.Aciklama;
 
             return eskiSozluk;

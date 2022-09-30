@@ -43,12 +43,11 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Türü', 'Kodu', 'Rol', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Türü', 'Rol', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 50, sortable: false },
               { name: 'TURU', index: 'TURU', hidden: true, width: 50, sortable: false },
-              { name: 'ROLKODU', index: 'ROLKODU', width: 50, sortable: false },
               { name: 'ROL', index: 'ROL', width: 200, sortable: false },
               { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', sortable: false, formatter: rolGunle },
               { name: 'Sil', index: 'Sil', width: 50, align: 'left', sortable: false, formatter: rolSilHazirla }
