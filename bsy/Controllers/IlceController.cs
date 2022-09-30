@@ -183,7 +183,7 @@ namespace bsy.Controllers
         {
             IlceVM ilceVM = new IlceVM();
 
-            ilceVM.sozluk.BabaID = ilce.sehirID;
+            soz.BabaID = ilce.sehirID;
             ilceVM.sozluk = soz;
             ilceVM.ilce = ilce;
 

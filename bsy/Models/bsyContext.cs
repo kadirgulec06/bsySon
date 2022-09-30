@@ -203,6 +203,7 @@ namespace bsy.Models
         public DbSet<AUDIT> tblAudits { get; set; }
         public DbSet<HANE> tblHaneler { get; set; }
         public DbSet<KISI> tblKisiler { get; set; }
+        public DbSet<KISIHANE> tblKisiHane { get; set; }
 
         public override int SaveChanges()
         {
@@ -286,6 +287,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new AuditConfiguration());
             modelBuilder.Configurations.Add(new HaneConfiguration());
             modelBuilder.Configurations.Add(new KisiConfiguration());
+            modelBuilder.Configurations.Add(new KisiHaneConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -477,7 +479,6 @@ namespace bsy.Models
                 : base()
             {
                 HasKey(p => p.id);
-                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 ToTable("Hane");
             }
         }
@@ -487,8 +488,18 @@ namespace bsy.Models
                 : base()
             {
                 HasKey(p => p.id);
+                ToTable("Kisi");
+            }
+        }
+
+        public class KisiHaneConfiguration : EntityTypeConfiguration<KISIHANE>
+        {
+            public KisiHaneConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
                 Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-                ToTable("Audits");
+                ToTable("KisiHane");
             }
         }
 

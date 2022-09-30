@@ -209,7 +209,7 @@ namespace bsy.Controllers
         {
             MahalleVM mahalleVM = new MahalleVM();
 
-            mahalleVM.sozluk.BabaID = mahalle.ilceID;
+            soz.BabaID = mahalle.ilceID;
             mahalleVM.sozluk = soz;
             mahalleVM.mahalle = mahalle;
 
@@ -348,6 +348,7 @@ namespace bsy.Controllers
         private MAHALLE MahalleYeniToEski(MAHALLE eskiMahalle, MAHALLE yeniMahalle)
         {
             eskiMahalle.id = yeniMahalle.id;
+            eskiMahalle.MahalleKodu = yeniMahalle.MahalleKodu;
             eskiMahalle.ilceID = yeniMahalle.ilceID;
             eskiMahalle.Aciklama = yeniMahalle.Aciklama;
 

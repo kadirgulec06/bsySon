@@ -154,7 +154,7 @@ namespace bsy.Helpers
             while (soz != null)
             {
                 yeniBirim = soz.BabaID;
-                switch (soz.Turu)
+                switch (soz.Turu.Trim())
                 {
                     case "KISI":
                         kunye.KisiID = birimID;
@@ -188,6 +188,29 @@ namespace bsy.Helpers
             }
 
             return kunye;
+        }
+
+        public static string haneAdresi(HANE hane)
+        {
+            string adres = hane.Cadde + " " + hane.Sokak + " " + hane.Apartman + " " + hane.Daire;
+            return adres;
+        }
+
+        public static SOZLUK haneSozlugu(bsyContext ctx, HANE hane)
+        {
+            SOZLUK sozluk = new SOZLUK();
+            if (hane.id != 0)
+            {
+                sozluk = ctx.tblSozluk.Find(hane.id);
+            }
+
+            sozluk.Turu = SozlukHelper.haneKodu;
+            sozluk.Aciklama = SozlukHelper.haneAdresi(hane);
+            sozluk.Parametre = hane.HaneKodu;
+            sozluk.BabaID = hane.MahalleID;
+
+            return sozluk;
+
         }
     }
 

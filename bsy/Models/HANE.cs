@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,12 +9,37 @@ namespace bsy.Models
 {
     public class HANE
     {
+        public HANE()
+        {
+            id = 0;
+            HaneKodu = "";
+            MahalleID = 0;
+            KayitTarihi = DateTime.Now.Date;
+            Cadde = "";
+            Sokak = "";
+            Apartman = "";
+            Daire = "";
+            OdaSayisi = 0;
+            BrutAlan = 0;
+            EkBilgi = "";
+            Eposta = "";
+            Telefon = "";
+        }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long id { get; set; }
 
         [MaxLength(20)]
         public string HaneKodu { get; set; }
         public long MahalleID { get; set; }
         public DateTime KayitTarihi { get; set; }
+
+        [MaxLength(20)]
+        public string Telefon { get; set; }
+
+        [MaxLength(200)]
+        public string Eposta { get; set; }
 
         [MaxLength(200)]
         public string Cadde { get; set; }
@@ -31,9 +57,6 @@ namespace bsy.Models
 
         [MaxLength(1000)]
         public string EkBilgi { get; set; }
-
-        [MaxLength(200)]
-        public string eposta { get; set; }
 
     }
 }

@@ -183,7 +183,7 @@ namespace bsy.Controllers
         {
             SehirVM sehirVM = new SehirVM();
 
-            sehirVM.sozluk.BabaID = sehir.bolgeID;
+            soz.BabaID = sehir.bolgeID;
             sehirVM.sozluk = soz;
             sehirVM.sehir = sehir;
 

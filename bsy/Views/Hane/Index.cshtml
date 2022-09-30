@@ -13,18 +13,18 @@
 
     function mahalleSec(cellvalue, options, rowObject)
     {
-        var mesaj = "Değiştir";
+        var mesaj = "Bu Mahalleyi Seç";
         if (rowObject[0] == 0) {
-            mesaj = "Ekle";
+            mesaj = "";
         }
         return "<a href='@Url.Action("Mahalle","Hane")?mahalleID=" + rowObject[0] + "&mahalleSec=1'>" + mesaj + "</a>";
     }
 
     function mahalleHaneleri(cellvalue, options, rowObject)
     {
-        var mesaj = "Değiştir";
+        var mesaj = "Bu Mahallenin Haneleri";
         if (rowObject[0] == 0) {
-            mesaj = "Ekle";
+            mesaj = "";
         }
         return "<a href='@Url.Action("Mahalle","Hane")?mahalleID=" + rowObject[0] + "&mahalleSec=0'>" + mesaj + "</a>";
     }
@@ -36,7 +36,7 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'İlçe ID', 'Şehir ID', 'Şehir Adı', 'Ilçe Adı', 'Mahalle Kodu', 'Mahalle Adı', 'Açıklama', 'Seç', 'Haneler'],
+            colNames: ['id', 'İlçe ID', 'Şehir ID', 'Şehir Adı', 'İlçe Adı', 'Mahalle Kodu', 'Mahalle Adı', 'Açıklama', 'Seç', 'Haneler'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },

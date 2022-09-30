@@ -75,7 +75,7 @@ namespace bsy.Controllers
                          join sh in context.tblSehirler on ic.sehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
-                            (user.gy.butunTurkiye || user.gy.mahalleler.Contains(mh.id)) &&
+                            (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
                             (sx.Aciklama + "").Contains(mahalle) &&
                             (sy.Aciklama + "").Contains(ilce) &&
                             (sz.Aciklama + "").Contains(sehir)
@@ -84,7 +84,7 @@ namespace bsy.Controllers
                              mh.id,
                              mh.ilceID,
                              ic.sehirID,
-                             //mahalleKODU = sx.Kodu,
+                             mahalleKODU=mh.MahalleKodu,
                              sehirADI = sz.Aciklama,
                              ilceADI = sy.Aciklama,
                              mahalleADI = sx.Aciklama,
@@ -102,7 +102,7 @@ namespace bsy.Controllers
                                  mhx.id,
                                  mhx.ilceID,
                                  mhx.sehirID,
-                                 //mhx.mahalleKODU,
+                                 mhx.mahalleKODU,
                                  mhx.sehirADI,
                                  mhx.ilceADI,
                                  mhx.mahalleADI,
@@ -130,9 +130,9 @@ namespace bsy.Controllers
                                  mhx.id.ToString(),
                                  mhx.ilceID.ToString(),
                                  mhx.sehirID.ToString(),
-                                 //mhx.mahalleKODU,
                                  mhx.sehirADI,
                                  mhx.ilceADI,
+                                 mhx.mahalleKODU,
                                  mhx.mahalleADI,
                                  mhx.Aciklama,
                                  mhx.Sec.ToString(),
@@ -212,7 +212,7 @@ namespace bsy.Controllers
             int totalRecords = query.Count();
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
-            var resultSetAfterOrderandPaging = query.OrderBy("Ad, Soyad").Skip(pageIndex * pageSize).Take(pageSize);
+            var resultSetAfterOrderandPaging = query.OrderBy("HaneKodu").Skip(pageIndex * pageSize).Take(pageSize);
 
             var resultSet = (from k in resultSetAfterOrderandPaging
                              select new
@@ -365,6 +365,11 @@ namespace bsy.Controllers
                         }
                         else
                         {
+                            SOZLUK sozluk = SozlukHelper.haneSozlugu(context, eskiHane.hane);
+                            context.tblSozluk.Add(sozluk);
+                            context.SaveChanges();
+
+                            eskiHane.hane.id = sozluk.id; // SozlukHelper.sozlukID(context, eskiIlceVM.sozluk);
                             context.tblHaneler.Add(eskiHane.hane);
                             m = new Mesaj("tamam", "Hane Kaydı Eklenmiştir.");
                             context.SaveChanges();
@@ -372,10 +377,11 @@ namespace bsy.Controllers
                     }
                     else
                     {
+                        SOZLUK sozluk = SozlukHelper.haneSozlugu(context, eskiHane.hane);
+                        context.Entry(sozluk).State = EntityState.Modified;
                         context.Entry(eskiHane.hane).State = EntityState.Modified;
                         m = new Mesaj("tamam", "Hane Kaydı Güncellenmiştir.");
-                    }
-
+                    }                    
                     try
                     {
                         context.SaveChanges();
@@ -404,7 +410,7 @@ namespace bsy.Controllers
             int mahalleSec = (int)Session["mahalleSec"];
             long mahalleID = (long)Session["mahalleID"];
 
-            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Haneler/Mahalle?mahalleID="+mahalleID.ToString()+ "&mahalleSec="+mahalleSec.ToString(), false);
+            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Hane/Mahalle?mahalleID="+mahalleID.ToString()+ "&mahalleSec="+mahalleSec.ToString(), false);
             return Content("OK");
 
         }
@@ -415,6 +421,8 @@ namespace bsy.Controllers
             eskiHane.kunye.HaneKODU = yeniHane.hane.HaneKodu;
 
             eskiHane.hane.id = yeniHane.hane.id;
+            eskiHane.hane.Telefon = yeniHane.hane.Telefon;
+            eskiHane.hane.Eposta = yeniHane.hane.Eposta;
             eskiHane.hane.Apartman = yeniHane.hane.Apartman;
             eskiHane.hane.BrutAlan = yeniHane.hane.BrutAlan;
             eskiHane.hane.Cadde = yeniHane.hane.Cadde;
@@ -456,7 +464,7 @@ namespace bsy.Controllers
             int mahalleSec = (int)Session["mahalleSec"];
             long mahalleID = (long)Session["mahalleID"];
 
-            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Haneler/Mahalle?mahalleID=" + mahalleID.ToString() + "&mahalleSec=" + mahalleSec.ToString(), false);
+            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Hane/Mahalle?mahalleID=" + mahalleID.ToString() + "&mahalleSec=" + mahalleSec.ToString(), false);
 
             return Content("OK");
         }
