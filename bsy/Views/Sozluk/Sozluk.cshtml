@@ -1,0 +1,145 @@
+﻿@model bsy.ViewModels.Sozluk.SozlukVM
+<script type="text/javascript">
+
+    $(window).bind('resize', function () {
+        $("#liste").jqGrid('destroyGroupHeader');
+        $("#liste").setGridWidth($(window).width() * shrinkFaktor, true);
+        setGridGroupHeaders();
+    }).trigger('resize');
+
+    function setGridGroupHeaders()
+    {
+
+    }
+
+    function sozlukSil(id) {
+        var agree = confirm("Sözlük Kaydını Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+            var frm = document.getElementById("frmSozlukSil");
+            document.getElementById("idSil").value = id;
+            frm.submit();
+        }
+        else
+            return false;
+    }
+
+    function sozlukSilHazirla(cellvalue, options, rowObject) {
+        return "<a href='#' onclick=sozlukSil(" + rowObject[0] + ");>Sil</a>"
+    }
+
+    function sozlukGunle(cellvalue, options, rowObject)
+    {
+        var link = "<a href='@Url.Action("YeniSozluk", "Sozluk")?id=" + rowObject[0] + "&tur=" + rowObject[1] + "'>Değiştir</a>";
+        return link;
+    }
+
+            function turKalemleriClick() {
+
+            alert("girdi");
+            document.getElementById("turSelect").removeAttribute('disabled');
+            var frm = document.getElementById("frmYeniSozluk");
+            frm.submit();
+
+            return true;
+        }
+
+        function turKalemleriIptal() {
+
+            //document.getElementById("turSelect").removeAttribute('disabled');
+
+            var tur = $('#turSelect :selected').text();
+            alert(tur);
+
+            var frm = document.getElementById("frmYeniSozluk");
+            frm.location.href = '@Url.Action("Sozluk", "Sozluk")' + "?tur=" + tur;
+            alert(frm.location.href);
+
+            return true;
+        }
+
+    jQuery(document).ready(function () {
+        //alert("girdi");
+        jQuery("#liste").jqGrid({ //hangi tablo onun id si
+            url: '@Url.Action("ListeSozluk", "Sozluk")', //ilki action ikincisi controller
+            datatype: 'json',
+            mtype: 'POST',
+            autowidth: true,
+            colNames: ['id', 'Türü', 'Açıklama', 'Ek Bilgi', 'Bağlı Olduğu Kalem', 'Değiştir', 'Sil'],
+            colModel:
+            [
+              { name: 'id', index: 'id', hidden:true, width: 50, sortable: false },
+              { name: 'TURU', index: 'TURU', width: 50, sortable: false },
+              { name: 'ACIKLAMA', index: 'ACIKLAMA', width: 200, sortable: false },
+              { name: 'PARAMETRE', index: 'PARAMETRE', width: 100, sortable: false },
+              { name: 'BABA', index: 'BABA', width: 100, sortable: false },
+              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', sortable: false, formatter: sozlukGunle },
+              { name: 'Sil', index: 'Sil', width: 50, align: 'left', sortable: false, formatter: sozlukSilHazirla }
+            ],
+            gridComplete: function ()
+            {
+                //alert("rolgirdi");
+                gridCompleteOrtak("#liste", true);
+            },
+            shrinkToFit: true,
+            autowidth: true,
+            altRows: true,
+            altclass: "myAltRowClass",
+            toppager: true,
+            rowNum: 30,
+            rowList: [5, 10, 15, 20, 30],
+            sortname: 'adSoyad',
+            sortorder: "asc",
+            viewrecords: true,
+            height: '100%',
+            caption: 'Sistemde Tanımlı Sözlük Kalemleri',
+            postData:
+                {
+                   'ilkGiris': function () { return '@ViewBag.IlkGiris' },
+                   'tur': function () { return '@Model.Tur' }
+                }
+        });
+
+        setGridGroupHeaders();
+
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        @*$('#liste').jqGrid('setGridWidth', '1000');*@
+    });
+</script>
+
+<form method="get" action="@Url.Action("YeniSozluk", "Sozluk")" id="frmYeniSozluk">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <fieldset class="field_style" style="border-width:2px;width:600px">
+            <table>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Sözlük Türü :
+                    </td>
+                    <td align="left">
+                        <input type="text" id="id" name="id" value="0" hidden="hidden" />
+                        @Html.DropDownListFor(model => model.Tur, new SelectList(Model.turler, "Value", "Text"), new { @id = "turSelect", @style = "width:250px", @class = "veri", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(model => model.Tur)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit"></td>
+                    <td align="left">
+                        <input type="button" value="Yeni Kalem" class="genelButton" name="btnSubmit" onclick="turKalemleriClick();" />
+                        <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Sozluk")'" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+</form>
+
+<table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+<form method="post" hidden="hidden" action="@Url.Action("SozlukSil", "Sozluk")" id="frmSozlukSil">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />
+    </div>
+</form>

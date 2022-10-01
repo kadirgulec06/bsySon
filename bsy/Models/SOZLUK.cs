@@ -8,6 +8,14 @@ namespace bsy.Models
 {
     public class SOZLUK
     {
+        public SOZLUK()
+        {
+            id = 0;
+            Turu = "";
+            Aciklama = "";
+            Parametre = "";
+            BabaID = 0;
+        }
         public long id { get; set; }
 
         [MaxLength(20)]

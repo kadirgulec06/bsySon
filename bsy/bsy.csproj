@@ -379,6 +379,7 @@
     <Compile Include="Controllers\SehirController.cs" />
     <Compile Include="Controllers\SifreController.cs" />
     <Compile Include="Controllers\SozlukController.cs" />
+    <Compile Include="Controllers\SozlukTuruController.cs" />
     <Compile Include="Filters\ortakGenelFiltre.cs" />
     <Compile Include="Filters\OturumAcikMI.cs" />
     <Compile Include="Filters\YetkiFiltresi.cs" />
@@ -424,6 +425,7 @@
     <Compile Include="Models\SIFREDEGISME.cs" />
     <Compile Include="Models\SIFRESIFIRLA.cs" />
     <Compile Include="Models\SOZLUK.cs" />
+    <Compile Include="Models\SOZLUKTURU.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Bolge\BolgeVM.cs" />
@@ -436,6 +438,7 @@
     <Compile Include="ViewModels\Roller\RollerVM.cs" />
     <Compile Include="ViewModels\Sehir\SehirVM.cs" />
     <Compile Include="ViewModels\Sifre\SifreDegisVM.cs" />
+    <Compile Include="ViewModels\Sozluk\SozlukVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -640,6 +643,11 @@
     <Content Include="Views\Kisi\Index.cshtml" />
     <Content Include="Views\Kisi\Hane.cshtml" />
     <Content Include="Views\Kisi\YeniKisi.cshtml" />
+    <Content Include="Views\SozlukTuru\Tur.cshtml" />
+    <Content Include="Views\SozlukTuru\YeniTur.cshtml" />
+    <Content Include="Views\Sozluk\Index.cshtml" />
+    <Content Include="Views\Sozluk\Sozluk.cshtml" />
+    <Content Include="Views\Sozluk\YeniSozluk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

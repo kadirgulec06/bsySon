@@ -43,6 +43,27 @@ namespace bsy.Helpers
 
         }
 
+        public static IEnumerable<SelectListItem> sozlukTurleriListesi(bsyContext ctx, string secilen="", bool hepsiEkle = false)
+        {
+            IEnumerable<SelectListItem> turListesi = (ctx.tblSozlukTurleri.OrderBy(item => item.Tur)
+              .Select(s => new SelectListItem
+              {
+                  Value = s.Tur.ToString(),
+                  Text = s.Tur,
+                  Selected = s.Tur.Equals(secilen)
+              })).ToList();
+
+            if (hepsiEkle)
+            {
+                turListesi = turListesi.Prepend(new SelectListItem { Value = "Hepsi", Text = "_Bütün Hepsi", Selected = false });
+            }
+
+            turListesi.Append(new SelectListItem { Value = "Hepsi", Text = "_Bütün Hepsi", Selected = false });
+
+            return turListesi;
+        }
+
+
         public static IEnumerable<SelectListItem> sozlukKalemleriListesi(bsyContext ctx, string turu, long secilen = 0, bool hepsiEkle = false )
         {
             IEnumerable<SelectListItem> sozlukListesi = (ctx.tblSozluk.Where(item => item.Turu == turu).OrderBy(item => item.Aciklama)
