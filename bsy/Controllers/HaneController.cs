@@ -128,13 +128,13 @@ namespace bsy.Controllers
                       cell = new string[]
                       {
                                  mhx.id.ToString(),
-                                 mhx.ilceID.ToString(),
-                                 mhx.sehirID.ToString(),
+                                 //mhx.ilceID.ToString(),
+                                 //mhx.sehirID.ToString(),
                                  mhx.sehirADI,
                                  mhx.ilceADI,
-                                 mhx.mahalleKODU,
+                                 //mhx.mahalleKODU,
                                  mhx.mahalleADI,
-                                 mhx.Aciklama,
+                                 //mhx.Aciklama,
                                  mhx.Sec.ToString(),
                                  mhx.Hane.ToString()
                        }
@@ -147,19 +147,44 @@ namespace bsy.Controllers
         public ActionResult ListeHaneler(string sidx, string sord, int page, int rows, byte ilkGiris=0, long mahalleID = 0)
         {
             User user = (User)Session["USER"];
+            string sehir = "";
+            string ilce = "";
+            string mahalle = "";
             string cadde = "";
             string sokak = "";
+            string apartman = "";
             string haneKodu = "";
 
             if (Request.Params["_search"] == "true")
             {
+                if (Request.Params["SEHIR"] != null)
+                {
+                    sehir = Request.Params["SEHIR"];
+                }
+
+                if (Request.Params["ILCE"] != null)
+                {
+                    ilce = Request.Params["ILCE"];
+                }
+
+                if (Request.Params["MAHALLE"] != null)
+                {
+                    mahalle = Request.Params["MAHALLE"];
+                }
+
                 if (Request.Params["CADDE"] != null)
                 {
                     cadde = Request.Params["CADDE"];
                 }
+
                 if (Request.Params["SOKAK"] != null)
                 {
                     sokak = Request.Params["SOKAK"];
+                }
+
+                if (Request.Params["APARTMAN"] != null)
+                {
+                    apartman = Request.Params["APARTMAN"];
                 }
 
                 if (Request.Params["HANEKODU"] != null)
@@ -172,14 +197,22 @@ namespace bsy.Controllers
             int rapor = 2;
             if (rapor == 0)
             {
+                Session["filtreSEHIR"] = sehir.ToUpper();
+                Session["filtreILCE"] = ilce.ToUpper();
+                Session["filtreMAHALLE"] = mahalle.ToUpper();
                 Session["filtreCADDE"] = cadde.ToUpper();
                 Session["filtreSOKAK"] = sokak.ToUpper();
+                Session["filtreAPARTMAN"] = apartman.ToUpper();
                 Session["filtreHANEKODU"] = haneKodu.ToUpper();
             }
             else if (rapor == 1)
             {
+                sehir = (string)Session["filtreSEHIR"];
+                ilce = (string)Session["filtreILCE"];
+                mahalle = (string)Session["filtreMAHALLE"];
                 cadde = (string)Session["filtreCADDE"];
                 sokak = (string)Session["filtreSOKAK"];
+                apartman = (string)Session["filtreAPARTMAN"];
                 haneKodu = (string)Session["filtreHANEKODU"];
             }
 
@@ -189,24 +222,35 @@ namespace bsy.Controllers
 
             //pageSize = 5;
             var query = (from h in context.tblHaneler
-                         where 
-                            (h.MahalleID == mahalleID || mahalleID == 0) &&
+                         join mh in context.tblMahalleler on h.MahalleID equals mh.id
+                         join sx in context.tblSozluk on mh.id equals sx.id
+                         join ic in context.tblIlceler on mh.ilceID equals ic.id
+                         join sy in context.tblSozluk on mh.ilceID equals sy.id
+                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join sz in context.tblSozluk on sh.id equals sz.id
+                         where
+                            (
+                            h.MahalleID == mahalleID || 
+                            mahalleID == 0 &&
+                            (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(h.MahalleID))
+                            ) &&
+                            (sz.Aciklama + "").Contains(sehir) &&
+                            (sy.Aciklama + "").Contains(ilce) &&
+                            (sx.Aciklama + "").Contains(mahalle) &&
                             (h.Cadde + "").Contains(cadde) &&
                             (h.Sokak + "").Contains(sokak) &&
+                            (h.Apartman + "").Contains(apartman) &&
                             (h.HaneKodu + "").Contains(haneKodu)
                          select new
                          {
-                             h.Apartman,
-                             h.BrutAlan,
-                             h.Cadde,
-                             h.Daire,
-                             h.EkBilgi,
-                             h.HaneKodu,
                              h.id,
-                             h.KayitTarihi,
-                             h.MahalleID,
-                             h.OdaSayisi,
-                             h.Sokak
+                             h.HaneKodu,
+                             sehirADI = sz.Aciklama,
+                             ilceADI = sy.Aciklama,
+                             mahalleADI = sx.Aciklama,
+                             h.Cadde,
+                             h.Sokak,
+                             ApartmanDaire = h.Apartman + "-" + h.Daire
                          });
 
             int totalRecords = query.Count();
@@ -214,17 +258,17 @@ namespace bsy.Controllers
 
             var resultSetAfterOrderandPaging = query.OrderBy("HaneKodu").Skip(pageIndex * pageSize).Take(pageSize);
 
-            var resultSet = (from k in resultSetAfterOrderandPaging
+            var resultSet = (from h in resultSetAfterOrderandPaging
                              select new
                              {
-                                 k.id,
-                                 k.MahalleID,
-                                 k.HaneKodu,
-                                 k.KayitTarihi,
-                                 k.Cadde,
-                                 k.Sokak,
-                                 ApartmanDaire = k.Apartman + "-" + k.Daire,
-                                 k.EkBilgi,
+                                 h.id,
+                                 h.HaneKodu,
+                                 h.sehirADI,
+                                 h.ilceADI,
+                                 h.mahalleADI,
+                                 h.Cadde,
+                                 h.Sokak,
+                                 h.ApartmanDaire,
                                  Degistir = 0,
                                  Sil = 0
                              }).ToList();
@@ -240,24 +284,188 @@ namespace bsy.Controllers
                 page = page,
                 records = totalRecords,
                 rows = (
-                  from k in resultSet
+                  from h in resultSet
                   select new
                   {
                       cell = new string[]
                       {
-                                 k.id.ToString(),
-                                 k.MahalleID.ToString(),
-                                 k.HaneKodu,
-                                 k.KayitTarihi.ToShortDateString(),
-                                 k.Cadde,
-                                 k.Sokak,
-                                 k.ApartmanDaire,
-                                 k.EkBilgi,
-                                 k.Degistir.ToString(),
-                                 k.Sil.ToString()
+                                 h.id.ToString(),
+                                 h.HaneKodu,
+                                 h.sehirADI,
+                                 h.ilceADI,
+                                 h.mahalleADI,
+                                 h.Cadde,
+                                 h.Sokak,
+                                 h.ApartmanDaire,
+                                 h.Degistir.ToString(),
+                                 h.Sil.ToString()
                        }
                   }).ToArray()
             };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ListeHanelerYENI(string sidx, string sord, int page, int rows, byte ilkGiris = 0)
+        {
+            // filtre parametrelerini hazırla
+
+            User user = (User)Session["USER"];
+
+            string sehir = "";
+            string ilce = "";
+            string mahalle = "";
+            string haneKodu = "";
+            string cadde = "";
+            string sokak = "";
+            string apartman = "";
+
+            if (Request.Params["_search"] == "true")
+            {
+                if (Request.Params["SEHIR"] != null)
+                {
+                    sehir = Request.Params["SEHIR"];
+                }
+
+                if (Request.Params["ILCE"] != null)
+                {
+                    ilce = Request.Params["ILCE"];
+                }
+
+                if (Request.Params["MAHALLE"] != null)
+                {
+                    mahalle = Request.Params["MAHALLE"];
+                }
+
+                if (Request.Params["HANEKODU"] != null)
+                {
+                    haneKodu = Request.Params["HANEKODU"];
+                }
+
+                if (Request.Params["CADDE"] != null)
+                {
+                    cadde = Request.Params["CADDE"];
+                }
+
+                if (Request.Params["SOKAK"] != null)
+                {
+                    sokak = Request.Params["SOKAK"];
+                }
+
+                if (Request.Params["APARTMAN"] != null)
+                {
+                    apartman = Request.Params["APARTMAN"];
+                }
+            }
+
+            int rapor = 2;
+            if (rapor == 0)
+            {
+                Session["filtreSEHIR"] = sehir.ToUpper();
+                Session["filtreILCE"] = ilce.ToUpper();
+                Session["filtreMAHALLE"] = mahalle.ToUpper();
+                Session["filtreHANEKODU"] = haneKodu.ToUpper();
+                Session["filtreCADDE"] = cadde.ToUpper();
+                Session["filtreSOKAK"] = sokak.ToUpper();
+                Session["filtreAPARTMAN"] = apartman.ToUpper();
+            }
+            else if (rapor == 1)
+            {
+                sehir = (string)Session["filtreSEHIR"];
+                ilce = (string)Session["filtreILCE"];
+                mahalle = (string)Session["filtreMAHALLE"];
+                haneKodu = (string)Session["filtreHANEKODU"];
+                cadde = (string)Session["filtreCADDE"];
+                sokak = (string)Session["filtreSOKAK"];
+                apartman = (string)Session["filtreAPARTMAN"];
+            }
+
+            int pageIndex = Convert.ToInt32(page) - 1;
+
+            int pageSize = rows;
+
+            //long ilID = (long)Session["ilID"];
+            //pageSize = 5;
+            var query = (from hn in context.tblHaneler
+                         join sx in context.tblSozluk on hn.id equals sx.id
+                         join mh in context.tblMahalleler on hn.MahalleID equals mh.id
+                         join sm in context.tblSozluk on mh.id equals sm.id
+                         join ic in context.tblIlceler on mh.ilceID equals ic.id
+                         join sy in context.tblSozluk on mh.ilceID equals sy.id
+                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join sz in context.tblSozluk on sh.id equals sz.id
+                         where
+                            (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
+                            (sm.Aciklama + "").Contains(mahalle) &&
+                            (sy.Aciklama + "").Contains(ilce) &&
+                            (sz.Aciklama + "").Contains(sehir) &&
+                            (hn.HaneKodu + "").Contains(haneKodu) &&
+                            (hn.Cadde + "").Contains(cadde) &&
+                            (hn.Sokak + "").Contains(sokak) &&
+                            (hn.Apartman + "").Contains(apartman)
+                         select new
+                         {
+                             hn.id,
+                             hn.HaneKodu,
+                             mahalleKODU = mh.MahalleKodu,
+                             sehirADI = sz.Aciklama,
+                             ilceADI = sy.Aciklama,
+                             mahalleADI = sm.Aciklama,
+                             hn.Cadde,
+                             hn.Sokak,
+                             ApartmanDaire = hn.Apartman + "-" + hn.Daire
+                         });
+
+            int totalRecords = query.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            var resultSetAfterOrderandPaging = query.OrderBy("sehirADI, ilceADI").Skip(pageIndex * pageSize).Take(pageSize);
+
+            var resultSet = (from hx in resultSetAfterOrderandPaging
+                             select new
+                             {
+                                 hx.id,
+                                 hx.HaneKodu,
+                                 hx.mahalleKODU,
+                                 hx.sehirADI,
+                                 hx.ilceADI,
+                                 hx.mahalleADI,
+                                 hx.Cadde,
+                                 hx.Sokak,
+                                 hx.ApartmanDaire,
+                                 Degistir = 0,
+                                 Sil = 0
+                             }).ToList();
+
+
+            //int totalRecords = resultSet.Count();
+            //int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            //Data to sent grid
+            var jsonData = new
+            {
+                total = totalPages, //todo: calculate
+                page = page,
+                records = totalRecords,
+                rows = (
+                  from hx in resultSet
+                  select new
+                  {
+                      cell = new string[]
+                      {
+                                 hx.id.ToString(),
+                                 hx.HaneKodu,
+                                 hx.sehirADI,
+                                 hx.ilceADI,
+                                 hx.mahalleADI,
+                                 hx.Cadde,
+                                 hx.Sokak,
+                                 hx.ApartmanDaire,
+                                 hx.Degistir.ToString(),
+                                 hx.Sil.ToString()
+                       }
+                  }).ToArray()
+            };
+
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 

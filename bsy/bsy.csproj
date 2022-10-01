@@ -371,6 +371,7 @@
     <Compile Include="Controllers\HaneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IlceController.cs" />
+    <Compile Include="Controllers\KisiController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
     <Compile Include="Controllers\MahalleController.cs" />
     <Compile Include="Controllers\MesajController.cs" />
@@ -386,6 +387,7 @@
     </Compile>
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\GenelHelper.cs" />
+    <Compile Include="Helpers\KisiHelper.cs" />
     <Compile Include="Helpers\KullaniciHelper.cs" />
     <Compile Include="Helpers\MenuBuilder.cs" />
     <Compile Include="Helpers\SabitlerHelper.cs" />
@@ -428,6 +430,7 @@
     <Compile Include="ViewModels\GorevSahasi\GorevSahasiVM.cs" />
     <Compile Include="ViewModels\Hane\HaneVM.cs" />
     <Compile Include="ViewModels\Ilce\IlceVM.cs" />
+    <Compile Include="ViewModels\Kisi\KisiVM.cs" />
     <Compile Include="ViewModels\Mahalle\MahalleVM.cs" />
     <Compile Include="ViewModels\Mesaj\SMSMesaji.cs" />
     <Compile Include="ViewModels\Roller\RollerVM.cs" />
@@ -582,6 +585,7 @@
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Scripts\jquery.maskedinput.js" />
     <Content Include="Scripts\jquery.maskedinput.min.js" />
+    <Content Include="Scripts\jquery.ui.datepicker-tr.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -633,6 +637,9 @@
     <Content Include="Views\Hane\Index.cshtml" />
     <Content Include="Views\Hane\Mahalle.cshtml" />
     <Content Include="Views\Hane\YeniHane.cshtml" />
+    <Content Include="Views\Kisi\Index.cshtml" />
+    <Content Include="Views\Kisi\Hane.cshtml" />
+    <Content Include="Views\Kisi\YeniKisi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

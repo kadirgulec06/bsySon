@@ -126,7 +126,7 @@
                         :
                     </td>
                     <td>
-                        @Html.TextBoxFor(model => model.KayitTarihi, "{0:dd-MM-yyyy}", new { @class = "datepicker veri" })
+                        @Html.TextBoxFor(model => model.KayitTarihi, "{0:dd-MM-yyyy}", new { @id="kayitTarihi", @class = "datepicker veri" })
                         @Html.ValidationMessageFor(model => model.KayitTarihi)
                     </td>
                 </tr>

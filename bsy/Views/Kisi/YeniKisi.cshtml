@@ -1,0 +1,248 @@
+﻿@model bsy.ViewModels.Kisi.KisiVM
+@{
+    ViewBag.Title = "Sistem Kisileri";
+}
+<style>
+</style>
+
+<script src="~/Scripts/spk-scripts.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $("#telefonBilgisi").mask("(999) 999-99-99");
+    });
+
+    function sehirDegisti(control) {
+        var sehir = control.value;
+        //alert(sehir);
+        $.ajax({
+            type: "POST",
+            data: { sehirID: sehir },
+            url: '@Url.Action("SehrinIlceleri", "Genel")',
+            dataType: 'json',
+            success: function (json) {
+
+                //alert("girdi");
+                var $el = $("#ilcelerSelect");
+                $el.empty(); // remove old options
+
+                //$el.append($("<option></option>")
+                //    .attr("value", '').text('_Bütün İlçeler'));
+
+                $.each(json, function (value, key) {
+                    //alert(value);
+                    //alert(key.text);
+                    //alert(key.value);
+                    $el.append($("<option></option>")
+                        .attr("value", key.value).text(key.text));
+                });
+            }
+        });
+
+        return;
+    }
+
+    function ilceDegisti(control) {
+        return;
+        var ilce = control.value;
+        var frm = document.getElementById("frmKisiIndex");
+        document.getElementById("ilceID").value = ilce;
+        frm.submit();
+    }
+
+    $(document).ready(function () {
+        /*
+        izinGorev = document.getElementById('IzinGorev').value;
+        */
+    });
+
+    function KisiClickHandler() {
+        //document.getElementById("SicilNo").removeAttribute('disabled');
+
+        return true;
+
+    }
+
+    function KisiSil() {
+        var agree = confirm("Kisiyi Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("YeniKisi", "Kisi", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => Model.kisi.id)
+
+    @Html.HiddenFor(model => Model.kunye.BolgeID)
+    @Html.HiddenFor(model => Model.kunye.SehirID)
+    @Html.HiddenFor(model => Model.kunye.IlceID)
+    @Html.HiddenFor(model => Model.kunye.MahalleID)
+    @Html.HiddenFor(model => Model.kunye.HaneID)
+    @Html.HiddenFor(model => Model.kunye.KisiID)
+
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style cerceveKucuk">
+            <table>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Şehir :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunye.Sehir, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        İlçe :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunye.Ilce, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Mahalle :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunye.Mahalle, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Hane Kodu :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunye.HaneKODU, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Adres :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunye.Adres, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <h3>Kisi Bilgileri</h3>
+        <fieldset class="field_style cerceveKucuk">
+            <table id="kisiTablosu">
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        TC Kimlik No :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.kisi.TCNo)
+                        @Html.ValidationMessageFor(model => model.kisi.TCNo)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Kayıt Tarihi :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.kisi.KayitTarihi, "{0:dd-MM-yyyy}", new { @class = "datepicker" })
+                        @Html.ValidationMessageFor(model => model.kisi.KayitTarihi)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Adı :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.kisi.Ad)
+                        @Html.ValidationMessageFor(model => model.kisi.Ad)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Soyadı :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.kisi.Soyad)
+                        @Html.ValidationMessageFor(model => model.kisi.Soyad)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Doğum Tarihi :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.kisi.DogumTarihi, "{0:dd-MM-yyyy}", new { @class = "datepicker" })
+                        @Html.ValidationMessageFor(model => model.kisi.DogumTarihi)
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Şehir :
+                    </td>
+                    <td align="left">
+                        @Html.DropDownListFor(model => model.kisi.Cinsiyet, new SelectList(Model.cinsiyetler, "Value", "Text"), new { @style = "width:150px", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.kisi.Cinsiyet)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Telefon :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.kisi.Telefon, new { @mask = "(999) 999-99-99", @id = "telefonBilgisi" })
+                        @Html.ValidationMessageFor(model => model.kisi.Telefon)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        EPosta :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.kisi.Eposta, new { @size = 100 })
+                        @Html.ValidationMessageFor(model => model.kisi.Eposta)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Ek Bilgiler :
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.kisi.EkBilgi, 10, 100, new { @size = 100 })
+                        @Html.ValidationMessageFor(model => model.kisi.EkBilgi)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <table>
+            <tr>
+                <td>
+                    <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return KisiClickHandler();" />
+                    <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Kisi")'" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+<form method="post" hidden="hidden" action="@Url.Action("Index", "Kisi")" id="frmKisiIndex">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="sehirID" name="sehirID" value="" hidden="hidden" />
+        <input type="text" id="ilceID" name="ilceID" value="" hidden="hidden" />
+        <input type="text" id="mahalleID" name="mahalleID" value="" hidden="hidden" />
+        <input type="text" id="haneID" name="haneID" value="" hidden="hidden" />
+    </div>
+</form>

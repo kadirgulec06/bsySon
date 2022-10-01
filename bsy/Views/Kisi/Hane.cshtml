@@ -11,10 +11,10 @@
 
     }
 
-    function haneSil(id) {
-        var agree = confirm("Hane Kaydını Silmek İstediğinizden Emin misiniz?");
+    function kisiSil(id) {
+        var agree = confirm("Kişi Kaydını Silmek İstediğinizden Emin misiniz?");
         if (agree) {
-            var frm = document.getElementById("frmHaneSil");
+            var frm = document.getElementById("frmKisiSil");
             document.getElementById("idSil").value = id;
             frm.submit();
         }
@@ -22,45 +22,45 @@
             return false;
     }
 
-    function haneSilHazirla(cellvalue, options, rowObject) {
+    function kisiSilHazirla(cellvalue, options, rowObject) {
         if (rowObject[0] == 0) {
             return "";
         }
-        return "<a href='#' onclick=haneSil(" + rowObject[0] + ");>Sil</a>"
+        return "<a href='#' onclick=kisiSil(" + rowObject[0] + ");>Sil</a>"
     }
 
-    function haneGunle(cellvalue, options, rowObject)
+    function kisiGunle(cellvalue, options, rowObject)
     {
         var mesaj = "Değiştir";
         if (rowObject[0] == 0) {
             mesaj = "Ekle";
         }
-        //return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
-
-        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
-        return "<a href='@Url.Action("YeniHane","Hane")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
+        return "<a href='@Url.Action("YeniKisi","Kisi")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
     }
 
     jQuery(document).ready(function () {
 
         jQuery("#liste").jqGrid({ //hangi tablo onun id si
-            url: '@Url.Action("ListeHaneler", "Hane")', //ilki action ikincisi controller
+            url: '@Url.Action("ListeKisiler", "Kisi")', //ilki action ikincisi controller
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Hane Kodu', 'Şehir', 'İlçe', 'Mahalle', 'Cadde', 'Sokak', 'Apartman-Daire', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Hane Kodu', 'Şehir', 'İlçe', 'Mahalle', 'Cadde', 'Sokak', 'Apartman-Daire', 'Ad', 'Soyad', 'TC No', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
               { name: 'HANEKODU', index: 'HANEKODU', width: 50, search: true, sortable: false },
-              { name: 'SEHIR', index: 'SEHIR', width: 150, search: true, sortable: false },
-              { name: 'ILCE', index: 'ILCE', width: 150, search: true, sortable: false },
+              { name: 'SEHIR', index: 'SEHIR', width: 50, search: true, sortable: false },
+              { name: 'ILCE', index: 'ILCE', width: 50, search: true, sortable: false },
               { name: 'MAHALLE', index: 'MAHALLE', width: 150, search: true, sortable: false },
               { name: 'CADDE', index: 'CADDE', width: 150, search: true, sortable: false },
               { name: 'SOKAK', index: 'SOKAK', width: 150, search: true, sortable: false },
-              { name: 'APARTMANDAIRE', index: 'APARTMANDAIRE', width: 75, search:true, sortable: false },
-              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: haneGunle },
-              { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: haneSilHazirla }
+              { name: 'APARTMAN', index: 'APARTMAN', width: 50, search:true, sortable: false },
+              { name: 'AD', index: 'AD', width: 50, search: true, sortable: false },
+              { name: 'SOYAD', index: 'SOYAD', width: 50, search: true, sortable: false },
+              { name: 'TCNO', index: 'TCNO', width: 20, search: true, sortable: false },
+              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: kisiGunle },
+              { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: kisiSilHazirla }
             ],
             gridComplete: function ()
             {
@@ -74,15 +74,15 @@
             toppager: true,
             rowNum: 30,
             rowList: [5, 10, 15, 20, 30],
-            sortname: 'MAHALLE',
+            sortname: 'AD',
             sortorder: "asc",
             viewrecords: true,
             height: '100%',
-            caption: 'Sistemdeki Haneler',
+            caption: 'Sistemdeki Kisiler',
             postData:
                 {
                    'ilkGiris': function () { return '@ViewBag.IlkGiris' },
-                   'mahalleID': function () { return '@ViewBag.mahalleID' }
+                   'haneID': function () { return '@ViewBag.haneID' }
                 }
         });
 
@@ -97,16 +97,16 @@
     });
 </script>
 
-<form method="get" action="@Url.Action("YeniHane", "Hane")" id="frmYeniHane">
+<form method="get" action="@Url.Action("YeniKisi", "Kisi")" id="frmYeniKisi">
     <div id="divIslem">
-        <input type="submit" class="genelButtonOrta" value="Yeni Hane" />
+        <input type="submit" class="genelButtonOrta" value="Yeni Kisi" />
     </div>
 </form>
 
 <table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
 <div id="pager" class="scroll" style="text-align:center;"></div>
 
-<form method="post" hidden="hidden" action="@Url.Action("HaneSil", "Hane")" id="frmHaneSil">
+<form method="post" hidden="hidden" action="@Url.Action("KisiSil", "Kisi")" id="frmKisiSil">
     @Html.AntiForgeryToken()
     <div id="divIslem">
         <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />

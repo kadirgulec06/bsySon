@@ -160,9 +160,12 @@ namespace bsy.Helpers
                         kunye.KisiID = birimID;
                         kunye.AdSoyad = soz.Aciklama;
                         kunye.TCNo = soz.Parametre;
+                        kunye.HaneID = KisiHelper.kisiHanesi(ctx, kunye.KisiID);
+                        yeniBirim = kunye.HaneID;
                         break;
                     case "HANE":
                         kunye.HaneID = birimID;
+                        kunye.Adres = haneAdresi(ctx, birimID);
                         kunye.HaneKODU = soz.Parametre;
                         kunye.haneBilgileri = soz.Aciklama;
                         break;
@@ -190,9 +193,15 @@ namespace bsy.Helpers
             return kunye;
         }
 
+        public static string haneAdresi(bsyContext ctx, long id)
+        {
+            HANE hane = ctx.tblHaneler.Find(id);
+            string adres = hane.Cadde + ";" + hane.Sokak + ";" + hane.Apartman + "-" + hane.Daire;
+            return adres;
+        }
         public static string haneAdresi(HANE hane)
         {
-            string adres = hane.Cadde + " " + hane.Sokak + " " + hane.Apartman + " " + hane.Daire;
+            string adres = hane.Cadde + ";" + hane.Sokak + ";" + hane.Apartman + "-" + hane.Daire;
             return adres;
         }
 
@@ -212,6 +221,24 @@ namespace bsy.Helpers
             return sozluk;
 
         }
+
+        public static SOZLUK kisiSozlugu(bsyContext ctx, KISI kisi)
+        {
+            SOZLUK sozluk = new SOZLUK();
+            if (kisi.id != 0)
+            {
+                sozluk = ctx.tblSozluk.Find(kisi.id);
+            }
+
+            sozluk.Turu = SozlukHelper.kisiKodu;
+            sozluk.Aciklama = kisi.Ad + " " + kisi.Soyad;
+            sozluk.Parametre = kisi.TCNo;
+            sozluk.BabaID = 0;   // KisiHane Kaydı Babası 
+
+            return sozluk;
+
+        }
+
     }
 
 

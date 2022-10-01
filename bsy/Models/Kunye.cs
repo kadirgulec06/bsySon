@@ -21,6 +21,7 @@ namespace bsy.Models
         public string Mahalle { get; set; }
         public string haneBilgileri { get; set; }
         public string HaneKODU { get; set; }
+        public string Adres { get; set; }
         public string AdSoyad { get; set; }
         public string TCNo { get; set; }
     }

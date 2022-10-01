@@ -11,44 +11,44 @@
 
     }
 
-    function mahalleSec(cellvalue, options, rowObject)
+    function haneSec(cellvalue, options, rowObject)
     {
-        var mesaj = "Bu Mahalleyi Seç";
+        var mesaj = "Bu Haneyi Seç";
         if (rowObject[0] == 0) {
             mesaj = "";
         }
-        return "<a href='@Url.Action("Mahalle","Hane")?mahalleID=" + rowObject[0] + "&mahalleSec=1'>" + mesaj + "</a>";
+        return "<a href='@Url.Action("Hane","Kisi")?haneID=" + rowObject[0] + "&haneSec=1'>" + mesaj + "</a>";
     }
 
-    function mahalleHaneleri(cellvalue, options, rowObject)
+    function haneKisileri(cellvalue, options, rowObject)
     {
-        var mesaj = "Mahallenin Haneleri";
+        var mesaj = "Hanedeki Kişiler";
         if (rowObject[0] == 0) {
             mesaj = "";
         }
-        return "<a href='@Url.Action("Mahalle","Hane")?mahalleID=" + rowObject[0] + "&mahalleSec=0'>" + mesaj + "</a>";
+        return "<a href='@Url.Action("Hane","Kisi")?haneID=" + rowObject[0] + "&haneSec=0'>" + mesaj + "</a>";
     }
 
     jQuery(document).ready(function () {
 
         jQuery("#liste").jqGrid({ //hangi tablo onun id si
-            url: '@Url.Action("ListeMahalleler", "Hane")', //ilki action ikincisi controller
+            url: '@Url.Action("ListeHaneler", "Kisi")', //ilki action ikincisi controller
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Şehir Adı', 'İlçe Adı', 'Mahalle Adı', 'Mahalleyi Seç', 'Mahallenin Haneleri'],
+            colNames: ['id', 'Hane Kodu', 'Şehir Adı', 'İlçe Adı', 'Mahalle Adı', 'Cadde', 'Sokak', 'Apartman-Daire', 'Haneyi Seç', 'Hanedeki Kişiler'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
-              //{ name: 'ilceID', index: 'ilceID', hidden: true, width: 10, sortable: false },
-              //{ name: 'sehirID', index: 'sehirID', hidden: true, width: 10, sortable: false },
-              { name: 'SEHIR', index: 'SEHIR', width: 75, search: true, sortable: false },
-              { name: 'ILCE', index: 'ILCE', width: 75, search:true, sortable: false },
-              //{ name: 'MAHALLEKODU', index: 'MAHALLEKODU', width: 50, search: false, sortable: false },
-              { name: 'MAHALLE', index: 'MAHALLE', width: 150, search: true, sortable: false },
-              //{ name: 'ACIKLAMA', index: 'ACIKLAMA', width: 200, search: false, sortable: false },
-              { name: 'SEC', index: 'SEC', width: 50, align: 'left', search: false, sortable: false, formatter: mahalleSec },
-              { name: 'HANELER', index: 'HANELER', width: 50, align: 'left', search: false, sortable: false, formatter: mahalleHaneleri }
+              { name: 'HANEKODU', index: 'HANEKODU', search: true, width: 20, sortable: false },
+              { name: 'SEHIR', index: 'SEHIR', width: 50, search: true, sortable: false },
+              { name: 'ILCE', index: 'ILCE', width: 50, search:true, sortable: false },
+              { name: 'MAHALLE', index: 'MAHALLE', width: 100, search: true, sortable: false },
+              { name: 'CADDE', index: 'CADDE', width: 100, search: true, sortable: false },
+              { name: 'SOKAK', index: 'SOKAK', width: 100, search: true, sortable: false },
+              { name: 'APARTMAN', index: 'APARTMAN', width: 50, search: true, sortable: false },
+              { name: 'SEC', index: 'SEC', width: 50, align: 'left', search: false, sortable: false, formatter: haneSec },
+              { name: 'KISILER', index: 'KISILER', width: 50, align: 'left', search: false, sortable: false, formatter: haneKisileri }
             ],
             gridComplete: function ()
             {
@@ -66,7 +66,7 @@
             sortorder: "asc",
             viewrecords: true,
             height: '100%',
-            caption: 'Sistem Mahalleleri',
+            caption: 'Sistemdeki Haneler',
             postData:
                 {
                    'ilkGiris': function () { return '@ViewBag.IlkGiris' }
