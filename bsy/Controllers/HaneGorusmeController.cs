@@ -423,13 +423,20 @@ namespace bsy.Controllers
 
             haneVM.kunye = SozlukHelper.KunyeHazirla(context, haneID);
 
-            haneVM.Ihtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, hane.Ihtiyaclar, true);
-            haneVM.BelediyeYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, hane.BelediyeYardimi, true);
-            haneVM.EvMulkiyeti = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, hane.EvMulkiyeti, true);
-            haneVM.EvTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, hane.EvTuru, true);
-            haneVM.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hane.HaneGelirDilimi, true);
+            haneVM = listeleriHazirla(haneVM);
 
             return haneVM;
+        }
+
+        private HaneGorusmeVM listeleriHazirla(HaneGorusmeVM hgVM)
+        {
+            hgVM.Ihtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, hgVM.haneGorusme.Ihtiyaclar, true);
+            hgVM.BelediyeYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, hgVM.haneGorusme.BelediyeYardimi, true);
+            hgVM.EvMulkiyeti = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, hgVM.haneGorusme.EvMulkiyeti, true);
+            hgVM.EvTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, hgVM.haneGorusme.EvTuru, true);
+            hgVM.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hgVM.haneGorusme.HaneGelirDilimi, true);
+
+            return hgVM;
         }
 
         private HANEGORUSME HaneToHane(HANEGORUSME eskiHG)
@@ -455,6 +462,8 @@ namespace bsy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult YeniHaneGorusme(HaneGorusmeVM yeniHane, string btnSubmit)
         {
+            yeniHane = listeleriHazirla(yeniHane);
+
             int haneSec = 0;
             long haneID = 0;
             try

@@ -444,7 +444,14 @@ namespace bsy.Controllers
                 kisiVM.kisiHane = new KISIHANE();               
             }
 
-            kisiVM.cinsiyetler = SozlukHelper.sozlukKalemleriListesi(context, "CINSIYET", kisi.Cinsiyet);
+            kisiVM = listeleriHazirla(kisiVM);
+            
+            return kisiVM;
+        }
+
+        private KisiVM listeleriHazirla(KisiVM kisiVM)
+        {
+            kisiVM.cinsiyetler = SozlukHelper.sozlukKalemleriListesi(context, "CINSIYET", kisiVM.kisi.Cinsiyet);
 
             return kisiVM;
         }
@@ -453,6 +460,8 @@ namespace bsy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult YeniKisi(KisiVM yeniKisi, string btnSubmit)
         {
+            yeniKisi = listeleriHazirla(yeniKisi);
+            
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
