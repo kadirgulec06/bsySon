@@ -233,7 +233,7 @@
                 <td>
                     <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return HaneClickHandler();" />
                     <a class="genelButton" href='@Url.Action("Mahalle", "Hane")?mahalleID=@Model.kunye.MahalleID.ToString()&mahalleSec=0'>
-                        <input type="button" class="genelButton" name="btnHaneGorusme" value="Devam" />
+                        <input type="button" class="genelButton" name="btnHaneGorusme" value="Mahalle" />
                     </a>
                     <input type="button" value="Haneler" class="genelButton" onclick="location.href='@Url.Action("Index", "Hane")'" />
                     @if (Model.kayitYapildi == 1)

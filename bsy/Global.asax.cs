@@ -1,4 +1,5 @@
 ﻿using bsy.Controllers;
+using bsy.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,9 @@ namespace bsy
             var app = (MvcApplication)sender;
             var context = app.Context;
             var ex = app.Server.GetLastError();
+
+            string hata = GenelHelper.exceptionMesaji(ex);
+
             context.Response.Clear();
             context.ClearError();
             var httpException = ex as HttpException;

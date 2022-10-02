@@ -1,4 +1,5 @@
-﻿using bsy.Models;
+﻿using bsy.Helpers;
+using bsy.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace bsy.Controllers
                 id = r.Values["guid"].ToString(),
                 time = DateTime.Now,
                 tckno = DN,
-                message = e.Message,
+                message = GenelHelper.exceptionMesaji(e),
                 trace = e.StackTrace + e.Source
             };
             if (e.InnerException != null)
