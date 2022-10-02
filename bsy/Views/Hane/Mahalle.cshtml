@@ -11,6 +11,16 @@
 
     }
 
+    function haneGorusmeleri(cellvalue, options, rowObject)
+    {
+        var mesaj = "Görüşmeler";
+        if (rowObject[0] == 0) {
+            mesaj = "";
+        }
+
+        return "<a href='@Url.Action("Hane","HaneGorusme")?haneID=" + rowObject[0] + "&haneSec=0'>" + mesaj + "</a>";
+    }
+
     function haneSil(id) {
         var agree = confirm("Hane Kaydını Silmek İstediğinizden Emin misiniz?");
         if (agree) {
@@ -35,9 +45,7 @@
         if (rowObject[0] == 0) {
             mesaj = "Ekle";
         }
-        //return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
 
-        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
         return "<a href='@Url.Action("YeniHane","Hane")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
     }
 
@@ -48,7 +56,7 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Hane Kodu', 'Şehir', 'İlçe', 'Mahalle', 'Cadde', 'Sokak', 'Apartman-Daire', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Hane Kodu', 'Şehir', 'İlçe', 'Mahalle', 'Cadde', 'Sokak', 'Apartman-Daire', 'Görüşmeler', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
@@ -59,6 +67,7 @@
               { name: 'CADDE', index: 'CADDE', width: 150, search: true, sortable: false },
               { name: 'SOKAK', index: 'SOKAK', width: 150, search: true, sortable: false },
               { name: 'APARTMANDAIRE', index: 'APARTMANDAIRE', width: 75, search:true, sortable: false },
+              { name: 'Gorusme', index: 'Gorusme', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeleri },
               { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: haneGunle },
               { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: haneSilHazirla }
             ],

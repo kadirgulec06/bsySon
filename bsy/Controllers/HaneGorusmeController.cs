@@ -394,13 +394,12 @@ namespace bsy.Controllers
                 hane = new HANEGORUSME();
             }
 
-            HaneGorusmeVM haneVM = haneGorusmeHazirla(hane);
-            haneVM.yeniGorusme = yeniGorusme;
+            HaneGorusmeVM haneVM = haneGorusmeHazirla(hane, yeniGorusme);
 
             return View(haneVM);
         }
 
-        private HaneGorusmeVM haneGorusmeHazirla(HANEGORUSME hane)
+        private HaneGorusmeVM haneGorusmeHazirla(HANEGORUSME hane, int yeniGorusme)
         {
             long haneID = (long)Session["haneID"];
             HaneGorusmeVM haneVM = new HaneGorusmeVM();
@@ -414,7 +413,13 @@ namespace bsy.Controllers
                 haneID = hane.HaneID;
             }
 
+            if (hane.id != 0 && yeniGorusme == 1)
+            {
+                hane = HaneToHane(hane);
+            }
+
             haneVM.haneGorusme = hane;
+            haneVM.yeniGorusme = yeniGorusme;
 
             haneVM.kunye = SozlukHelper.KunyeHazirla(context, haneID);
 
@@ -425,6 +430,25 @@ namespace bsy.Controllers
             haneVM.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hane.HaneGelirDilimi, true);
 
             return haneVM;
+        }
+
+        private HANEGORUSME HaneToHane(HANEGORUSME eskiHG)
+        {
+            HANEGORUSME yeniHG = new HANEGORUSME();
+
+            yeniHG.Aciklama = eskiHG.Aciklama;
+            yeniHG.BelediyeYardimi = eskiHG.BelediyeYardimi;
+            yeniHG.EkBilgi = eskiHG.EkBilgi;
+            yeniHG.EvMulkiyeti = eskiHG.EvMulkiyeti;
+            yeniHG.EvTuru = eskiHG.EvTuru;
+            yeniHG.GorusmeTarihi = DateTime.Now.Date;
+            yeniHG.HaneGelirDilimi = eskiHG.HaneGelirDilimi;
+            yeniHG.HaneID = eskiHG.HaneID;
+            yeniHG.id = 0;
+            yeniHG.Ihtiyaclar = eskiHG.Ihtiyaclar;
+            yeniHG.KiraTutari = eskiHG.KiraTutari;
+
+            return yeniHG;
         }
 
         [HttpPost]
@@ -454,7 +478,7 @@ namespace bsy.Controllers
                 hane = new HANEGORUSME();
             }
 
-            HaneGorusmeVM eskiHane = haneGorusmeHazirla(hane);
+            HaneGorusmeVM eskiHane = haneGorusmeHazirla(hane, yeniHane.yeniGorusme);
 
             bool yeniHaneIslemi = false;
             bool kaydedildi = true;

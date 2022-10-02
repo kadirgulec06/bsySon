@@ -9,6 +9,7 @@ namespace bsy.ViewModels.Hane
 {
     public class HaneVM
     {
+        public int kayitYapildi { get; set; }
         public Kunye kunye { get; set; }
         public HANE hane { get; set; }
     }

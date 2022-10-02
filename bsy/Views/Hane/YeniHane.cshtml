@@ -233,6 +233,9 @@
                 <td>
                     <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return HaneClickHandler();" />
                     <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Hane")'" />
+                    <a target="_blank" href='@Url.Action("Hane","HaneGorusme")?haneID=@Model.kunye.HaneID.ToString()&haneSec=0'>
+                        <input type="button" name="btnHaneGorusme" value="Hane Görüşmeleri" />
+                    </a>
                 </td>
             </tr>
         </table>

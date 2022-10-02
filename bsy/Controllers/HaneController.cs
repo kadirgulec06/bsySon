@@ -432,6 +432,7 @@ namespace bsy.Controllers
                                  hx.Cadde,
                                  hx.Sokak,
                                  hx.ApartmanDaire,
+                                 Gorusmeler=0,
                                  Degistir = 0,
                                  Sil = 0
                              }).ToList();
@@ -460,6 +461,7 @@ namespace bsy.Controllers
                                  hx.Cadde,
                                  hx.Sokak,
                                  hx.ApartmanDaire,
+                                 hx.Gorusmeler.ToString(),
                                  hx.Degistir.ToString(),
                                  hx.Sil.ToString()
                        }
@@ -520,6 +522,8 @@ namespace bsy.Controllers
         {
             long mahalleID = (long)Session["mahalleID"];
             HaneVM haneVM = new HaneVM();
+
+            haneVM.kayitYapildi = 0;
 
             if (hane.MahalleID == 0)
             {
@@ -593,6 +597,7 @@ namespace bsy.Controllers
                             context.tblHaneler.Add(eskiHane.hane);
                             m = new Mesaj("tamam", "Hane Kaydı Eklenmiştir.");
                             context.SaveChanges();
+                            eskiHane.kunye.HaneID = eskiHane.hane.id;
                         }
                     }
                     else
@@ -629,6 +634,9 @@ namespace bsy.Controllers
 
             int mahalleSec = (int)Session["mahalleSec"];
             long mahalleID = (long)Session["mahalleID"];
+
+            eskiHane.kayitYapildi = 0;
+            return View(eskiHane);
 
             Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Hane/Mahalle?mahalleID="+mahalleID.ToString()+ "&mahalleSec="+mahalleSec.ToString(), false);
             return Content("OK");
