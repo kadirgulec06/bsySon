@@ -1,0 +1,273 @@
+﻿@model bsy.ViewModels.HaneGorusme.HaneGorusmeVM
+@{
+    ViewBag.Title = "Hane Görüşmeleri";
+}
+<style>
+</style>
+
+<script src="~/Scripts/spk-scripts.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function selectTab() {
+        var tabIX = document.getElementById("tabIndex").value;
+        var tabNo = parseInt(tabIX, 10);
+        tabNo = 0;
+        $("#tabView").tabs();
+        $("#tabView").tabs("option", "selected", tabNo);
+    }
+
+    function saveSelectedTabIndex(tabIX) {
+        var oldSelectedForm = $("#tabKutulari li.ui-tabs-selected a");
+        $(oldSelectedForm.attr("href")).removeClass("selected");
+        document.getElementById("tabIndex").value = tabIX;
+        var tabNo = tabIX + 1;
+        var selectedForm = $("#tabKutulari li:nth-child(" + tabNo + ") a");
+        $(selectedForm.attr("href")).addClass("selected");
+    }
+
+    $(function () {
+        $("#telefonBilgisi").mask("(999) 999-99-99");
+    });
+
+    $(document).ready(function () {
+
+        selectTab();
+
+        $('#tabView').tabs({
+            select: function (event, ui) {
+                var tabIX = ui.index;
+                alert(tabIX);
+                saveSelectedTabIndex(tabIX);
+            }
+        });
+
+        /*
+        izinGorev = document.getElementById('IzinGorev').value;
+        */
+    });
+
+    function HaneGorusmeClickHandler() {
+        //document.getElementById("SicilNo").removeAttribute('disabled');
+
+        return true;
+
+    }
+
+    function HaneGorusmeSil() {
+        var agree = confirm("Görüşmeyi Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
+
+<div id="divHepsi">
+    @using (Html.BeginForm("YeniHaneGorusme", "HaneGorusme", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.tabIndex, new { @id = "tabIndex" })
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(model => Model.haneGorusme.id)
+
+        @Html.HiddenFor(model => Model.kunye.BolgeID)
+        @Html.HiddenFor(model => Model.kunye.SehirID)
+        @Html.HiddenFor(model => Model.kunye.IlceID)
+        @Html.HiddenFor(model => Model.kunye.MahalleID)
+        @Html.HiddenFor(model => Model.kunye.HaneID)
+
+        <div id="divAna" style="font-weight:900; font-size: 11px;">
+            <div id="tabView">
+                <ul id="tabKutulari" class="tabGrubu">
+                    <li id="tab1" class="tab"><a id="a1" href="#frmKunye">Kimlik Bilgileri</a></li>
+                    <li id="tab2" class="tab"><a id="a2" href="#frmGorusme01">Bilgiler 01</a></li>
+                    <li id="tab3" class="tab"><a id="a3" href="#frmGorusme02">Bilgiler 02</a></li>
+                </ul>
+
+                <font size="3" color=black><b>@ViewBag.Title</b></font>
+                <br />
+                <br />
+                <div id="frmKunye" class="tabFormu selected">
+                    <div class="divForm">
+                        <fieldset class="field_style cerceveKucuk">
+                            <table>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Şehir :
+                                    </td>
+                                    <td align="left">
+                                        @Html.TextBoxFor(model => model.kunye.Sehir, new { @readonly = "readonly" })
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        İlçe :
+                                    </td>
+                                    <td align="left">
+                                        @Html.TextBoxFor(model => model.kunye.Ilce, new { @readonly = "readonly" })
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Mahalle :
+                                    </td>
+                                    <td align="left">
+                                        @Html.TextBoxFor(model => model.kunye.Mahalle, new { @readonly = "readonly" })
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Hane Kodu :
+                                    </td>
+                                    <td align="left">
+                                        @Html.TextBoxFor(model => model.kunye.HaneKODU, new { @readonly = "readonly" })
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Adres :
+                                    </td>
+                                    <td align="left">
+                                        @Html.TextBoxFor(model => model.kunye.Adres, new { @readonly = "readonly" })
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div> @*  END frmKunye *@
+                <br />
+                <div id="frmGorusme01" class="tabFormu">
+                    <div class="divForm">
+                        <h3>HaneGorusme Bilgileri</h3>
+                        <fieldset class="field_style cerceveKucuk">
+                            <table id="haneGorusmeTablosu">
+                                <tr>
+                                    <td align="right" class="etiketSabit">
+                                        Görüşme Tarihi :
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => model.haneGorusme.GorusmeTarihi, "{0:dd-MM-yyyy}", new { @class = "datepicker" })
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.GorusmeTarihi)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="etiketSabit">
+                                        Görüşme Açıklaması :
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(model => model.haneGorusme.Aciklama, 4, 100, new { @size = 100 })
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.Aciklama)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="etiketSabit">
+                                        Ek Bilgiler :
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(model => model.haneGorusme.EkBilgi, 10, 100, new { @size = 100 })
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.EkBilgi)
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>  @*  END frmGorusme01 *@
+                </div>   
+
+                <div id="frmGorusme02" class="tabFormu">
+                    <div class="divForm">
+                        <fieldset class="field_style cerceveKucuk">
+                            <table>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        İhtiyaçlar :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.haneGorusme.Ihtiyaclar, new SelectList(Model.Ihtiyaclar, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.Ihtiyaclar)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Belediye Yardımı Durumu :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.haneGorusme.BelediyeYardimi, new SelectList(Model.BelediyeYardimi, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.BelediyeYardimi)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Ev Türü :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.haneGorusme.EvTuru, new SelectList(Model.EvTuru, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.EvTuru)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Ev Mülkiyeti :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.haneGorusme.EvMulkiyeti, new SelectList(Model.EvMulkiyeti, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.EvMulkiyeti)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" class="etiketSabit">
+                                        Kira Tutarı :
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => model.haneGorusme.KiraTutari)
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.KiraTutari)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Gelir Dilimi :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.haneGorusme.HaneGelirDilimi, new SelectList(Model.HaneGelirDilimi, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.haneGorusme.HaneGelirDilimi)
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>  @*  END frmGorusme02 *@
+
+            </div>   @* END tabview *@
+
+            <br />
+            <br />
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return HaneGorusmeClickHandler();" />
+                            <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "HaneGorusme")'" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>  @* END divAna *@
+    }
+
+    <form method="post" hidden="hidden" action="@Url.Action("Index", "HaneGorusme")" id="frmHaneGorusmeIndex">
+        @Html.AntiForgeryToken()
+        <div id="divIslem">
+            <input type="text" id="sehirID" name="sehirID" value="" hidden="hidden" />
+            <input type="text" id="ilceID" name="ilceID" value="" hidden="hidden" />
+            <input type="text" id="mahalleID" name="mahalleID" value="" hidden="hidden" />
+            <input type="text" id="haneID" name="haneID" value="" hidden="hidden" />
+        </div>
+    </form>
+
+</div>  @* END divHepsi *@

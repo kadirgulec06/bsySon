@@ -186,6 +186,7 @@ namespace bsy.Models
 
         public DbSet<DENEME> tblDeneme { get; set; }
         public DbSet<BSYMENUSU> tblBSYmenusu { get; set; }
+        public DbSet<ANASOZLUK> tblAnaSozluk { get; set; }
         public DbSet<SOZLUK> tblSozluk { get; set; }
         public DbSet<KULLANICI> tblKullanicilar { get; set; }
         public DbSet<ROLLER> tblRoller { get; set; }
@@ -202,6 +203,7 @@ namespace bsy.Models
         public DbSet<GOREVSAHASI> tblGorevSahasi { get; set; }
         public DbSet<AUDIT> tblAudits { get; set; }
         public DbSet<HANE> tblHaneler { get; set; }
+        public DbSet<HANEGORUSME> tblHaneGorusme { get; set; }
         public DbSet<KISI> tblKisiler { get; set; }
         public DbSet<KISIHANE> tblKisiHane { get; set; }
         public DbSet<SOZLUKTURU> tblSozlukTurleri { get; set; }
@@ -271,6 +273,7 @@ namespace bsy.Models
         {
             modelBuilder.Configurations.Add(new DenemeConfiguration());
             modelBuilder.Configurations.Add(new bsyMenusuConfiguration());
+            modelBuilder.Configurations.Add(new AnaSozlukConfiguration());
             modelBuilder.Configurations.Add(new SozlukConfiguration());
             modelBuilder.Configurations.Add(new KullaniciConfiguration());
             modelBuilder.Configurations.Add(new RollerConfiguration());
@@ -287,6 +290,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new GorevSahasiConfiguration());
             modelBuilder.Configurations.Add(new AuditConfiguration());
             modelBuilder.Configurations.Add(new HaneConfiguration());
+            modelBuilder.Configurations.Add(new HaneGorusmeConfiguration());
             modelBuilder.Configurations.Add(new KisiConfiguration());
             modelBuilder.Configurations.Add(new KisiHaneConfiguration());
             modelBuilder.Configurations.Add(new SozlukTuruConfiguration());
@@ -312,6 +316,17 @@ namespace bsy.Models
             {
                 HasKey(p => p.menuNo);
                 ToTable("bsyMenusu");
+            }
+        }
+
+        public class AnaSozlukConfiguration : EntityTypeConfiguration<ANASOZLUK>
+        {
+            public AnaSozlukConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("AnaSozluk");
             }
         }
 
@@ -484,6 +499,18 @@ namespace bsy.Models
                 ToTable("Hane");
             }
         }
+
+        public class HaneGorusmeConfiguration : EntityTypeConfiguration<HANEGORUSME>
+        {
+            public HaneGorusmeConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("HaneGorusme");
+            }
+        }
+
         public class KisiConfiguration : EntityTypeConfiguration<KISI>
         {
             public KisiConfiguration()

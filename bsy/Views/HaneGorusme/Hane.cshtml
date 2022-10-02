@@ -1,0 +1,116 @@
+﻿<script type="text/javascript">
+
+    $(window).bind('resize', function () {
+        $("#liste").jqGrid('destroyGroupHeader');
+        $("#liste").setGridWidth($(window).width() * shrinkFaktor, true);
+        setGridGroupHeaders();
+    }).trigger('resize');
+
+    function setGridGroupHeaders()
+    {
+
+    }
+
+    function haneGorusmeSil(id) {
+        var agree = confirm("Hane Görüşme Kaydını Silmek İstediğinizden Emin misiniz?");
+        if (agree) {
+            var frm = document.getElementById("frmHaneGorusmeSil");
+            document.getElementById("idSil").value = id;
+            frm.submit();
+        }
+        else
+            return false;
+    }
+
+    function haneGorusmeSilHazirla(cellvalue, options, rowObject) {
+        if (rowObject[0] == 0) {
+            return "";
+        }
+
+        return "<a href='#' onclick=haneGorusmeSil(" + rowObject[0] + ");>Sil</a>"
+    }
+
+    function haneGorusmeGunle(cellvalue, options, rowObject)
+    {
+        var mesaj = "Değiştir";
+        if (rowObject[0] == 0) {
+            mesaj = "Ekle";
+        }
+
+        return "<a href='@Url.Action("YeniHaneGorusme","HaneGorusme")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
+    }
+
+    jQuery(document).ready(function () {
+
+        jQuery("#liste").jqGrid({ //hangi tablo onun id si
+            url: '@Url.Action("ListeGorusmeler", "HaneGorusme")', //ilki action ikincisi controller
+            datatype: 'json',
+            mtype: 'POST',
+            autowidth: true,
+            colNames: ['id', 'Hane ID', 'Hane Kodu', 'Şehir', 'İlçe', 'Mahalle', 'Cadde', 'Sokak', 'Apartman-Daire', 'Görüşme Tarihi', 'Görüşme Açıklaması', 'Değiştir', 'Sil'],
+            colModel:
+            [
+              { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
+              { name: 'haneID', index: 'haneID', hidden: true, width: 10, sortable: false },
+              { name: 'HANEKODU', index: 'HANEKODU', width: 50, search: true, sortable: false },
+              { name: 'SEHIR', index: 'SEHIR', width: 150, search: true, sortable: false },
+              { name: 'ILCE', index: 'ILCE', width: 150, search: true, sortable: false },
+              { name: 'MAHALLE', index: 'MAHALLE', width: 150, search: true, sortable: false },
+              { name: 'CADDE', index: 'CADDE', width: 150, search: true, sortable: false },
+              { name: 'SOKAK', index: 'SOKAK', width: 150, search: true, sortable: false },
+              { name: 'APARTMANDAIRE', index: 'APARTMANDAIRE', width: 75, search:true, sortable: false },
+              { name: 'GORUSMETARIHI', index: 'GORUSMETARIHI', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
+              { name: 'ACIKLAMA', index: 'ACIKLAMA', width: 150, search: true, sortable: false },
+              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeGunle },
+              { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeSilHazirla }
+            ],
+            gridComplete: function ()
+            {
+                //alert("girdi");
+                gridCompleteOrtak("#liste", true);
+            },
+            shrinkToFit: true,
+            autowidth: true,
+            altRows: true,
+            altclass: "myAltRowClass",
+            toppager: true,
+            rowNum: 30,
+            rowList: [5, 10, 15, 20, 30],
+            sortname: 'MAHALLE',
+            sortorder: "asc",
+            viewrecords: true,
+            height: '100%',
+            caption: 'Hane Görüşmeleri',
+            postData:
+                {
+                   'ilkGiris': function () { return '@ViewBag.IlkGiris' },
+                   'haneID': function () { return '@ViewBag.haneID' }
+                }
+        });
+
+        jQuery("#liste").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en', 'cn', 'nc'] });
+
+        setGridGroupHeaders();
+        gridCompleteOrtak("#liste", true);
+
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        @*$('#liste').jqGrid('setGridWidth', '1000');*@
+    });
+</script>
+
+<form method="get" action="@Url.Action("YeniHaneGorusme", "HaneGorusme")" id="frmYeniHaneGorusme">
+    <div id="divIslem">
+        <input type="submit" class="genelButtonOrta" value="Yeni Görüşme" />
+    </div>
+</form>
+
+<table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+<form method="post" hidden="hidden" action="@Url.Action("HaneGorusmeSil", "HaneGorusme")" id="frmHaneGorusmeSil">
+    @Html.AntiForgeryToken()
+    <div id="divIslem">
+        <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />
+    </div>
+</form>

@@ -9,7 +9,13 @@ namespace bsy.Helpers
 {
     public static class SozlukHelper
     {
-        public static string rolKodu = "ROL";
+        public static string rolTuru = "ROL";
+        public static string ihtiyaclarTuru = "IHTIYACLAR";
+        public static string belediyeYardimiTuru = "BELEDIYEYARDIMI";
+        public static string evTuru = "EVTURU";
+        public static string evMulkiyetiTuru = "EVMULKIYETI";
+        public static string gelirDilimiTuru = "GELIRDILIMI";
+
         public static string bolgeKodu = "BOLGE";
         public static string sehirKodu = "SEHIR";
         public static string ilceKodu = "ILCE";
@@ -17,21 +23,21 @@ namespace bsy.Helpers
         public static string haneKodu = "HANE";
         public static string kisiKodu = "KISI";
 
-        public static string RolKoduBul(long id, string rolKodu)
+        public static string rolTuruBul(long id, string rolTuru)
         {
             if (id == 0)
             {
                 return sayiUret().ToString();
             }
 
-            return rolKodu;
+            return rolTuru;
         }
 
-        public static string RolKoduHazirla(long id)
+        public static string rolTuruHazirla(long id)
         {
             string idStr = id.ToString();
-            string sifirlar = GenelHelper.repeat("0", SabitlerHelper.SozlukKodBoyu - rolKodu.Length - idStr.Length);
-            return rolKodu + sifirlar + idStr;
+            string sifirlar = GenelHelper.repeat("0", SabitlerHelper.SozlukKodBoyu - rolTuru.Length - idStr.Length);
+            return rolTuru + sifirlar + idStr;
         }
 
         public static long sayiUret()
@@ -63,6 +69,24 @@ namespace bsy.Helpers
             return turListesi;
         }
 
+        public static IEnumerable<SelectListItem> anaSozlukKalemleriDD(bsyContext ctx, string turu, long secilen = 0, bool hepsiEkle = false)
+        {
+            IEnumerable<SelectListItem> sozlukListesi = (ctx.tblAnaSozluk.Where(item => item.Turu == turu).OrderBy(item => item.Aciklama)
+              .Select(s => new SelectListItem
+              {
+                  Value = s.id.ToString(),
+                  Text = s.Aciklama,
+                  Selected = s.id.Equals(secilen)
+              })).ToList();
+
+            if (hepsiEkle)
+            {
+                sozlukListesi = sozlukListesi.Prepend(new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false });
+            }
+            sozlukListesi.Append(new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false });
+
+            return sozlukListesi;
+        }
 
         public static IEnumerable<SelectListItem> sozlukKalemleriListesi(bsyContext ctx, string turu, long secilen = 0, bool hepsiEkle = false )
         {

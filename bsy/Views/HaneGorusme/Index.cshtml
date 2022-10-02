@@ -1,0 +1,91 @@
+﻿<script type="text/javascript">
+
+    $(window).bind('resize', function () {
+        $("#liste").jqGrid('destroyGroupHeader');
+        $("#liste").setGridWidth($(window).width() * shrinkFaktor, true);
+        setGridGroupHeaders();
+    }).trigger('resize');
+
+    function setGridGroupHeaders()
+    {
+
+    }
+
+    function haneGorusmeSec(cellvalue, options, rowObject)
+    {
+        var mesaj = "Bu Haneyi Seç";
+        if (rowObject[0] == 0) {
+            mesaj = "";
+        }
+
+        return "<a href='@Url.Action("Hane","HaneGorusme")?haneID=" + rowObject[0] + "&haneSec=1" + "'>" + mesaj + "</a>";
+    }
+
+    function haneGorusmeGoster(cellvalue, options, rowObject)
+    {
+        var mesaj = "Bu Hanenin Görüşmeleri";
+        if (rowObject[0] == 0) {
+            mesaj = "";
+        }
+
+        return "<a href='@Url.Action("Hane","HaneGorusme")?haneID=" + rowObject[0] + "&haneSec=0" + "'>" + mesaj + "</a>";
+    }
+
+    jQuery(document).ready(function () {
+
+        jQuery("#liste").jqGrid({ //hangi tablo onun id si
+            url: '@Url.Action("ListeHaneler", "HaneGorusme")', //ilki action ikincisi controller
+            datatype: 'json',
+            mtype: 'POST',
+            autowidth: true,
+            colNames: ['id', 'Hane Kodu', 'Şehir', 'İlçe', 'Mahalle', 'Cadde', 'Sokak', 'Apartman-Daire', 'Bu Haneyi Seç', 'Hane Görüşmeleri'],
+            colModel:
+            [
+              { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
+              { name: 'HANEKODU', index: 'HANEKODU', width: 50, search: true, sortable: false },
+              { name: 'SEHIR', index: 'SEHIR', width: 150, search: true, sortable: false },
+              { name: 'ILCE', index: 'ILCE', width: 150, search: true, sortable: false },
+              { name: 'MAHALLE', index: 'MAHALLE', width: 150, search: true, sortable: false },
+              { name: 'CADDE', index: 'CADDE', width: 150, search: true, sortable: false },
+              { name: 'SOKAK', index: 'SOKAK', width: 150, search: true, sortable: false },
+              { name: 'APARTMANDAIRE', index: 'APARTMANDAIRE', width: 75, search:true, sortable: false },
+              { name: 'Sec', index: 'DegiSecstir', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeSec },
+              { name: 'Gorusmeler', index: 'Gorusmeler', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeGoster }
+            ],
+            gridComplete: function ()
+            {
+                //alert("girdi");
+                gridCompleteOrtak("#liste", true);
+            },
+            shrinkToFit: true,
+            autowidth: true,
+            altRows: true,
+            altclass: "myAltRowClass",
+            toppager: true,
+            rowNum: 30,
+            rowList: [5, 10, 15, 20, 30],
+            sortname: 'MAHALLE',
+            sortorder: "asc",
+            viewrecords: true,
+            height: '100%',
+            caption: 'Haneler',
+            postData:
+                {
+                   'ilkGiris': function () { return '@ViewBag.IlkGiris' },
+                   'haneID': function () { return '@ViewBag.haneID' }
+                }
+        });
+
+        jQuery("#liste").jqGrid('filterToolbar', { searchOnEnter: true, enableClear: false, sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en', 'cn', 'nc'] });
+
+        setGridGroupHeaders();
+        gridCompleteOrtak("#liste", true);
+
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        @*$('#liste').jqGrid('setGridWidth', '1000');*@
+    });
+</script>
+
+<table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
+<div id="pager" class="scroll" style="text-align:center;"></div>

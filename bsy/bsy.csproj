@@ -369,6 +369,7 @@
     <Compile Include="Controllers\GirisController.cs" />
     <Compile Include="Controllers\GorevSahasiController.cs" />
     <Compile Include="Controllers\HaneController.cs" />
+    <Compile Include="Controllers\HaneGorusmeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IlceController.cs" />
     <Compile Include="Controllers\KisiController.cs" />
@@ -378,7 +379,7 @@
     <Compile Include="Controllers\RollerController.cs" />
     <Compile Include="Controllers\SehirController.cs" />
     <Compile Include="Controllers\SifreController.cs" />
-    <Compile Include="Controllers\SozlukController.cs" />
+    <Compile Include="Controllers\AnaSozlukController.cs" />
     <Compile Include="Controllers\SozlukTuruController.cs" />
     <Compile Include="Filters\ortakGenelFiltre.cs" />
     <Compile Include="Filters\OturumAcikMI.cs" />
@@ -395,6 +396,7 @@
     <Compile Include="Helpers\SifreHelper.cs" />
     <Compile Include="Helpers\SozlukHelper.cs" />
     <Compile Include="Helpers\TCKimlikNoValidation.cs" />
+    <Compile Include="Models\ANASOZLUK.cs" />
     <Compile Include="Models\AUDIT.cs" />
     <Compile Include="Models\BOLGE.cs" />
     <Compile Include="Models\bsyContext.cs" />
@@ -408,6 +410,7 @@
     <Compile Include="Models\GorevYeri.cs" />
     <Compile Include="Models\GorevYerleri.cs" />
     <Compile Include="Models\HANE.cs" />
+    <Compile Include="Models\HANEGORUSME.cs" />
     <Compile Include="Models\ILCE.cs" />
     <Compile Include="Models\IPACMA.cs" />
     <Compile Include="Models\KISI.cs" />
@@ -428,8 +431,10 @@
     <Compile Include="Models\SOZLUKTURU.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AnaSozluk\AnaSozlukVM.cs" />
     <Compile Include="ViewModels\Bolge\BolgeVM.cs" />
     <Compile Include="ViewModels\GorevSahasi\GorevSahasiVM.cs" />
+    <Compile Include="ViewModels\HaneGorusme\HaneGorusmeVM.cs" />
     <Compile Include="ViewModels\Hane\HaneVM.cs" />
     <Compile Include="ViewModels\Ilce\IlceVM.cs" />
     <Compile Include="ViewModels\Kisi\KisiVM.cs" />
@@ -648,6 +653,12 @@
     <Content Include="Views\Sozluk\Index.cshtml" />
     <Content Include="Views\Sozluk\Sozluk.cshtml" />
     <Content Include="Views\Sozluk\YeniSozluk.cshtml" />
+    <Content Include="Views\AnaSozluk\Index.cshtml" />
+    <Content Include="Views\HaneGorusme\Index.cshtml" />
+    <Content Include="Views\HaneGorusme\Hane.cshtml" />
+    <Content Include="Views\HaneGorusme\YeniHaneGorusme.cshtml" />
+    <Content Include="Views\AnaSozluk\AnaSozluk.cshtml" />
+    <Content Include="Views\AnaSozluk\YeniAnaSozluk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

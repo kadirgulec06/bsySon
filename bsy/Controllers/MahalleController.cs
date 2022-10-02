@@ -230,7 +230,7 @@ namespace bsy.Controllers
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
-            //yeniSozluk.Turu = SozlukHelper.rolKodu;
+            //yeniSozluk.Turu = SozlukHelper.rolTuru;
             if (!ModelState.IsValid)
             {
                 return View(yeniMahalleVM);

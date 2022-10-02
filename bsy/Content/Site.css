@@ -1320,3 +1320,306 @@ td.etiketSabit {
 }
 
 /* End Of Diğer Stiller II */
+
+
+/* 
+
+    TAB Formları İçin CSS
+
+*/
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .tabs .tab {
+        order: 99;
+        flex-grow: 1;
+        width: 100%;
+        display: none;
+        padding: 1rem;
+        background: #fff;
+    }
+
+
+    .tabs input[type="radio"] {
+        display: none;
+    }
+
+        .tabs input[type="radio"] + label {
+            background-color: black;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 120px;
+            height: 40px;
+            border-top-left-radius: 20px 25px;
+            text-wrap: normal;
+            /*                   
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+                box-shadow: 5px 5px 25px 1px rgba(0,0,0,0.25); 
+            */
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            cursor: pointer;
+            outline: 0;
+            transition: 0.3s linear;
+            transform: scale(1);
+        }
+
+            .tabs input[type="radio"] + label:hover {
+                background-color: lime;
+                color: black;
+                font-weight: 600;
+            }
+
+        .tabs input[type="radio"]:checked + label {
+            background-color: yellow;
+            color: black;
+            font-weight: 700;
+            z-index: 9;
+            /*
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+                box-shadow: 0 3px lightgray;
+                transform: translateY(2px);
+                */
+            transition: 0.3s linear;
+            transform: scale(1.05);
+            box-shadow: rgba(0, 0, 0, 0.25) 5px 5px, rgba(0, 0, 0, 0.22) 10px 10px, rgba(0, 0, 0, 0.15) 15px 15px, rgba(0, 0, 0, 0.10) 20px 20px, rgba(0, 0, 0, 0.05) 25px 25px;
+            /*
+                box-shadow: 3px 2px 25px 1px rgba(0,0,0,0.25);
+                box-shadow: -12px -12px 0px 0px #000;
+           */
+        }
+
+            .tabs input[type="radio"]:checked + label + .tab {
+                display: block;
+            }
+
+.divForm label {
+    float: left;
+    height: 2em;
+    width: 20em;
+    text-align: right;
+    background-color: gainsboro;
+    clear: both;
+}
+
+.divIslem label {
+    float: left;
+    width: 20em;
+    text-align: right;
+    background-color: white;
+    clear: both;
+}
+
+
+/*   
+
+TAB 2 CSS 
+
+*/
+
+/*
+#tabKutulari {
+    background: gainsboro;
+}
+
+    #tabKutulari li {
+        color: white;
+        font-weight: 600;
+        font-size: 11.5px;
+        display: flex;
+        background: black;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 130px;
+        height: 40px;
+        border-top-left-radius: 20px 25px;
+        text-wrap: normal;
+        white-space: pre-wrap;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        cursor: pointer;
+        outline: 0;
+        transition: 0.3s linear;
+        transform: scale(1);
+    }
+
+        #tabKutulari li:hover {
+            background-color: lime;
+            color: black;
+            font-weight: 600;
+        }
+
+        #tabKutulari li a {
+            font-size: 11.3px;
+        }
+
+        #tabKutulari li + a {
+            background: black;
+            color: white;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            display: inline-block;
+            width: 120px;
+            max-width: 120px;
+            vertical-align: middle;
+            white-space: pre-wrap;
+        }
+
+
+        #tabKutulari li.ui-state-active a {
+            color: black;
+        }
+
+        #tabKutulari li.ui-state-active {
+            color: black;
+            background: yellow;
+            font-weight: 700;
+            z-index: 9;           
+            transition: 0.3s linear;
+            transform: scale(1.05);
+            box-shadow: rgba(0, 0, 0, 0.25) 5px 5px, rgba(0, 0, 0, 0.22) 10px 10px, rgba(0, 0, 0, 0.15) 15px 15px, rgba(0, 0, 0, 0.10) 20px 20px, rgba(0, 0, 0, 0.05) 25px 25px;
+            
+        }
+
+    */
+
+
+#tabKutulari {
+    background: gainsboro;
+}
+
+    #tabKutulari li {
+        color: white;
+        font-weight: 600;
+        font-size: 11.5px;
+        display: flex;
+        background: black;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 130px;
+        height: 40px;
+        border-top-left-radius: 20px 25px;
+        text-wrap: normal;
+        white-space: pre-wrap;
+        /*
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+                box-shadow: 5px 5px 25px 1px rgba(0,0,0,0.25);
+            */
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        cursor: pointer;
+        outline: 0;
+        transition: 0.5s linear;
+        transform: scale(1);
+    }
+
+        #tabKutulari li:hover {
+            background-color: lime;
+            color: black;
+            font-weight: 600;
+        }
+
+        #tabKutulari li a {
+            color: white;
+            font-size: 11.3px;
+        }
+
+        #tabKutulari li + a {
+            background: black;
+            color: white;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            display: inline-block;
+            width: 120px;
+            max-width: 120px;
+            vertical-align: middle;
+            white-space: pre-wrap;
+        }
+
+        #tabKutulari li.ui-state-active a {
+            color: black;
+        }
+
+        #tabKutulari li.ui-state-active {
+            color: black;
+            background: yellow;
+            font-weight: 700;
+            z-index: 9;
+            /*
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+                box-shadow: 0 3px lightgray;
+                transform: translateY(2px);
+                */
+            transition: 0.5s linear;
+            transform: scale(1.05);
+            box-shadow: rgba(0, 0, 0, 0.25) 5px 5px, rgba(0, 0, 0, 0.22) 10px 10px, rgba(0, 0, 0, 0.15) 15px 15px, rgba(0, 0, 0, 0.10) 20px 20px, rgba(0, 0, 0, 0.05) 25px 25px;
+            /*
+                box-shadow: 3px 2px 25px 1px rgba(0,0,0,0.25);
+                box-shadow: -12px -12px 0px 0px #000;
+           */
+        }
+
+/*
+#tabView .tabFormu {
+    opacity: 0;
+    animation: sagdanCik 1s forwards;
+}
+*/
+
+#tabView .tabFormu.selected {
+    opacity: 1;
+    animation: soldanGir 1s forwards;
+}
+
+@keyframes hideMe {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes showMe {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes soldanGir {
+    0% {
+        transform: translateX(-900px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes sagdanCik {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(9999px);
+    }
+}
+
+/*   END Tab styles  */

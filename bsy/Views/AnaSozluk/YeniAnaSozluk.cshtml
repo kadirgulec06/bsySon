@@ -1,0 +1,53 @@
+﻿@model bsy.ViewModels.AnaSozluk.AnaSozlukVM
+
+<script type="text/javascript">
+
+</script>
+
+@using (Html.BeginForm("YeniAnaSozluk", "AnaSozluk", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => Model.sozluk.id)
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style" style="border-width:2px;width:600px">
+            <table>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Türü :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.sozluk.Turu, new { Value = Model.Tur, @class = "veri", @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Sözlük Kalemi :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.sozluk.Aciklama, new { Value = Model.sozluk.Aciklama, @class = "veri" })
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Kalem Ek Bilgileri
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.sozluk.EkBilgi, new { Value = Model.sozluk.EkBilgi, @class = "veri" })
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                    <td align="left">
+                        <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" />
+                        <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("AnaSozluk", "AnaSozluk")'" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+}

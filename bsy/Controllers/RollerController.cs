@@ -159,7 +159,7 @@ namespace bsy.Controllers
                 rolVM.userID = user.id;
 
                 var roller = (from rs in context.tblSozluk
-                              where rs.Turu == SozlukHelper.rolKodu
+                              where rs.Turu == SozlukHelper.rolTuru
                               orderby rs.Aciklama
                               select rs.Aciklama).ToList();
 
