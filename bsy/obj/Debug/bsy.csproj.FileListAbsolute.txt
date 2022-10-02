@@ -253,3 +253,4 @@ C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\Nexmo.Api.xml
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\System.ComponentModel.Annotations.dll
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\Vonage.dll
 C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\bin\Vonage.xml
+C:\Yazilimlar\Denemeler\bsySon\bsy\bsy\obj\Debug\bsy.csprojAssemblyReference.cache

@@ -17,12 +17,14 @@
     }
 
     function saveSelectedTabIndex(tabIX) {
-        var oldSelectedForm = $("#tabKutulari li.ui-tabs-selected a");
-        $(oldSelectedForm.attr("href")).removeClass("selected");
+        var oldSelectedForm = $("#tabKutulari li.ui-tabs-active a");
+        //alert(oldSelectedForm);
+        //alert(oldSelectedForm.attr("href"));
+        $(oldSelectedForm.attr("href")).removeClass("active");
         document.getElementById("tabIndex").value = tabIX;
         var tabNo = tabIX + 1;
         var selectedForm = $("#tabKutulari li:nth-child(" + tabNo + ") a");
-        $(selectedForm.attr("href")).addClass("selected");
+        $(selectedForm.attr("href")).addClass("active");
     }
 
     $(function () {
@@ -33,6 +35,15 @@
 
         selectTab();
 
+        $("#tabView").tabs({
+            activate: function (event, ui) {
+                var tabIX = ui.newTab.index();
+                //alert(tabIX);
+                saveSelectedTabIndex(tabIX);
+            }
+        });
+
+        /*
         $('#tabView').tabs({
             select: function (event, ui) {
                 var tabIX = ui.index;
@@ -40,6 +51,7 @@
                 saveSelectedTabIndex(tabIX);
             }
         });
+        * /
 
         /*
         izinGorev = document.getElementById('IzinGorev').value;
@@ -94,7 +106,7 @@
                 <font size="3" color=black><b>@ViewBag.Title</b></font>
                 <br />
                 <br />
-                <div id="frmKunye" class="tabFormu selected">
+                <div id="frmKunye" class="tabFormu active">
                     <div class="divForm">
                         <fieldset class="field_style cerceveKucuk">
                             <table>

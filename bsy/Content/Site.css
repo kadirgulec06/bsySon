@@ -1577,7 +1577,7 @@ TAB 2 CSS
 }
 */
 
-#tabView .tabFormu.selected {
+#tabView .tabFormu.active {
     opacity: 1;
     animation: soldanGir 1s forwards;
 }
