@@ -281,6 +281,7 @@ namespace bsy.Controllers
                             join hn in context.tblHaneler on kh.HaneID equals hn.id
                             join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                             where
+                              (kh.HaneID == haneID || haneID == 0) &&
                               (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
                             group kh by kh.BasTar into khGRP
                             select khGRP.OrderByDescending(g => g.BasTar).FirstOrDefault());
@@ -385,6 +386,7 @@ namespace bsy.Controllers
             Session["HaneSec"] = 0;
 
             ViewBag.IlkGiris = 1;
+            ViewBag.haneID = 0;
 
             return View();
         }
@@ -395,6 +397,7 @@ namespace bsy.Controllers
             Session["haneID"] = haneID;
 
             ViewBag.IlkGiris = 1;
+            ViewBag.haneID = haneID;
 
             return View();
         }

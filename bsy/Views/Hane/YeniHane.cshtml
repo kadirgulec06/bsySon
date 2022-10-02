@@ -232,7 +232,10 @@
             <tr>
                 <td>
                     <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return HaneClickHandler();" />
-                    <input type="button" value="İptal" class="genelButton" onclick="location.href='@Url.Action("Index", "Hane")'" />
+                    <a class="genelButton" href='@Url.Action("Mahalle", "Hane")?mahalleID=@Model.kunye.MahalleID.ToString()&mahalleSec=0'>
+                        <input type="button" class="genelButton" name="btnHaneGorusme" value="Devam" />
+                    </a>
+                    <input type="button" value="Haneler" class="genelButton" onclick="location.href='@Url.Action("Index", "Hane")'" />
                     @if (Model.kayitYapildi == 1)
                     {
                         <a target="_blank" class="genelButton" href='@Url.Action("Hane", "HaneGorusme")?haneID=@Model.kunye.HaneID.ToString()&haneSec=0'>

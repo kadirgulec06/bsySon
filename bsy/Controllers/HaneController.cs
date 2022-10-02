@@ -638,7 +638,7 @@ namespace bsy.Controllers
             int mahalleSec = (int)Session["mahalleSec"];
             long mahalleID = (long)Session["mahalleID"];
 
-            eskiHane.kayitYapildi = 0;
+            eskiHane.kayitYapildi = 1;
             return View(eskiHane);
 
             Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Hane/Mahalle?mahalleID="+mahalleID.ToString()+ "&mahalleSec="+mahalleSec.ToString(), false);
