@@ -433,6 +433,7 @@ namespace bsy.Controllers
                                  hx.Sokak,
                                  hx.ApartmanDaire,
                                  Gorusmeler=0,
+                                 Kisiler=0,
                                  Degistir = 0,
                                  Sil = 0
                              }).ToList();
@@ -462,6 +463,7 @@ namespace bsy.Controllers
                                  hx.Sokak,
                                  hx.ApartmanDaire,
                                  hx.Gorusmeler.ToString(),
+                                 hx.Kisiler.ToString(),
                                  hx.Degistir.ToString(),
                                  hx.Sil.ToString()
                        }
@@ -539,6 +541,7 @@ namespace bsy.Controllers
             if (hane.id != 0)
             {
                 haneVM.kunye = SozlukHelper.KunyeHazirla(context, hane.id);
+                haneVM.kayitYapildi = 1;
             }
             else
             {
