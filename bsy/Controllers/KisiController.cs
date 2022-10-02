@@ -463,7 +463,7 @@ namespace bsy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult YeniKisi(KisiVM yeniKisi, string btnSubmit)
         {
-            //yeniKisi = listeleriHazirla(yeniKisi);
+            yeniKisi = listeleriHazirla(yeniKisi);
             
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
