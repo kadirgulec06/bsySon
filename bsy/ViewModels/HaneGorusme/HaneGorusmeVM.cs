@@ -9,6 +9,7 @@ namespace bsy.ViewModels.HaneGorusme
 {
     public class HaneGorusmeVM
     {
+        public int yeniGorusme { get; set; }
         public int tabIndex { get; set; }
         public Kunye kunye { get; set; }
         public HANEGORUSME haneGorusme { get; set; }

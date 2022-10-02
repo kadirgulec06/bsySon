@@ -37,7 +37,13 @@
             mesaj = "Ekle";
         }
 
-        return "<a href='@Url.Action("YeniHaneGorusme","HaneGorusme")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
+        return "<a href='@Url.Action("YeniHaneGorusme","HaneGorusme")?id=" + rowObject[0] + "&yeniGorusme=0'>" + mesaj + "</a>";
+    }
+
+    function haneGorusmeEkle(cellvalue, options, rowObject)
+    {
+        var mesaj = "Yeni Görüşme";
+        return "<a href='@Url.Action("YeniHaneGorusme","HaneGorusme")?id=" + rowObject[0] + "&yeniGorusme=1'>" + mesaj + "</a>";
     }
 
     jQuery(document).ready(function () {
@@ -47,7 +53,7 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Hane ID', 'Hane Kodu', 'Şehir', 'İlçe', 'Mahalle', 'Cadde', 'Sokak', 'Apartman-Daire', 'Görüşme Tarihi', 'Görüşme Açıklaması', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Hane ID', 'Hane Kodu', 'Şehir', 'İlçe', 'Mahalle', 'Cadde', 'Sokak', 'Apartman-Daire', 'Görüşme Tarihi', 'Görüşme Açıklaması', 'Ekle', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
@@ -61,6 +67,7 @@
               { name: 'APARTMANDAIRE', index: 'APARTMANDAIRE', width: 75, search:true, sortable: false },
               { name: 'GORUSMETARIHI', index: 'GORUSMETARIHI', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
               { name: 'ACIKLAMA', index: 'ACIKLAMA', width: 150, search: true, sortable: false },
+              { name: 'Ekle', index: 'Ekle', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeEkle },
               { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeGunle },
               { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeSilHazirla }
             ],
@@ -101,6 +108,8 @@
 
 <form method="get" action="@Url.Action("YeniHaneGorusme", "HaneGorusme")" id="frmYeniHaneGorusme">
     <div id="divIslem">
+        <input type="hidden" name="id" value="0" />
+        <input type="hidden" name="yeniGorusme" value="1" />
         <input type="submit" class="genelButtonOrta" value="Yeni Görüşme" />
     </div>
 </form>

@@ -475,6 +475,7 @@ namespace bsy.Controllers
             Session["mahalleID"] = 0;
 
             ViewBag.IlkGiris = 1;
+            ViewBag.mahalleID = 0;
 
             return View();
         }
@@ -485,6 +486,7 @@ namespace bsy.Controllers
             Session["mahalleID"] = mahalleID;
 
             ViewBag.IlkGiris = 1;
+            ViewBag.mahalleID = mahalleID;
 
             return View();
         }
@@ -518,8 +520,18 @@ namespace bsy.Controllers
         {
             long mahalleID = (long)Session["mahalleID"];
             HaneVM haneVM = new HaneVM();
-            haneVM.hane = hane;
 
+            if (hane.MahalleID == 0)
+            {
+                hane.MahalleID = mahalleID;
+            }
+            else
+            {
+                mahalleID = hane.MahalleID;
+            }
+
+            haneVM.hane = hane;
+            
             if (hane.id != 0)
             {
                 haneVM.kunye = SozlukHelper.KunyeHazirla(context, hane.id);

@@ -310,6 +310,7 @@ namespace bsy.Controllers
                                  hg.ApartmanDaire,
                                  hg.GorusmeTarihi,
                                  hg.Aciklama,
+                                 Ekle=0,
                                  Degistir = 0,
                                  Sil = 0
                              }).ToList();
@@ -341,11 +342,13 @@ namespace bsy.Controllers
                                  hg.ApartmanDaire,
                                  hg.GorusmeTarihi.ToShortDateString(),
                                  hg.Aciklama,
+                                 hg.Ekle.ToString(),
                                  hg.Degistir.ToString(),
                                  hg.Sil.ToString()
                        }
                   }).ToArray()
             };
+
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
@@ -371,15 +374,8 @@ namespace bsy.Controllers
             return View();
         }
 
-        public ActionResult YeniHaneGorusme(long id = 0)
-        {
-            /*
-            if (id != 0)
-            {
-                Session["haneSec"] = 0;
-                Session["haneID"] = id;
-            }
-            */
+        public ActionResult YeniHaneGorusme(long id = 0, int yeniGorusme=0)
+        {                           
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
@@ -399,6 +395,7 @@ namespace bsy.Controllers
             }
 
             HaneGorusmeVM haneVM = haneGorusmeHazirla(hane);
+            haneVM.yeniGorusme = yeniGorusme;
 
             return View(haneVM);
         }
@@ -407,28 +404,25 @@ namespace bsy.Controllers
         {
             long haneID = (long)Session["haneID"];
             HaneGorusmeVM haneVM = new HaneGorusmeVM();
-            haneVM.haneGorusme = hane;
 
-            haneVM.kunye = SozlukHelper.KunyeHazirla(context, haneID);
-
-            if (hane.HaneID != 0)
+            if (hane.HaneID == 0)
             {
-                haneVM.kunye = SozlukHelper.KunyeHazirla(context, hane.HaneID);
-                haneID = hane.HaneID;
+                hane.HaneID = haneID;
             }
             else
             {
-                haneVM.kunye = SozlukHelper.KunyeHazirla(context, haneID);
+                haneID = hane.HaneID;
             }
 
-            haneVM.haneGorusme.HaneID = haneID;
+            haneVM.haneGorusme = hane;
+
+            haneVM.kunye = SozlukHelper.KunyeHazirla(context, haneID);
 
             haneVM.Ihtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, hane.Ihtiyaclar, true);
             haneVM.BelediyeYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, hane.BelediyeYardimi, true);
             haneVM.EvMulkiyeti = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, hane.EvMulkiyeti, true);
             haneVM.EvTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, hane.EvTuru, true);
             haneVM.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hane.HaneGelirDilimi, true);
-
 
             return haneVM;
         }
@@ -470,9 +464,10 @@ namespace bsy.Controllers
                 try
                 {
                     eskiHane = HaneYeniToEski(eskiHane, yeniHane);
-                    if (eskiHane.haneGorusme.id == 0)
+                    if (eskiHane.haneGorusme.id == 0 || eskiHane.yeniGorusme == 1)
                     {
                         yeniHaneIslemi = true;
+                        eskiHane.haneGorusme.id = 0;
                         hane = context.tblHaneGorusme.Where(kx => kx.HaneID == eskiHane.haneGorusme.HaneID &&
                                                             kx.GorusmeTarihi == eskiHane.haneGorusme.GorusmeTarihi).FirstOrDefault();
                         if (hane != null)
@@ -526,8 +521,12 @@ namespace bsy.Controllers
 
         private HaneGorusmeVM HaneYeniToEski(HaneGorusmeVM eskiHane, HaneGorusmeVM yeniHane)
         {
-            eskiHane.kunye.HaneID = yeniHane.haneGorusme.id;
+            if (yeniHane.haneGorusme.HaneID != 0)
+            {
+                eskiHane.kunye.HaneID = yeniHane.haneGorusme.HaneID;
+            }
 
+            eskiHane.yeniGorusme = yeniHane.yeniGorusme;
             eskiHane.haneGorusme.id = yeniHane.haneGorusme.id;
             eskiHane.haneGorusme.HaneID = yeniHane.kunye.HaneID;
             eskiHane.haneGorusme.GorusmeTarihi = yeniHane.haneGorusme.GorusmeTarihi;
@@ -536,6 +535,7 @@ namespace bsy.Controllers
             eskiHane.haneGorusme.BelediyeYardimi = yeniHane.haneGorusme.BelediyeYardimi;
             eskiHane.haneGorusme.EvTuru = yeniHane.haneGorusme.EvTuru;
             eskiHane.haneGorusme.EvMulkiyeti = yeniHane.haneGorusme.EvMulkiyeti;
+            eskiHane.haneGorusme.KiraTutari = yeniHane.haneGorusme.KiraTutari;
             eskiHane.haneGorusme.EkBilgi = yeniHane.haneGorusme.EkBilgi;
             eskiHane.haneGorusme.HaneGelirDilimi = yeniHane.haneGorusme.HaneGelirDilimi;
 

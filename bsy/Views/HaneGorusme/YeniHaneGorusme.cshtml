@@ -74,6 +74,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
 
+        @Html.HiddenFor(model => Model.yeniGorusme)
         @Html.HiddenFor(model => Model.haneGorusme.id)
 
         @Html.HiddenFor(model => Model.kunye.BolgeID)
@@ -177,7 +178,7 @@
                             </table>
                         </fieldset>
                     </div>  @*  END frmGorusme01 *@
-                </div>   
+                </div>
 
                 <div id="frmGorusme02" class="tabFormu">
                     <div class="divForm">
@@ -257,7 +258,7 @@
                 </table>
             </div>
 
-        </div>  @* END divAna *@
+        </div> @* END divAna *@
     }
 
     <form method="post" hidden="hidden" action="@Url.Action("Index", "HaneGorusme")" id="frmHaneGorusmeIndex">
