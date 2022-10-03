@@ -43,12 +43,42 @@
     }
 
     function ilceDegisti(control) {
-        return;
         var ilce = control.value;
-        var frm = document.getElementById("frmHaneIndex");
-        document.getElementById("ilceID").value = ilce;
-        frm.submit();
+        //alert(ilce);
+        $.ajax({
+            type: "POST",
+            data: { ilceID: ilce },
+            url: '@Url.Action("IlceninMahalleleri", "Genel")',
+            dataType: 'json',
+            success: function (json) {
+
+                //alert("girdi");
+                var $el = $("#mahallelerSelect");
+                $el.empty(); // remove old options
+
+                $el.append($("<option></option>")
+                    .attr("value", '0').text('_Bütün Mahalleler'));
+
+                $.each(json, function (value, key) {
+                    //alert(value);
+                    //alert(key.text);
+                    //alert(key.value);
+                    $el.append($("<option></option>")
+                        .attr("value", key.value).text(key.text));
+                });
+            }
+        });
+
+        return;
     }
+
+        function mahalleDegisti(control) {
+            return;
+            var mahalle = control.value;
+            var frm = document.getElementById("frmMahalleIndex");
+            document.getElementById("mahalleID").value = mahalle;
+            frm.submit();
+        }
 
     $(document).ready(function () {
         /*
@@ -84,45 +114,87 @@
     @Html.HiddenFor(model => Model.hane.MahalleID)
     @Html.HiddenFor(model => Model.hane.id)
 
-    @Html.HiddenFor(model => Model.kunye.BolgeID)
-    @Html.HiddenFor(model => Model.kunye.SehirID)
-    @Html.HiddenFor(model => Model.kunye.IlceID)
-    @Html.HiddenFor(model => Model.kunye.MahalleID)
-    @Html.HiddenFor(model => Model.kunye.HaneID)
+<div id="divAna">
+    <font size="3" color=black><b>@ViewBag.Title</b></font>
+    <br />
+    <br />
+    @if (Model.kunye.kunyeID.MahalleID != 0)
+    {
+        @Html.HiddenFor(model => Model.kunye.kunyeID.BolgeID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.SehirID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.IlceID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.MahalleID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.HaneID)
 
-    <div id="divAna">
-        <font size="3" color=black><b>@ViewBag.Title</b></font>
-        <br />
-        <br />
-        <fieldset class="field_style cerceveKucuk">
-            <table>
-                <tr class="veri">
-                    <td align="right" class="etiketSabit">
-                        Şehir :
-                    </td>
-                    <td align="left">
-                        @Html.TextBoxFor(model => model.kunye.Sehir, new { @readonly = "readonly" })
-                    </td>
-                </tr>
-                <tr class="veri">
-                    <td align="right" class="etiketSabit">
-                        İlçe :
-                    </td>
-                    <td align="left">
-                        @Html.TextBoxFor(model => model.kunye.Ilce, new { @readonly = "readonly" })
-                    </td>
-                </tr>
-                <tr class="veri">
-                    <td align="right" class="etiketSabit">
-                        Mahalle :
-                    </td>
-                    <td align="left">
-                        @Html.TextBoxFor(model => model.kunye.Mahalle, new { @readonly = "readonly" })
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
-        <br />
+        <div id="frmKunye">
+            <fieldset class="field_style cerceveKucuk">
+                <table>
+                    <tr class="veri">
+                        <td align="right" class="etiketSabit">
+                            Şehir :
+                        </td>
+                        <td align="left">
+                            @Html.TextBoxFor(model => model.kunye.kunyeBilgi.Sehir, new { @readonly = "readonly" })
+                        </td>
+                    </tr>
+                    <tr class="veri">
+                        <td align="right" class="etiketSabit">
+                            İlçe :
+                        </td>
+                        <td align="left">
+                            @Html.TextBoxFor(model => model.kunye.kunyeBilgi.Ilce, new { @readonly = "readonly" })
+                        </td>
+                    </tr>
+                    <tr class="veri">
+                        <td align="right" class="etiketSabit">
+                            Mahalle :
+                        </td>
+                        <td align="left">
+                            @Html.TextBoxFor(model => model.kunye.kunyeBilgi.Mahalle, new { @readonly = "readonly" })
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+    }
+    else
+    {
+        <div class="divForm" id="frmListeler">
+            <fieldset class="field_style cerceveKucuk">
+                <table>
+                    <tr class="veri">
+                        <td align="right" class="etiketSabit">
+                            Şehir :
+                        </td>
+                        <td align="left">
+                            @Html.DropDownListFor(model => model.kunye.kunyeID.SehirID, new SelectList(Model.kunye.kunyeListe.sehirler, "Value", "Text"), new { @style = "width:340px", @onchange = "sehirDegisti(this)", @class = "veri" })
+                            @Html.ValidationMessageFor(model => model.kunye.kunyeID.SehirID)
+                        </td>
+                    </tr>
+                    <tr class="veri">
+                        <td align="right" class="etiketSabit">
+                            İlçe :
+                        </td>
+                        <td align="left">
+                            @Html.DropDownListFor(model => model.kunye.kunyeID.IlceID, new SelectList(Model.kunye.kunyeListe.ilceler, "Value", "Text"), new { id = "ilcelerSelect", @style = "width:340px", @onchange = "ilceDegisti(this)", @class = "veri" })
+                            @Html.ValidationMessageFor(model => model.kunye.kunyeID.IlceID)
+                        </td>
+                    </tr>
+                    <tr class="veri">
+                        <td align="right" class="etiketSabit">
+                            Mahalle :
+                        </td>
+                        <td align="left">
+                            @Html.DropDownListFor(model => model.kunye.kunyeID.MahalleID, new SelectList(Model.kunye.kunyeListe.mahalleler, "Value", "Text"), new { id = "mahallelerSelect", @style = "width:340px", @onchange = "mahalleDegisti(this)", @class = "veri" })
+                            @Html.ValidationMessageFor(model => model.kunye.kunyeID.MahalleID)
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+    }
+    <br />
+    <div id="frmHaneBilgileri">
         <h3>Hane Bilgileri</h3>
         <fieldset class="field_style cerceveKucuk">
             <table id="haneTablosu">
@@ -232,23 +304,24 @@
             <tr>
                 <td>
                     <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return HaneClickHandler();" />
-                    <a class="genelButton" href='@Url.Action("Mahalle", "Hane")?mahalleID=@Model.kunye.MahalleID.ToString()&mahalleSec=0'>
-                        <input type="button" class="genelButton" name="btnHaneGorusme" value="Mahalle" />
+                    <a class="genelButton" href='@Url.Action("Mahalle", "Hane")?mahalleID=@Model.kunye.kunyeID.MahalleID.ToString()&mahalleSec=0'>
+                        <input type="button" class="genelButton" name="btnHaneGorusme" value="Haneler" />
                     </a>
-                    <input type="button" value="Haneler" class="genelButton" onclick="location.href='@Url.Action("Index", "Hane")'" />
-                    @if (Model.kayitYapildi == 1)
+                    <input type="button" value="Mahalleler" class="genelButton" onclick="location.href='@Url.Action("Index", "Hane")'" />
+                    @if (Model.kayitVar == 1)
                     {
-                        <a target="_blank" class="genelButton" href='@Url.Action("Hane", "HaneGorusme")?haneID=@Model.kunye.HaneID.ToString()&haneSec=0'>
+                        <a target="_blank" class="genelButton" href='@Url.Action("Hane", "HaneGorusme")?haneID=@Model.kunye.kunyeID.HaneID.ToString()&haneSec=0'>
                             <input type="button" class="genelButton" name="btnHaneGorusme" value="Görüşmeler" />
                         </a>
-                        <a target="_blank" class="genelButton" href='@Url.Action("Hane", "Kisi")?haneID=@Model.kunye.HaneID.ToString()&haneSec=0'>
+                        <a target="_blank" class="genelButton" href='@Url.Action("Hane", "Kisi")?haneID=@Model.kunye.kunyeID.HaneID.ToString()&haneSec=0'>
                             <input type="button" class="genelButton" name="btnHaneGorusme" value="Kisiler" />
                         </a>
                     }
                 </td>
             </tr>
         </table>
-    </div>
+    </div>   @* END frmHaneBilgileri *@
+</div>
 }
 
 <form method="post" hidden="hidden" action="@Url.Action("Index", "Hane")" id="frmHaneIndex">

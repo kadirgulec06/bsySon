@@ -187,7 +187,7 @@ namespace bsy.Controllers
             sehirVM.sozluk = soz;
             sehirVM.sehir = sehir;
 
-            sehirVM.bolgeler = SozlukHelper.sozlukKalemleriListesi(context, "BOLGE", 0);
+            sehirVM.bolgeler = SozlukHelper.sozlukKalemleriDD(context, "BOLGE", 0, 0);
             sehirVM.bolgeADI = SozlukHelper.sozlukAciklama(context, sehir.bolgeID);
 
             return sehirVM;

@@ -69,7 +69,7 @@ namespace bsy.Helpers
             return turListesi;
         }
 
-        public static IEnumerable<SelectListItem> anaSozlukKalemleriDD(bsyContext ctx, string turu, long secilen = 0, bool hepsiEkle = false)
+        public static IEnumerable<SelectListItem> anaSozlukKalemleriDD(bsyContext ctx, string turu, long secilen = 0, int bosHepsiHicbiri = 0)
         {
             IEnumerable<SelectListItem> sozlukListesi = (ctx.tblAnaSozluk.Where(item => item.Turu == turu).OrderBy(item => item.Aciklama)
               .Select(s => new SelectListItem
@@ -79,16 +79,22 @@ namespace bsy.Helpers
                   Selected = s.id.Equals(secilen)
               })).ToList();
 
-            if (hepsiEkle)
+            SelectListItem hepsiHicbiri = new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false };
+            if (bosHepsiHicbiri == 2)
             {
-                sozlukListesi = sozlukListesi.Prepend(new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false });
+                new SelectListItem { Value = "0", Text = "_Hiçbiri", Selected = false };
             }
-            sozlukListesi.Append(new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false });
+
+            if (bosHepsiHicbiri > 0)
+            {
+                sozlukListesi = sozlukListesi.Prepend(hepsiHicbiri);
+                sozlukListesi.Append(hepsiHicbiri);
+            }
 
             return sozlukListesi;
         }
 
-        public static IEnumerable<SelectListItem> sozlukKalemleriListesi(bsyContext ctx, string turu, long secilen = 0, bool hepsiEkle = false )
+        public static IEnumerable<SelectListItem> sozlukKalemleriDD(bsyContext ctx, string turu, long secilen = 0, int bosHepsiHicbiri=0 )
         {
             IEnumerable<SelectListItem> sozlukListesi = (ctx.tblSozluk.Where(item => item.Turu == turu).OrderBy(item => item.Aciklama)
               .Select(s => new SelectListItem
@@ -98,11 +104,17 @@ namespace bsy.Helpers
                   Selected = s.id.Equals(secilen)
               })).ToList();
 
-            if (hepsiEkle)
+            SelectListItem hepsiHicbiri = new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false };
+            if (bosHepsiHicbiri == 2)
             {
-                sozlukListesi = sozlukListesi.Prepend(new SelectListItem{ Value =  "0", Text = "_Bütün Hepsi", Selected=false });
+                new SelectListItem { Value = "0", Text = "_Hiçbiri", Selected = false };
             }
-            sozlukListesi.Append(new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false });
+
+            if (bosHepsiHicbiri > 0)
+            {
+                sozlukListesi = sozlukListesi.Prepend(hepsiHicbiri);
+                sozlukListesi.Append(hepsiHicbiri);
+            }
 
             return sozlukListesi;
         }
@@ -202,30 +214,30 @@ namespace bsy.Helpers
                 switch (soz.Turu.Trim())
                 {
                     case "KISI":
-                        kunye.KisiID = birimID;
-                        kunye.AdSoyad = soz.Aciklama;
-                        kunye.TCNo = soz.Parametre;
-                        kunye.HaneID = KisiHelper.kisiHanesi(ctx, kunye.KisiID);
-                        yeniBirim = kunye.HaneID;
+                        kunye.kunyeID.KisiID = birimID;
+                        kunye.kunyeBilgi.AdSoyad = soz.Aciklama;
+                        kunye.kunyeID.TCNo = soz.Parametre;
+                        kunye.kunyeID.HaneID = KisiHelper.kisiHanesi(ctx, kunye.kunyeID.KisiID);
+                        yeniBirim = kunye.kunyeID.HaneID;
                         break;
                     case "HANE":
-                        kunye.HaneID = birimID;
-                        kunye.Adres = haneAdresi(ctx, birimID);
-                        kunye.HaneKODU = soz.Parametre;
-                        kunye.haneBilgileri = soz.Aciklama;
+                        kunye.kunyeID.HaneID = birimID;
+                        kunye.kunyeBilgi.Adres = haneAdresi(ctx, birimID);
+                        kunye.kunyeID.HaneKODU = soz.Parametre;
+                        kunye.kunyeBilgi.haneBilgileri = soz.Aciklama;
                         break;
                     case "MAHALLE":
-                        kunye.MahalleID = birimID;
-                        kunye.Mahalle = soz.Aciklama;
-                        kunye.MahalleKodu = soz.Parametre;
+                        kunye.kunyeID.MahalleID = birimID;
+                        kunye.kunyeBilgi.Mahalle = soz.Aciklama;
+                        kunye.kunyeID.MahalleKodu = soz.Parametre;
                         break;
                     case "ILCE":
-                        kunye.IlceID = birimID;
-                        kunye.Ilce = soz.Aciklama;
+                        kunye.kunyeID.IlceID = birimID;
+                        kunye.kunyeBilgi.Ilce = soz.Aciklama;
                         break;
                     case "SEHIR":
-                        kunye.SehirID = birimID;
-                        kunye.Sehir = soz.Aciklama;
+                        kunye.kunyeID.SehirID = birimID;
+                        kunye.kunyeBilgi.Sehir = soz.Aciklama;
                         break;
                     default:
                         break;
@@ -235,9 +247,22 @@ namespace bsy.Helpers
                 soz = ctx.tblSozluk.Find(birimID);
             }
 
+            kunye.kunyeListe = KunyeListeleri(ctx, kunye.kunyeID, 0);
+
             return kunye;
         }
 
+        public static KunyeListe KunyeListeleri(bsyContext ctx, KunyeID kunyeID, int bosHepsiHicbiri)
+        {
+            KunyeListe kunyeListe = new KunyeListe();
+
+            kunyeListe.bolgeler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.bolgeKodu, kunyeID.BolgeID,  bosHepsiHicbiri);
+            kunyeListe.sehirler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.sehirKodu, kunyeID.SehirID, bosHepsiHicbiri);
+            kunyeListe.ilceler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.ilceKodu, kunyeID.IlceID, bosHepsiHicbiri);
+            kunyeListe.mahalleler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.mahalleKodu, kunyeID.MahalleID, bosHepsiHicbiri);
+
+            return kunyeListe;
+        }
         public static string haneAdresi(bsyContext ctx, long id)
         {
             HANE hane = ctx.tblHaneler.Find(id);

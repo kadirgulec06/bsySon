@@ -213,8 +213,8 @@ namespace bsy.Controllers
             mahalleVM.sozluk = soz;
             mahalleVM.mahalle = mahalle;
 
-            mahalleVM.sehirler = SozlukHelper.sozlukKalemleriListesi(context, "SEHIR", 0);
-            mahalleVM.ilceler = SozlukHelper.sozlukKalemleriListesi(context, "ILCE", 0);
+            mahalleVM.sehirler = SozlukHelper.sozlukKalemleriDD(context, "SEHIR", 0, 0);
+            mahalleVM.ilceler = SozlukHelper.sozlukKalemleriDD(context, "ILCE", 0, 0);
             mahalleVM.ilceADI = SozlukHelper.sozlukAciklama(context, mahalle.ilceID);
 
             return mahalleVM;

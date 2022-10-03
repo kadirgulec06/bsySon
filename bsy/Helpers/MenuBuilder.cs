@@ -16,7 +16,7 @@ namespace bsy.Helpers
             try
             {
                 bsyContext ctx = new bsyContext();
-                all = ctx.tblBSYmenusu.ToList();
+                all = ctx.tblBSYmenusu.OrderBy(mx=>mx.menuNo).ToList();
             }
             catch (Exception ex)
             {

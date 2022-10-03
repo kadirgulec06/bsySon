@@ -187,7 +187,7 @@ namespace bsy.Controllers
             ilceVM.sozluk = soz;
             ilceVM.ilce = ilce;
 
-            ilceVM.sehirler = SozlukHelper.sozlukKalemleriListesi(context, "SEHIR", 0);
+            ilceVM.sehirler = SozlukHelper.sozlukKalemleriDD(context, "SEHIR", 0);
             ilceVM.sehirADI = SozlukHelper.sozlukAciklama(context, ilce.sehirID);
 
             return ilceVM;

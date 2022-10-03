@@ -438,7 +438,7 @@ namespace bsy.Controllers
             {
                 kisiVM.kunye = SozlukHelper.KunyeHazirla(context, kisi.id);
                 kisiVM.kisiHane = context.tblKisiHane
-                    .Where(kh => kh.KisiID == kisi.id && kh.HaneID == kisiVM.kunye.HaneID)
+                    .Where(kh => kh.KisiID == kisi.id && kh.HaneID == kisiVM.kunye.kunyeID.HaneID)
                     .OrderByDescending(kx => kx.BasTar).FirstOrDefault();
             }
             else
@@ -454,7 +454,7 @@ namespace bsy.Controllers
 
         private KisiVM listeleriHazirla(KisiVM kisiVM)
         {
-            kisiVM.cinsiyetler = SozlukHelper.sozlukKalemleriListesi(context, "CINSIYET", kisiVM.kisi.Cinsiyet);
+            kisiVM.cinsiyetler = SozlukHelper.anaSozlukKalemleriDD(context, "CINSIYET", kisiVM.kisi.Cinsiyet, 0);
 
             return kisiVM;
         }
@@ -518,7 +518,7 @@ namespace bsy.Controllers
                             context.tblKisiler.Add(eskiKisi.kisi);
 
                             eskiKisi.kisiHane.KisiID = eskiKisi.kisi.id;
-                            eskiKisi.kisiHane.HaneID = eskiKisi.kunye.HaneID;
+                            eskiKisi.kisiHane.HaneID = eskiKisi.kunye.kunyeID.HaneID;
                             eskiKisi.kisiHane.BasTar = eskiKisi.kisi.KayitTarihi;
                             context.tblKisiHane.Add(eskiKisi.kisiHane);
                             //context.SaveChanges();
@@ -570,7 +570,7 @@ namespace bsy.Controllers
 
         private KisiVM KisiYeniToEski(KisiVM eskiKisi, KisiVM yeniKisi)
         {
-            eskiKisi.kunye.KisiID = yeniKisi.kisi.id;
+            eskiKisi.kunye.kunyeID.KisiID = yeniKisi.kisi.id;
 
             eskiKisi.kisi.id = yeniKisi.kisi.id;
             eskiKisi.kisi.TCNo = yeniKisi.kisi.TCNo;

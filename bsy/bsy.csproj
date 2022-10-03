@@ -418,6 +418,9 @@
     <Compile Include="Models\KULLANICI.cs" />
     <Compile Include="Models\KULLANICIROL.cs" />
     <Compile Include="Models\Kunye.cs" />
+    <Compile Include="Models\KunyeBilgi.cs" />
+    <Compile Include="Models\KunyeID.cs" />
+    <Compile Include="Models\KunyeListe.cs" />
     <Compile Include="Models\LogIn.cs" />
     <Compile Include="Models\MAHALLE.cs" />
     <Compile Include="Models\Mail.cs" />

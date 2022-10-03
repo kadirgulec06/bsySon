@@ -430,11 +430,11 @@ namespace bsy.Controllers
 
         private HaneGorusmeVM listeleriHazirla(HaneGorusmeVM hgVM)
         {
-            hgVM.Ihtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, hgVM.haneGorusme.Ihtiyaclar, true);
-            hgVM.BelediyeYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, hgVM.haneGorusme.BelediyeYardimi, true);
-            hgVM.EvMulkiyeti = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, hgVM.haneGorusme.EvMulkiyeti, true);
-            hgVM.EvTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, hgVM.haneGorusme.EvTuru, true);
-            hgVM.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hgVM.haneGorusme.HaneGelirDilimi, true);
+            hgVM.Ihtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, hgVM.haneGorusme.Ihtiyaclar, 2);
+            hgVM.BelediyeYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, hgVM.haneGorusme.BelediyeYardimi, 2);
+            hgVM.EvMulkiyeti = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, hgVM.haneGorusme.EvMulkiyeti, 2);
+            hgVM.EvTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, hgVM.haneGorusme.EvTuru, 2);
+            hgVM.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hgVM.haneGorusme.HaneGelirDilimi, 2);
 
             return hgVM;
         }
@@ -556,12 +556,12 @@ namespace bsy.Controllers
         {
             if (yeniHane.haneGorusme.HaneID != 0)
             {
-                eskiHane.kunye.HaneID = yeniHane.haneGorusme.HaneID;
+                eskiHane.kunye.kunyeID.HaneID = yeniHane.haneGorusme.HaneID;
             }
 
             eskiHane.yeniGorusme = yeniHane.yeniGorusme;
             eskiHane.haneGorusme.id = yeniHane.haneGorusme.id;
-            eskiHane.haneGorusme.HaneID = yeniHane.kunye.HaneID;
+            eskiHane.haneGorusme.HaneID = yeniHane.kunye.kunyeID.HaneID;
             eskiHane.haneGorusme.GorusmeTarihi = yeniHane.haneGorusme.GorusmeTarihi;
             eskiHane.haneGorusme.Aciklama = yeniHane.haneGorusme.Aciklama;
             eskiHane.haneGorusme.Ihtiyaclar = yeniHane.haneGorusme.Ihtiyaclar;

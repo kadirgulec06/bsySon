@@ -89,11 +89,11 @@
         @Html.HiddenFor(model => Model.yeniGorusme)
         @Html.HiddenFor(model => Model.haneGorusme.id)
 
-        @Html.HiddenFor(model => Model.kunye.BolgeID)
-        @Html.HiddenFor(model => Model.kunye.SehirID)
-        @Html.HiddenFor(model => Model.kunye.IlceID)
-        @Html.HiddenFor(model => Model.kunye.MahalleID)
-        @Html.HiddenFor(model => Model.kunye.HaneID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.BolgeID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.SehirID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.IlceID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.MahalleID)
+        @Html.HiddenFor(model => Model.kunye.kunyeID.HaneID)
 
         <div id="divAna" style="font-weight:900; font-size: 11px;">
             <div id="tabView">
@@ -107,7 +107,7 @@
                 <br />
                 <br />
                 <div id="frmKunye" class="tabFormu active">
-                    <div class="divForm">
+                    <div class="divForm" id="kunye">
                         <fieldset class="field_style cerceveKucuk">
                             <table>
                                 <tr class="veri">
@@ -115,7 +115,7 @@
                                         Şehir :
                                     </td>
                                     <td align="left">
-                                        @Html.TextBoxFor(model => model.kunye.Sehir, new { @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.kunye.kunyeBilgi.Sehir, new { @readonly = "readonly" })
                                     </td>
                                 </tr>
                                 <tr class="veri">
@@ -123,7 +123,7 @@
                                         İlçe :
                                     </td>
                                     <td align="left">
-                                        @Html.TextBoxFor(model => model.kunye.Ilce, new { @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.kunye.kunyeBilgi.Ilce, new { @readonly = "readonly" })
                                     </td>
                                 </tr>
                                 <tr class="veri">
@@ -131,7 +131,7 @@
                                         Mahalle :
                                     </td>
                                     <td align="left">
-                                        @Html.TextBoxFor(model => model.kunye.Mahalle, new { @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.kunye.kunyeBilgi.Mahalle, new { @readonly = "readonly" })
                                     </td>
                                 </tr>
                                 <tr class="veri">
@@ -139,7 +139,7 @@
                                         Hane Kodu :
                                     </td>
                                     <td align="left">
-                                        @Html.TextBoxFor(model => model.kunye.HaneKODU, new { @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.kunye.kunyeID.HaneKODU, new { @readonly = "readonly" })
                                     </td>
                                 </tr>
                                 <tr class="veri">
@@ -147,7 +147,7 @@
                                         Adres :
                                     </td>
                                     <td align="left">
-                                        @Html.TextBoxFor(model => model.kunye.Adres, new { @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.kunye.kunyeBilgi.Adres, new { @readonly = "readonly" })
                                     </td>
                                 </tr>
                             </table>

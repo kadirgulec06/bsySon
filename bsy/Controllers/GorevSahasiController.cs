@@ -203,9 +203,9 @@ namespace bsy.ContgorevSahasis
                 gorevSahasiVM.Ilce = SozlukHelper.sozlukKalemi(context, ilceID);
                 gorevSahasiVM.Mahalle = SozlukHelper.sozlukKalemi(context, mahalleID);
 
-                gorevSahasiVM.sehirler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.sehirKodu, sehirID, true);
-                gorevSahasiVM.ilceler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.ilceKodu, ilceID, true);
-                gorevSahasiVM.mahalleler = SozlukHelper.sozlukKalemleriListesi(context, SozlukHelper.mahalleKodu, mahalleID, true);
+                gorevSahasiVM.sehirler = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.sehirKodu, sehirID, 1);
+                gorevSahasiVM.ilceler = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.ilceKodu, ilceID, 1);
+                gorevSahasiVM.mahalleler = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.mahalleKodu, mahalleID, 1);
             }
             catch
             {

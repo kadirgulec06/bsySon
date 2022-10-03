@@ -515,17 +515,22 @@ namespace bsy.Controllers
                 hane = new HANE();
             }
 
-            HaneVM haneVM = haneHazirla(hane);
+            HaneVM haneVM = haneHazirla(hane, new Kunye());
 
             return View(haneVM);
         }
 
-        private HaneVM haneHazirla(HANE hane)
+        private HaneVM haneHazirla(HANE hane, Kunye kunye)
         {
             long mahalleID = (long)Session["mahalleID"];
+            if (kunye.kunyeID.MahalleID != 0)
+            {
+                mahalleID = kunye.kunyeID.MahalleID;
+            }
+
             HaneVM haneVM = new HaneVM();
 
-            haneVM.kayitYapildi = 0;
+            haneVM.kayitVar = 0;
 
             if (hane.MahalleID == 0)
             {
@@ -541,7 +546,7 @@ namespace bsy.Controllers
             if (hane.id != 0)
             {
                 haneVM.kunye = SozlukHelper.KunyeHazirla(context, hane.id);
-                haneVM.kayitYapildi = 1;
+                haneVM.kayitVar = 1;
             }
             else
             {
@@ -555,6 +560,8 @@ namespace bsy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult YeniHane(HaneVM yeniHane, string btnSubmit)
         {
+            yeniHane.kunye = SozlukHelper.KunyeHazirla(context, yeniHane.kunye.kunyeID.MahalleID);
+
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
@@ -569,7 +576,7 @@ namespace bsy.Controllers
                 hane = new HANE();
             }
 
-            HaneVM eskiHane = haneHazirla(hane);
+            HaneVM eskiHane = haneHazirla(hane, yeniHane.kunye);
 
             bool yeniHaneIslemi = false;
             bool kaydedildi = true;
@@ -600,7 +607,7 @@ namespace bsy.Controllers
                             context.tblHaneler.Add(eskiHane.hane);
                             m = new Mesaj("tamam", "Hane Kaydı Eklenmiştir.");
                             context.SaveChanges();
-                            eskiHane.kunye.HaneID = eskiHane.hane.id;
+                            eskiHane.kunye.kunyeID.HaneID = eskiHane.hane.id;
                         }
                     }
                     else
@@ -632,13 +639,16 @@ namespace bsy.Controllers
             }
 
             mesajlar.Add(m);
-
             Session["MESAJLAR"] = mesajlar;
 
             int mahalleSec = (int)Session["mahalleSec"];
             long mahalleID = (long)Session["mahalleID"];
 
-            eskiHane.kayitYapildi = 1;
+            if (kaydedildi)
+            {
+                eskiHane.kayitVar = 1;
+            }
+
             return View(eskiHane);
 
             Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Hane/Mahalle?mahalleID="+mahalleID.ToString()+ "&mahalleSec="+mahalleSec.ToString(), false);
@@ -648,8 +658,8 @@ namespace bsy.Controllers
 
         private HaneVM HaneYeniToEski(HaneVM eskiHane, HaneVM yeniHane)
         {
-            eskiHane.kunye.HaneID = yeniHane.hane.id;
-            eskiHane.kunye.HaneKODU = yeniHane.hane.HaneKodu;
+            eskiHane.kunye.kunyeID.HaneID = yeniHane.hane.id;
+            eskiHane.kunye.kunyeID.HaneKODU = yeniHane.hane.HaneKodu;
 
             eskiHane.hane.id = yeniHane.hane.id;
             eskiHane.hane.Telefon = yeniHane.hane.Telefon;
@@ -661,7 +671,7 @@ namespace bsy.Controllers
             eskiHane.hane.EkBilgi = yeniHane.hane.EkBilgi;
             eskiHane.hane.HaneKodu = yeniHane.hane.HaneKodu;
             eskiHane.hane.KayitTarihi = yeniHane.hane.KayitTarihi;
-            eskiHane.hane.MahalleID = eskiHane.kunye.MahalleID;
+            eskiHane.hane.MahalleID = eskiHane.kunye.kunyeID.MahalleID;
             eskiHane.hane.OdaSayisi = yeniHane.hane.OdaSayisi;
             eskiHane.hane.Sokak = yeniHane.hane.Sokak;
 
