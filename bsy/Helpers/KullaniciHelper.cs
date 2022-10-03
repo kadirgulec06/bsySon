@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace bsy.Helpers
 {
@@ -157,8 +158,8 @@ namespace bsy.Helpers
         public static GorevYerleri gorevYerleriHazirla(bsyContext ctx, long userID)
         {
             GorevYerleri gyx = new GorevYerleri();
-            List<GorevYeri> gy = gorevYerleri(ctx, userID);
-            int gyt = gorevYeriTuru(gy);
+            gyx.gy = gorevYerleri(ctx, userID);
+            int gyt = gorevYeriTuru(gyx.gy);
             if (gyt <= 0)
             {
                 return gyx;
@@ -167,12 +168,24 @@ namespace bsy.Helpers
             if (gyt == 1)
             {
                 gyx.butunTurkiye = true;
-                return gyx;
             }
 
-            gyx.mahalleler = gorevMahalleleri(ctx, gy);
+            gyx.mahalleler = gorevMahalleleri(ctx, gyx);
             return gyx;
 
+        }
+
+        public static SehirIlceMahalle kullaniciGorevSahalari(bsyContext ctx)
+        {
+            User user = (User)HttpContext.Current.Session["USER"];
+
+            SehirIlceMahalle sim = new SehirIlceMahalle();
+
+            sim.sehirler = gorevSehirleri(ctx, user.gy);
+            sim.ilceler = gorevIlceleri(ctx, user.gy);
+            sim.mahalleler = user.gy.mahalleler;
+
+            return sim;
         }
         public static List<GorevYeri> gorevYerleri(bsyContext ctx, long userID)
         {
@@ -215,11 +228,65 @@ namespace bsy.Helpers
             return 2;
         }
 
-        public static List<long> gorevMahalleleri(bsyContext ctx, List<GorevYeri> gy)
+        public static List<long> gorevSehirleri(bsyContext ctx, GorevYerleri gy)
+        {
+            List<long> sehirler = new List<long>();
+            if (gy.butunTurkiye)
+            {
+                sehirler = (from sh in ctx.tblSozluk
+                            where sh.Turu == SozlukHelper.sehirKodu
+                            select sh.id).ToList();
+
+                return sehirler;                                   
+            }
+
+            sehirler = (from sh in gy.gy
+                           where sh.sehirID != 0
+                           select sh.sehirID).
+                           Distinct().ToList();
+
+            return sehirler;
+        }
+        public static List<long> gorevIlceleri(bsyContext ctx, GorevYerleri gy)
+        {
+            List<long> ilceler = new List<long>();
+
+            if (gy.butunTurkiye)
+            {
+                ilceler = (from sh in ctx.tblSozluk
+                            where sh.Turu == SozlukHelper.ilceKodu
+                            select sh.id).ToList();
+
+                return ilceler;
+            }
+
+            var sehirIlceler = (from ic in ctx.tblSozluk
+                                  where ic.Turu == SozlukHelper.ilceKodu
+                                  select new
+                                  {
+                                      ilceID = ic.id,
+                                      sehirID = ic.BabaID
+                                  }).Distinct().ToList();
+
+            ilceler = (from ix in sehirIlceler
+                          join gx in gy.gy on ix.sehirID equals gx.sehirID
+                          where gx.ilceID == 0 || gx.ilceID == ix.ilceID
+                          select ix.ilceID).ToList();
+
+            return ilceler;
+        }
+
+        public static List<long> gorevMahalleleri(bsyContext ctx, GorevYerleri gy)
         {
             List<long> mahalleler = null;
             List<long> gm = new List<long>();
-            foreach (GorevYeri gyx in gy)
+
+            if (gy.butunTurkiye)
+            {
+                return gm;
+            }
+
+            foreach (GorevYeri gyx in gy.gy)
             {
                 if (gyx.sehirID != 0)
                 {
@@ -247,6 +314,98 @@ namespace bsy.Helpers
             }
 
             return gm;
+        }
+
+        public static IEnumerable<SelectListItem> kullaniciSehirleriDD(bsyContext ctx, User user, long secilen = 0, int bosHepsiHicbiri = 0)
+        {
+            List<long> sehirler = gorevSehirleri(ctx, user.gy);
+            var tumSehirler = (from sx in ctx.tblSozluk
+                               where sx.Turu == SozlukHelper.sehirKodu
+                               select new
+                               {
+                                   sehirID = sx.id,
+                                   sehirADI = sx.Aciklama
+                               }).ToList();
+
+            IEnumerable<SelectListItem> sehirlerDD = (from sx in tumSehirler
+                                                      join sy in sehirler on sx.sehirID equals sy
+                                                      select new SelectListItem
+                                                      {
+                                                          Text = sx.sehirADI,
+                                                          Value = sx.sehirID.ToString(),
+                                                          Selected = sx.sehirID == secilen
+                                                      }).ToList();
+            return sehirlerDD;
+        }
+
+        public static IEnumerable<SelectListItem> kullaniciIlceleriDD(bsyContext ctx, User user, long secilen = 0, int bosHepsiHicbiri = 0)
+        {
+            List<long> ilceleri = gorevIlceleri(ctx, user.gy);
+            var tumIlceler = (from ix in ctx.tblSozluk
+                              where ix.Turu == SozlukHelper.ilceKodu
+                              select new
+                              {
+                                  ilceID = ix.id,
+                                  ilceADI = ix.Aciklama
+                              }).ToList();
+
+            IEnumerable <SelectListItem> sozlukListesi = (from ti in tumIlceler
+                                                           join gi in ilceleri on ti.ilceID equals gi
+                                                           select new SelectListItem
+                                                           {
+                                                               Value = ti.ilceID.ToString(),
+                                                               Text = ti.ilceADI,
+                                                               Selected = ti.ilceID.Equals(secilen)
+                                                           }).ToList();
+
+            SelectListItem hepsiHicbiri = new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false };
+            if (bosHepsiHicbiri == 2)
+            {
+                new SelectListItem { Value = "0", Text = "_Hiçbiri", Selected = false };
+            }
+
+            if (bosHepsiHicbiri > 0)
+            {
+                sozlukListesi = sozlukListesi.Prepend(hepsiHicbiri);
+                sozlukListesi.Append(hepsiHicbiri);
+            }
+
+            return sozlukListesi;
+        }
+
+        public static IEnumerable<SelectListItem> kullaniciMahalleleriDD(bsyContext ctx, User user, long secilen = 0, int bosHepsiHicbiri = 0)
+        {
+            List<long> mahalleleri = gorevMahalleleri(ctx, user.gy);
+            var tumMahalleler = (from ix in ctx.tblSozluk
+                              where ix.Turu == SozlukHelper.mahalleKodu
+                              select new
+                              {
+                                  mahalleID = ix.id,
+                                  mahalleADI = ix.Aciklama
+                              }).ToList();
+
+            IEnumerable<SelectListItem> sozlukListesi = (from ti in tumMahalleler
+                                                         join gi in mahalleleri on ti.mahalleID equals gi
+                                                         select new SelectListItem
+                                                         {
+                                                             Value = ti.mahalleID.ToString(),
+                                                             Text = ti.mahalleADI,
+                                                             Selected = ti.mahalleID.Equals(secilen)
+                                                         }).ToList();
+
+            SelectListItem hepsiHicbiri = new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false };
+            if (bosHepsiHicbiri == 2)
+            {
+                new SelectListItem { Value = "0", Text = "_Hiçbiri", Selected = false };
+            }
+
+            if (bosHepsiHicbiri > 0)
+            {
+                sozlukListesi = sozlukListesi.Prepend(hepsiHicbiri);
+                sozlukListesi.Append(hepsiHicbiri);
+            }
+
+            return sozlukListesi;
         }
 
         public static List<long> sehrinMahalleleri(bsyContext ctx, long sehirID)

@@ -428,6 +428,7 @@
     <Compile Include="Models\Mesaj.cs" />
     <Compile Include="Models\ROLLER.cs" />
     <Compile Include="Models\SEHIR.cs" />
+    <Compile Include="Models\SehirIlceMahalle.cs" />
     <Compile Include="Models\SIFREDEGISME.cs" />
     <Compile Include="Models\SIFRESIFIRLA.cs" />
     <Compile Include="Models\SOZLUK.cs" />

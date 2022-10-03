@@ -254,12 +254,18 @@ namespace bsy.Helpers
 
         public static KunyeListe KunyeListeleri(bsyContext ctx, KunyeID kunyeID, int bosHepsiHicbiri)
         {
+            User user = (User)HttpContext.Current.Session["USER"];
+
             KunyeListe kunyeListe = new KunyeListe();
 
             kunyeListe.bolgeler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.bolgeKodu, kunyeID.BolgeID,  bosHepsiHicbiri);
-            kunyeListe.sehirler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.sehirKodu, kunyeID.SehirID, bosHepsiHicbiri);
-            kunyeListe.ilceler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.ilceKodu, kunyeID.IlceID, bosHepsiHicbiri);
-            kunyeListe.mahalleler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.mahalleKodu, kunyeID.MahalleID, bosHepsiHicbiri);
+            kunyeListe.sehirler = KullaniciHelper.kullaniciSehirleriDD(ctx, user, kunyeID.SehirID, bosHepsiHicbiri);
+            kunyeListe.ilceler = KullaniciHelper.kullaniciIlceleriDD(ctx, user, kunyeID.IlceID, bosHepsiHicbiri);
+            kunyeListe.mahalleler = KullaniciHelper.kullaniciMahalleleriDD(ctx, user, kunyeID.MahalleID, bosHepsiHicbiri);
+
+            //kunyeListe.sehirler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.sehirKodu, kunyeID.SehirID, bosHepsiHicbiri);
+            //kunyeListe.ilceler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.ilceKodu, kunyeID.IlceID, bosHepsiHicbiri);
+            //kunyeListe.mahalleler = SozlukHelper.sozlukKalemleriDD(ctx, SozlukHelper.mahalleKodu, kunyeID.MahalleID, bosHepsiHicbiri);
 
             return kunyeListe;
         }
