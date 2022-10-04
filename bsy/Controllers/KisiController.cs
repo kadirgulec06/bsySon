@@ -212,6 +212,7 @@ namespace bsy.Controllers
             int pageSize = rows;
 
             //pageSize = 5;
+            /*
             DateTime bugun = DateTime.Now.Date;
 
 
@@ -228,9 +229,10 @@ namespace bsy.Controllers
             var sonKisiHane = (from kht in sonKisiHaneTarih
                                join kh in context.tblKisiHane on new { x1 = kht.KisiID, x2 = kht.Tarih } equals new { x1 = kh.KisiID, x2 = kh.BasTar }
                                select kh);
+            */
 
             var query = (from kx in context.tblKisiler
-                         join kh in sonKisiHane on kx.id equals kh.KisiID
+                         join kh in context.tblKisiHane on kx.id equals kh.KisiID
                          join hn in context.tblHaneler on kh.HaneID equals hn.id
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sm in context.tblSozluk on mh.id equals sm.id
@@ -239,6 +241,7 @@ namespace bsy.Controllers
                          join sh in context.tblSehirler on ic.sehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
+                            (kh.HaneID == haneID || haneID == 0) &&
                             (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
                             (sm.Aciklama + "").Contains(mahalle) &&
                             (sz.Aciklama + " " + sy.Aciklama + "").Contains(sehirIlce) &&

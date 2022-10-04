@@ -7,6 +7,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+
+Get last record of each group in group by  
+  
+             from p in PersonOrders
+                //where conditions or joins with other tables to be included here
+            group p by p.PersonID into grp
+            let MaxOrderDatePerPerson = grp.Max(g => g.OrderDate)
+
+            from p in grp
+            where p.OrderDate == MaxOrderDatePerPerson
+            select p
+
+
+ */
+
 namespace bsy.Controllers
 {
     [OturumAcikMI]

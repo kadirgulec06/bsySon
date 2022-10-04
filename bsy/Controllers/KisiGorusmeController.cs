@@ -90,6 +90,7 @@ namespace bsy.Controllers
             int pageSize = rows;
 
             //pageSize = 5;
+            /*
             DateTime bugun = DateTime.Now.Date;
 
             var sonKisiHaneTarih = (from kh in context.tblKisiHane
@@ -105,9 +106,10 @@ namespace bsy.Controllers
             var sonKisiHane = (from kht in sonKisiHaneTarih
                                join kh in context.tblKisiHane on new { x1 = kht.KisiID, x2 = kht.Tarih } equals new { x1 = kh.KisiID, x2 = kh.BasTar }
                                select kh);
+            */
 
             var query = (from kx in context.tblKisiler
-                         join kh in sonKisiHane on kx.id equals kh.KisiID
+                         join kh in context.tblKisiHane on kx.id equals kh.KisiID
                          join hn in context.tblHaneler on kh.HaneID equals hn.id
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sm in context.tblSozluk on mh.id equals sm.id
@@ -254,6 +256,21 @@ namespace bsy.Controllers
 
             DateTime bugun = DateTime.Now.Date;
 
+            /*
+            var sonKH = (from kh in context.tblKisiHane
+                         join hn in context.tblHaneler on kh.HaneID equals hn.id
+                         join mh in context.tblMahalleler on hn.MahalleID equals mh.id
+                         where
+                           kh.BitTar > bugun &&
+                           (kh.KisiID == kisiID || kisiID == 0) &&
+                           (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
+                         group kh by kh.KisiID into khGRP
+                         let maxBastar = khGRP.Max(khx => khx.BasTar)
+
+                         from kh in khGRP
+                         where kh.BasTar == maxBastar
+                         select kh).ToList();
+
             var sonKisiHaneTarih = (from kh in context.tblKisiHane
                                     join hn in context.tblHaneler on kh.HaneID equals hn.id
                                     join mh in context.tblMahalleler on hn.MahalleID equals mh.id
@@ -267,11 +284,12 @@ namespace bsy.Controllers
             var sonKisiHane = (from kht in sonKisiHaneTarih
                                join kh in context.tblKisiHane on new { x1 = kht.KisiID, x2 = kht.Tarih } equals new { x1 = kh.KisiID, x2 = kh.BasTar }
                                select kh);
+            */
 
             //pageSize = 5;
             var query = (from kg in context.tblKisiGorusme
                          join kx in context.tblKisiler on kg.KisiID equals kx.id
-                         join kh in sonKisiHane on kx.id equals kh.KisiID
+                         join kh in context.tblKisiHane on kx.id equals kh.KisiID
                          join hn in context.tblHaneler on kh.HaneID equals hn.id
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sx in context.tblSozluk on mh.id equals sx.id
