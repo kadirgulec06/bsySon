@@ -299,6 +299,7 @@ namespace bsy.Controllers
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (kg.KisiID == kisiID || kisiID == 0) &&
+                            (kg.GorusmeTarihi >= kh.BasTar && kg.GorusmeTarihi <= kh.BitTar) &&
                             (user.gy.butunTurkiye == true ||
                             user.gy.mahalleler.Contains(hn.MahalleID)) &&
                             (sz.Aciklama + " " + sy.Aciklama + "").Contains(sehirIlce) &&
