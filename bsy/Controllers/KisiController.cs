@@ -98,7 +98,7 @@ namespace bsy.Controllers
             int totalRecords = query.Count();
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
-            var resultSetAfterOrderandPaging = query.OrderBy("sehirADI, ilceADI").Skip(pageIndex * pageSize).Take(pageSize);
+            var resultSetAfterOrderandPaging = query.OrderBy("sehirIlce").Skip(pageIndex * pageSize).Take(pageSize);
 
             var resultSet = (from hx in resultSetAfterOrderandPaging
                              select new
@@ -214,15 +214,20 @@ namespace bsy.Controllers
             //pageSize = 5;
             DateTime bugun = DateTime.Now.Date;
 
-            var sonKisiHane = (from kh in context.tblKisiHane
-                            join hn in context.tblHaneler on kh.HaneID equals hn.id
-                            join mh in context.tblMahalleler on hn.MahalleID equals mh.id
-                            where
-                              kh.BitTar > bugun &&
-                              (kh.HaneID == haneID || haneID == 0) &&
-                              (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
-                            group kh by kh.BasTar into khGRP
-                            select khGRP.OrderByDescending(g => g.BasTar).FirstOrDefault());
+
+            var sonKisiHaneTarih = (from kh in context.tblKisiHane
+                               join hn in context.tblHaneler on kh.HaneID equals hn.id
+                               join mh in context.tblMahalleler on hn.MahalleID equals mh.id
+                               where
+                                 kh.BitTar > bugun &&
+                                 (kh.HaneID == haneID || haneID == 0) &&
+                                 (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
+                               group kh by kh.KisiID into khGRP
+                               select new { KisiID=khGRP.Key, Tarih = khGRP.Max(x => x.BasTar) });
+
+            var sonKisiHane = (from kht in sonKisiHaneTarih
+                               join kh in context.tblKisiHane on new { x1 = kht.KisiID, x2 = kht.Tarih } equals new { x1 = kh.KisiID, x2 = kh.BasTar }
+                               select kh);
 
             var query = (from kx in context.tblKisiler
                          join kh in sonKisiHane on kx.id equals kh.KisiID
@@ -255,7 +260,7 @@ namespace bsy.Controllers
             int totalRecords = query.Count();
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
-            var resultSetAfterOrderandPaging = query.OrderBy("Ad, Soyad").Skip(pageIndex * pageSize).Take(pageSize);
+            var resultSetAfterOrderandPaging = query.OrderBy("AdSoyad").Skip(pageIndex * pageSize).Take(pageSize);
 
             var resultSet = (from kx in resultSetAfterOrderandPaging
                              select new
@@ -267,6 +272,7 @@ namespace bsy.Controllers
                                  kx.Adres,
                                  kx.AdSoyad,
                                  kx.TCNo,
+                                 Gorusme=0,
                                  Degistir = 0,
                                  Sil = 0
                              }).ToList();
@@ -294,6 +300,7 @@ namespace bsy.Controllers
                                  kx.Adres,
                                  kx.AdSoyad,
                                  kx.TCNo,
+                                 kx.Gorusme.ToString(),
                                  kx.Degistir.ToString(),
                                  kx.Sil.ToString()
                        }
@@ -398,6 +405,7 @@ namespace bsy.Controllers
                 return View(yeniKisi);
             }
 
+            /*
             if (!TCKimlikNoValidationAttribute.ValidateKimlikNo(yeniKisi.kisi.TCNo.ToString()))
             {
                 m = new Mesaj("hata", "TC Kimlik Numarası Hatalı");
@@ -405,6 +413,7 @@ namespace bsy.Controllers
                 Session["MESAJLAR"] = mesajlar;
                 return View(yeniKisi);
             }
+            */
 
             KISI kisi = context.tblKisiler.Find(yeniKisi.kisi.id);
             if (kisi == null)
@@ -441,12 +450,14 @@ namespace bsy.Controllers
 
                             eskiKisi.kisi.id = sozluk.id; // SozlukHelper.sozlukID(context, eskiIlceVM.sozluk);
                             context.tblKisiler.Add(eskiKisi.kisi);
+                            context.SaveChanges();
+                            eskiKisi.kunye.kunyeID.KisiID = eskiKisi.kisi.id;
 
                             eskiKisi.kisiHane.KisiID = eskiKisi.kisi.id;
                             eskiKisi.kisiHane.HaneID = eskiKisi.kunye.kunyeID.HaneID;
                             eskiKisi.kisiHane.BasTar = eskiKisi.kisi.KayitTarihi;
                             context.tblKisiHane.Add(eskiKisi.kisiHane);
-                            //context.SaveChanges();
+                            context.SaveChanges();
 
                             m = new Mesaj("tamam", "Kisi Kaydı Eklenmiştir.");
                             

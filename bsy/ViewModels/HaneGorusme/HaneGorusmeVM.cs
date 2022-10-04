@@ -9,6 +9,14 @@ namespace bsy.ViewModels.HaneGorusme
 {
     public class HaneGorusmeVM
     {
+        public HaneGorusmeVM()
+        {
+            yeniGorusme = 0;
+            tabIndex = 0;
+            kunye = new Kunye();
+            haneListeleri = new HaneListeleri();
+            haneGorusme = new HANEGORUSME();
+        }
         public int yeniGorusme { get; set; }
         public int tabIndex { get; set; }
         public Kunye kunye { get; set; }

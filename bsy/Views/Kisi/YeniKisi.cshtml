@@ -236,7 +236,7 @@
                     <input type="button" value="Haneler" class="genelButton" onclick="location.href='@Url.Action("Index", "Kisi")'" />
                     @if (Model.kayitVar == 1)
                     {
-                        <a target="_blank" class="genelButton" href='@Url.Action("Kisi", "KisiGorusme")?haneID=@Model.kunye.kunyeID.KisiID.ToString()&haneSec=0'>
+                        <a target="_blank" class="genelButton" href='@Url.Action("Kisi", "KisiGorusme")?kisiID=@Model.kunye.kunyeID.KisiID.ToString()&kisiSec=0'>
                             <input type="button" class="genelButton" name="btnHaneGorusme" value="Görüşmeler" />
                         </a>
                     }

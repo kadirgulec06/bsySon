@@ -10,6 +10,12 @@ namespace bsy.ViewModels.Hane
 {
     public class HaneVM
     {
+        public HaneVM()
+        {
+            kayitVar = 0;
+            kunye = new Kunye();
+            hane = new HANE();
+        }
         public int kayitVar { get; set; }
         public Kunye kunye { get; set; }
         public HANE hane { get; set; }

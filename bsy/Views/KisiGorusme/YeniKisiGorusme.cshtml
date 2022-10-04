@@ -101,7 +101,7 @@
                     <li id="tab1" class="tab"><a id="a1" href="#frmKunye">Kimlik Bilgileri</a></li>
                     <li id="tab2" class="tab"><a id="a2" href="#frmGorusme01">Bilgiler 01</a></li>
                     <li id="tab3" class="tab"><a id="a3" href="#frmGorusme02">Bilgiler 02</a></li>
-                    <li id="tab4" class="tab"><a id="a4" href="#frmGorusme03">Bilgiler 02</a></li>
+                    <li id="tab4" class="tab"><a id="a4" href="#frmGorusme03">Bilgiler 03</a></li>
                 </ul>
 
                 <font size="3" color=black><b>@ViewBag.Title</b></font>
@@ -336,7 +336,7 @@
                     </div>
                 </div>  @*  END frmGorusme02 *@
                 <br />
-                <div id="frmGorusme01" class="tabFormu">
+                <div id="frmGorusme03" class="tabFormu">
                     <div class="divForm">
                         <h3>KisiGorusme Bilgileri</h3>
                         <fieldset class="field_style cerceveKucuk">
@@ -346,7 +346,7 @@
                                         Bakkal Borcu :
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.kisiGorusme.BorcBakkal, new {@class="veri" })
+                                        @Html.TextBoxFor(model => model.kisiGorusme.BorcBakkal, new { @class = "veri" })
                                         @Html.ValidationMessageFor(model => model.kisiGorusme.BorcBakkal)
                                     </td>
                                 </tr>
@@ -388,8 +388,8 @@
                                 </tr>
                             </table>
                         </fieldset>
-                    </div>  @*  END frmGorusme03 *@
-                </div>
+                    </div>
+                </div>  @*  END frmGorusme03 *@
             </div>   @* END tabview *@
 
             <br />

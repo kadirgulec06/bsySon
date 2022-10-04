@@ -13,7 +13,7 @@
 
     function haneSec(cellvalue, options, rowObject)
     {
-        var mesaj = "Bu Haneyi Seç";
+        var mesaj = "Seç";
         if (rowObject[0] == 0) {
             mesaj = "";
         }
@@ -22,7 +22,7 @@
 
     function haneKisileri(cellvalue, options, rowObject)
     {
-        var mesaj = "Hanedeki Kişiler";
+        var mesaj = "Kişiler";
         if (rowObject[0] == 0) {
             mesaj = "";
         }
@@ -36,17 +36,14 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Hane Kodu', 'Şehir Adı', 'İlçe Adı', 'Mahalle Adı', 'Cadde', 'Sokak', 'Apartman-Daire', 'Haneyi Seç', 'Hanedeki Kişiler'],
+            colNames: ['id', 'Hane Kodu', 'Şehir ve İlçe', 'Mahalle Adı', 'Adres', 'Seç', 'Kişiler'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
               { name: 'HANEKODU', index: 'HANEKODU', search: true, width: 20, sortable: false },
-              { name: 'SEHIR', index: 'SEHIR', width: 50, search: true, sortable: false },
-              { name: 'ILCE', index: 'ILCE', width: 50, search:true, sortable: false },
+              { name: 'SEHIRILCE', index: 'SEHIRILCE', width: 50, search: true, sortable: false },
               { name: 'MAHALLE', index: 'MAHALLE', width: 100, search: true, sortable: false },
-              { name: 'CADDE', index: 'CADDE', width: 100, search: true, sortable: false },
-              { name: 'SOKAK', index: 'SOKAK', width: 100, search: true, sortable: false },
-              { name: 'APARTMAN', index: 'APARTMAN', width: 50, search: true, sortable: false },
+              { name: 'ADRES', index: 'ADRES', width: 100, search: true, sortable: false },
               { name: 'SEC', index: 'SEC', width: 50, align: 'left', search: false, sortable: false, formatter: haneSec },
               { name: 'KISILER', index: 'KISILER', width: 50, align: 'left', search: false, sortable: false, formatter: haneKisileri }
             ],
@@ -62,7 +59,7 @@
             toppager: true,
             rowNum: 30,
             rowList: [5, 10, 15, 20, 30],
-            sortname: 'AD',
+            sortname: 'ADRES',
             sortorder: "asc",
             viewrecords: true,
             height: '100%',

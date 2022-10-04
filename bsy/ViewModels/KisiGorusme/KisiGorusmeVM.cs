@@ -8,6 +8,14 @@ namespace bsy.ViewModels.KisiGorusme
 {
     public class KisiGorusmeVM
     {
+        public KisiGorusmeVM()
+        {
+            yeniGorusme = 0;
+            tabIndex = 0;
+            kunye = new Kunye();
+            kisiListeleri = new KisiListeleri();
+            kisiGorusme = new KISIGORUSME();
+        }
         public int yeniGorusme { get; set; }
         public int tabIndex { get; set; }
         public Kunye kunye { get; set; }

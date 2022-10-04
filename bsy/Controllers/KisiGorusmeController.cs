@@ -92,15 +92,19 @@ namespace bsy.Controllers
             //pageSize = 5;
             DateTime bugun = DateTime.Now.Date;
 
-            var sonKisiHane = (from kh in context.tblKisiHane
-                               join hn in context.tblHaneler on kh.HaneID equals hn.id
-                               join mh in context.tblMahalleler on hn.MahalleID equals mh.id
-                               where
-                                  kh.BitTar > bugun &&
-                                 (kh.HaneID == kisiID || kisiID == 0) &&
-                                 (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
-                               group kh by kh.BasTar into khGRP
-                               select khGRP.OrderByDescending(g => g.BasTar).FirstOrDefault());
+            var sonKisiHaneTarih = (from kh in context.tblKisiHane
+                                    join hn in context.tblHaneler on kh.HaneID equals hn.id
+                                    join mh in context.tblMahalleler on hn.MahalleID equals mh.id
+                                    where
+                                      kh.BitTar > bugun &&
+                                      (kh.KisiID == kisiID || kisiID == 0) &&
+                                      (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
+                                    group kh by kh.KisiID into khGRP
+                                    select new { KisiID = khGRP.Key, Tarih = khGRP.Max(x => x.BasTar) });
+
+            var sonKisiHane = (from kht in sonKisiHaneTarih
+                               join kh in context.tblKisiHane on new { x1 = kht.KisiID, x2 = kht.Tarih } equals new { x1 = kh.KisiID, x2 = kh.BasTar }
+                               select kh);
 
             var query = (from kx in context.tblKisiler
                          join kh in sonKisiHane on kx.id equals kh.KisiID
@@ -250,15 +254,19 @@ namespace bsy.Controllers
 
             DateTime bugun = DateTime.Now.Date;
 
-            var sonKisiHane = (from kh in context.tblKisiHane
-                               join hn in context.tblHaneler on kh.HaneID equals hn.id
-                               join mh in context.tblMahalleler on hn.MahalleID equals mh.id
-                               where
-                                  kh.BitTar > bugun &&
-                                 (kh.HaneID == kisiID || kisiID == 0) &&
-                                 (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
-                               group kh by kh.BasTar into khGRP
-                               select khGRP.OrderByDescending(g => g.BasTar).FirstOrDefault());
+            var sonKisiHaneTarih = (from kh in context.tblKisiHane
+                                    join hn in context.tblHaneler on kh.HaneID equals hn.id
+                                    join mh in context.tblMahalleler on hn.MahalleID equals mh.id
+                                    where
+                                      kh.BitTar > bugun &&
+                                      (kh.KisiID == kisiID || kisiID == 0) &&
+                                      (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
+                                    group kh by kh.KisiID into khGRP
+                                    select new { KisiID = khGRP.Key, Tarih = khGRP.Max(x => x.BasTar) });
+
+            var sonKisiHane = (from kht in sonKisiHaneTarih
+                               join kh in context.tblKisiHane on new { x1 = kht.KisiID, x2 = kht.Tarih } equals new { x1 = kh.KisiID, x2 = kh.BasTar }
+                               select kh);
 
             //pageSize = 5;
             var query = (from kg in context.tblKisiGorusme
@@ -298,7 +306,7 @@ namespace bsy.Controllers
             int totalRecords = query.Count();
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
-            var resultSetAfterOrderandPaging = query.OrderBy("KisiKodu").Skip(pageIndex * pageSize).Take(pageSize);
+            var resultSetAfterOrderandPaging = query.OrderBy("HaneKodu").Skip(pageIndex * pageSize).Take(pageSize);
 
             var resultSet = (from kg in resultSetAfterOrderandPaging
                              select new
@@ -336,7 +344,6 @@ namespace bsy.Controllers
                       {
                                  kg.id.ToString(),
                                  kg.kisiID.ToString(),
-                                 kg.haneID.ToString(),
                                  kg.HaneKodu,
                                  kg.sehirIlce,
                                  kg.mahalleADI,
