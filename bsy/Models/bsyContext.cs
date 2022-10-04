@@ -206,6 +206,7 @@ namespace bsy.Models
         public DbSet<HANEGORUSME> tblHaneGorusme { get; set; }
         public DbSet<KISI> tblKisiler { get; set; }
         public DbSet<KISIHANE> tblKisiHane { get; set; }
+        public DbSet<KISIGORUSME> tblKisiGorusme { get; set; }
         public DbSet<SOZLUKTURU> tblSozlukTurleri { get; set; }
 
         public override int SaveChanges()
@@ -293,6 +294,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new HaneGorusmeConfiguration());
             modelBuilder.Configurations.Add(new KisiConfiguration());
             modelBuilder.Configurations.Add(new KisiHaneConfiguration());
+            modelBuilder.Configurations.Add(new KisiGorusmeConfiguration());
             modelBuilder.Configurations.Add(new SozlukTuruConfiguration());
 
             base.OnModelCreating(modelBuilder);
@@ -529,6 +531,17 @@ namespace bsy.Models
                 HasKey(p => p.id);
                 Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 ToTable("KisiHane");
+            }
+        }
+
+        public class KisiGorusmeConfiguration : EntityTypeConfiguration<KISIGORUSME>
+        {
+            public KisiGorusmeConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("KisiGorusme");
             }
         }
 

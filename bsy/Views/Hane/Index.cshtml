@@ -17,7 +17,7 @@
         if (rowObject[0] == 0) {
             mesaj = "";
         }
-        return "<a href='@Url.Action("Mahalle","Hane")?mahalleID=" + rowObject[0] + "&mahalleSec=1'>" + mesaj + "</a>";
+        return "<a target='_blank' href='@Url.Action("Mahalle","Hane")?mahalleID=" + rowObject[0] + "&mahalleSec=1'>" + mesaj + "</a>";
     }
 
     function mahalleHaneleri(cellvalue, options, rowObject)
@@ -26,7 +26,7 @@
         if (rowObject[0] == 0) {
             mesaj = "";
         }
-        return "<a href='@Url.Action("Mahalle","Hane")?mahalleID=" + rowObject[0] + "&mahalleSec=0'>" + mesaj + "</a>";
+        return "<a target='_blank' href='@Url.Action("Mahalle","Hane")?mahalleID=" + rowObject[0] + "&mahalleSec=0'>" + mesaj + "</a>";
     }
 
     jQuery(document).ready(function () {

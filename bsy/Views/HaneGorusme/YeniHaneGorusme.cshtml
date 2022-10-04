@@ -201,7 +201,7 @@
                                         İhtiyaçlar :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.haneGorusme.Ihtiyaclar, new SelectList(Model.Ihtiyaclar, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.DropDownListFor(model => model.haneGorusme.Ihtiyaclar, new SelectList(Model.haneListeleri.Ihtiyaclar, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
                                         @Html.ValidationMessageFor(model => model.haneGorusme.Ihtiyaclar)
                                     </td>
                                 </tr>
@@ -210,7 +210,7 @@
                                         Belediye Yardımı Durumu :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.haneGorusme.BelediyeYardimi, new SelectList(Model.BelediyeYardimi, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.DropDownListFor(model => model.haneGorusme.BelediyeYardimi, new SelectList(Model.haneListeleri.BelediyeYardimi, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
                                         @Html.ValidationMessageFor(model => model.haneGorusme.BelediyeYardimi)
                                     </td>
                                 </tr>
@@ -219,7 +219,7 @@
                                         Ev Türü :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.haneGorusme.EvTuru, new SelectList(Model.EvTuru, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.DropDownListFor(model => model.haneGorusme.EvTuru, new SelectList(Model.haneListeleri.EvTuru, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
                                         @Html.ValidationMessageFor(model => model.haneGorusme.EvTuru)
                                     </td>
                                 </tr>
@@ -228,7 +228,7 @@
                                         Ev Mülkiyeti :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.haneGorusme.EvMulkiyeti, new SelectList(Model.EvMulkiyeti, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.DropDownListFor(model => model.haneGorusme.EvMulkiyeti, new SelectList(Model.haneListeleri.EvMulkiyeti, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
                                         @Html.ValidationMessageFor(model => model.haneGorusme.EvMulkiyeti)
                                     </td>
                                 </tr>
@@ -246,7 +246,7 @@
                                         Gelir Dilimi :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.haneGorusme.HaneGelirDilimi, new SelectList(Model.HaneGelirDilimi, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.DropDownListFor(model => model.haneGorusme.HaneGelirDilimi, new SelectList(Model.haneListeleri.HaneGelirDilimi, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
                                         @Html.ValidationMessageFor(model => model.haneGorusme.HaneGelirDilimi)
                                     </td>
                                 </tr>

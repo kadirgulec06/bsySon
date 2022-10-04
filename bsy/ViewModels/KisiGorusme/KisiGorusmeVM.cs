@@ -3,16 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 
-namespace bsy.ViewModels.HaneGorusme
+namespace bsy.ViewModels.KisiGorusme
 {
-    public class HaneGorusmeVM
+    public class KisiGorusmeVM
     {
         public int yeniGorusme { get; set; }
         public int tabIndex { get; set; }
         public Kunye kunye { get; set; }
-        public HaneListeleri haneListeleri { get; set; }
-        public HANEGORUSME haneGorusme { get; set; }
+        public KisiListeleri kisiListeleri { get; set; }
+        public KISIGORUSME kisiGorusme { get; set; }
+
     }
 }

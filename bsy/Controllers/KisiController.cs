@@ -22,24 +22,16 @@ namespace bsy.Controllers
 
             User user = (User)Session["USER"];
 
-            string sehir = "";
-            string ilce = "";
+            string sehirIlce = "";
             string mahalle = "";
             string haneKodu = "";
-            string cadde = "";
-            string sokak = "";
-            string apartman = "";
+            string adres = "";
 
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["SEHIR"] != null)
+                if (Request.Params["SEHIRILCE"] != null)
                 {
-                    sehir = Request.Params["SEHIR"];
-                }
-
-                if (Request.Params["ILCE"] != null)
-                {
-                    ilce = Request.Params["ILCE"];
+                    sehirIlce = Request.Params["SEHIRILCE"];
                 }
 
                 if (Request.Params["MAHALLE"] != null)
@@ -52,42 +44,27 @@ namespace bsy.Controllers
                     haneKodu = Request.Params["HANEKODU"];
                 }
 
-                if (Request.Params["CADDE"] != null)
+                if (Request.Params["ADRES"] != null)
                 {
-                    cadde = Request.Params["CADDE"];
+                    adres = Request.Params["ADRES"];
                 }
 
-                if (Request.Params["SOKAK"] != null)
-                {
-                    sokak = Request.Params["SOKAK"];
-                }
-
-                if (Request.Params["APARTMAN"] != null)
-                {
-                    apartman = Request.Params["APARTMAN"];
-                }
             }
 
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreSEHIR"] = sehir.ToUpper();
-                Session["filtreILCE"] = ilce.ToUpper();
+                Session["filtreSEHIRILCE"] = sehirIlce.ToUpper();
                 Session["filtreMAHALLE"] = mahalle.ToUpper();
                 Session["filtreHANEKODU"] = haneKodu.ToUpper();
-                Session["filtreCADDE"] = cadde.ToUpper();
-                Session["filtreSOKAK"] = sokak.ToUpper();
-                Session["filtreAPARTMAN"] = apartman.ToUpper();
+                Session["filtreADRES"] = adres.ToUpper();
             }
             else if (rapor == 1)
             {
-                sehir = (string)Session["filtreSEHIR"];
-                ilce = (string)Session["filtreILCE"];
+                sehirIlce = (string)Session["filtreSEHIR"];
                 mahalle = (string)Session["filtreMAHALLE"];
                 haneKodu = (string)Session["filtreHANEKODU"];
-                cadde = (string)Session["filtreCADDE"];
-                sokak = (string)Session["filtreSOKAK"];
-                apartman = (string)Session["filtreAPARTMAN"];
+                adres = (string)Session["filtreADRES"];
             }
 
             int pageIndex = Convert.ToInt32(page) - 1;
@@ -106,20 +83,16 @@ namespace bsy.Controllers
                          where
                             (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
                             (sx.Aciklama + "").Contains(mahalle) &&
-                            (sy.Aciklama + "").Contains(ilce) &&
-                            (sz.Aciklama + "").Contains(sehir) &&
+                            (sz.Aciklama + " " + sy.Aciklama + "").Contains(sehirIlce) &&
                             (hn.HaneKodu + "").Contains(haneKodu)
                          select new
                          {
                              hn.id,
                              hn.HaneKodu,
                              mahalleKODU = mh.MahalleKodu,
-                             sehirADI = sz.Aciklama,
-                             ilceADI = sy.Aciklama,
+                             sehirIlce = sz.Aciklama +  "-" +sy.Aciklama,
                              mahalleADI = sx.Aciklama,
-                             hn.Cadde,
-                             hn.Sokak,
-                             ApartmanDaire=hn.Apartman + "-" + hn.Daire
+                             Adres = hn.Cadde + " " + hn.Sokak + " "+ hn.Apartman + "-"+ hn.Daire
                          });
 
             int totalRecords = query.Count();
@@ -132,12 +105,9 @@ namespace bsy.Controllers
                              {
                                  hx.id,
                                  hx.HaneKodu,
-                                 hx.sehirADI,
-                                 hx.ilceADI,
+                                 hx.sehirIlce,
                                  hx.mahalleADI,
-                                 hx.Cadde,
-                                 hx.Sokak,
-                                 hx.ApartmanDaire,
+                                 hx.Adres,
                                  Sec = 0,
                                  Kisi = 0
                              }).ToList();
@@ -160,12 +130,9 @@ namespace bsy.Controllers
                       {
                                  hx.id.ToString(),
                                  hx.HaneKodu,
-                                 hx.sehirADI,
-                                 hx.ilceADI,
+                                 hx.sehirIlce,
                                  hx.mahalleADI,
-                                 hx.Cadde,
-                                 hx.Sokak,
-                                 hx.ApartmanDaire,
+                                 hx.Adres,
                                  hx.Sec.ToString(),
                                  hx.Kisi.ToString()
                        }
@@ -179,27 +146,18 @@ namespace bsy.Controllers
         {
             User user = (User)Session["USER"];
 
-            string sehir = "";
-            string ilce = "";
+            string sehirIlce = "";
             string mahalle = "";
             string haneKodu = "";
-            string cadde = "";
-            string sokak = "";
-            string apartman = "";
-            string ad = "";
-            string soyad = "";
+            string adres = "";
+            string adSoyad = "";
             string tcNo = "";
 
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["SEHIR"] != null)
+                if (Request.Params["SEHIRILCE"] != null)
                 {
-                    sehir = Request.Params["SEHIR"];
-                }
-
-                if (Request.Params["ILCE"] != null)
-                {
-                    ilce = Request.Params["ILCE"];
+                    sehirIlce = Request.Params["SEHIRILCE"];
                 }
 
                 if (Request.Params["MAHALLE"] != null)
@@ -212,28 +170,14 @@ namespace bsy.Controllers
                     haneKodu = Request.Params["HANEKODU"];
                 }
 
-                if (Request.Params["CADDE"] != null)
+                if (Request.Params["ADRES"] != null)
                 {
-                    cadde = Request.Params["CADDE"];
+                    adres = Request.Params["ADRES"];
                 }
 
-                if (Request.Params["SOKAK"] != null)
+                if (Request.Params["ADSOYAD"] != null)
                 {
-                    sokak = Request.Params["SOKAK"];
-                }
-
-                if (Request.Params["APARTMAN"] != null)
-                {
-                    apartman = Request.Params["APARTMAN"];
-                }
-
-                if (Request.Params["AD"] != null)
-                {
-                    ad = Request.Params["AD"];
-                }
-                if (Request.Params["SOYAD"] != null)
-                {
-                    soyad = Request.Params["SOYAD"];
+                    adSoyad = Request.Params["ADSOYAD"];
                 }
 
                 if (Request.Params["TCNO"] != null)
@@ -246,28 +190,20 @@ namespace bsy.Controllers
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreSEHIR"] = sehir.ToUpper();
-                Session["filtreILCE"] = ilce.ToUpper();
+                Session["filtreSEHIRILCE"] = sehirIlce.ToUpper();
                 Session["filtreMAHALLE"] = mahalle.ToUpper();
                 Session["filtreHANEKODU"] = haneKodu.ToUpper();
-                Session["filtreCADDE"] = cadde.ToUpper();
-                Session["filtreSOKAK"] = sokak.ToUpper();
-                Session["filtreAPARTMAN"] = apartman.ToUpper();
-                Session["filtreAD"] = ad.ToUpper();
-                Session["filtreSOYAD"] = soyad.ToUpper();
+                Session["filtreADRES"] = adres.ToUpper();
+                Session["filtreADSOYAD"] = adSoyad.ToUpper();
                 Session["filtreTCNO"] = tcNo.ToUpper();
             }
             else if (rapor == 1)
             {
-                sehir = (string)Session["filtreSEHIR"];
-                ilce = (string)Session["filtreILCE"];
+                sehirIlce = (string)Session["filtreSEHIRILCE"];
                 mahalle = (string)Session["filtreMAHALLE"];
                 haneKodu = (string)Session["filtreHANEKODU"];
-                cadde = (string)Session["filtreCADDE"];
-                sokak = (string)Session["filtreSOKAK"];
-                apartman = (string)Session["filtreAPARTMAN"];
-                ad = (string)Session["filtreAD"];
-                soyad = (string)Session["filtreSOYAD"];
+                adres = (string)Session["filtreADRES"];
+                adSoyad = (string)Session["filtreADSOYAD"];
                 tcNo = (string)Session["filtreTCNO"];
             }
 
@@ -276,11 +212,13 @@ namespace bsy.Controllers
             int pageSize = rows;
 
             //pageSize = 5;
+            DateTime bugun = DateTime.Now.Date;
 
             var sonKisiHane = (from kh in context.tblKisiHane
                             join hn in context.tblHaneler on kh.HaneID equals hn.id
                             join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                             where
+                              kh.BitTar > bugun &&
                               (kh.HaneID == haneID || haneID == 0) &&
                               (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id))
                             group kh by kh.BasTar into khGRP
@@ -298,27 +236,19 @@ namespace bsy.Controllers
                          where
                             (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
                             (sm.Aciklama + "").Contains(mahalle) &&
-                            (sy.Aciklama + "").Contains(ilce) &&
-                            (sz.Aciklama + "").Contains(sehir) &&
+                            (sz.Aciklama + " " + sy.Aciklama + "").Contains(sehirIlce) &&
                             (hn.HaneKodu + "").Contains(haneKodu) &&
-                            (hn.Cadde + "").Contains(cadde) &&
-                            (hn.Sokak + "").Contains(sokak) &&
-                            (hn.Apartman + "").Contains(apartman) &&
-                            (kx.Ad + "").Contains(ad) &&
-                            (kx.Soyad + "").Contains(soyad) &&
+                            (hn.Cadde + "" + hn.Sokak + " " + hn.Apartman + "-" + hn.Daire + "").Contains(adres) &&
+                            (kx.Ad + " " + kx.Soyad + "").Contains(adSoyad) &&
                             (kx.TCNo + "").Contains(tcNo)
                          select new
                          {
                              kx.id,
                              hn.HaneKodu,
-                             sehirADI = sz.Aciklama,
-                             ilceADI = sy.Aciklama,
+                             sehirIlce = sz.Aciklama + " " + sy.Aciklama,
                              mahalleADI = sm.Aciklama,
-                             hn.Cadde,
-                             hn.Sokak,
-                             ApartmanDaire = hn.Apartman + "-" + hn.Daire,
-                             kx.Ad,
-                             kx.Soyad,
+                             Adres = hn.Cadde + " " + hn.Sokak +  " " + hn.Apartman + "-" + hn.Daire,
+                             AdSoyad = kx.Ad +  " " + kx.Soyad,
                              kx.TCNo
                          });
 
@@ -332,14 +262,10 @@ namespace bsy.Controllers
                              {
                                  kx.id,
                                  kx.HaneKodu,
-                                 kx.sehirADI,
-                                 kx.ilceADI,
+                                 kx.sehirIlce,
                                  kx.mahalleADI,
-                                 kx.Cadde,
-                                 kx.Sokak,
-                                 kx.ApartmanDaire,
-                                 kx.Ad,
-                                 kx.Soyad,
+                                 kx.Adres,
+                                 kx.AdSoyad,
                                  kx.TCNo,
                                  Degistir = 0,
                                  Sil = 0
@@ -363,14 +289,10 @@ namespace bsy.Controllers
                       {
                                  kx.id.ToString(),
                                  kx.HaneKodu,
-                                 kx.sehirADI,
-                                 kx.ilceADI,
+                                 kx.sehirIlce,
                                  kx.mahalleADI,
-                                 kx.Cadde,
-                                 kx.Sokak,
-                                 kx.ApartmanDaire,
-                                 kx.Ad,
-                                 kx.Soyad,
+                                 kx.Adres,
+                                 kx.AdSoyad,
                                  kx.TCNo,
                                  kx.Degistir.ToString(),
                                  kx.Sil.ToString()
@@ -432,10 +354,13 @@ namespace bsy.Controllers
         {
             long haneID = (long)Session["haneID"];
             KisiVM kisiVM = new KisiVM();
+            kisiVM.kayitVar = 0;
+
             kisiVM.kisi = kisi;
 
             if (kisi.id != 0)
             {
+                kisiVM.kayitVar = 1;
                 kisiVM.kunye = SozlukHelper.KunyeHazirla(context, kisi.id);
                 kisiVM.kisiHane = context.tblKisiHane
                     .Where(kh => kh.KisiID == kisi.id && kh.HaneID == kisiVM.kunye.kunyeID.HaneID)
@@ -562,6 +487,13 @@ namespace bsy.Controllers
 
             int haneSec = (int)Session["haneSec"];
             long haneID = (long)Session["haneID"];
+
+            if (kaydedildi)
+            {
+                eskiKisi.kayitVar = 1;
+            }
+
+            return View(eskiKisi);
 
             Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kisi/Hane?haneID=" + haneID.ToString() + "&haneSec=" + haneSec.ToString(), false);
             return Content("OK");

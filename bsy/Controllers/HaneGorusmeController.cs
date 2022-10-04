@@ -24,24 +24,16 @@ namespace bsy.Controllers
         {
             User user = (User)Session["USER"];
 
-            string sehir = "";
-            string ilce = "";
+            string sehirIlce = "";
             string mahalle = "";
-            string cadde = "";
-            string sokak = "";
-            string apartman = "";
+            string adres = "";
             string haneKodu = "";
 
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["SEHIR"] != null)
+                if (Request.Params["SEHIRILCE"] != null)
                 {
-                    sehir = Request.Params["SEHIR"];
-                }
-
-                if (Request.Params["ILCE"] != null)
-                {
-                    ilce = Request.Params["ILCE"];
+                    sehirIlce = Request.Params["SEHIRILCE"];
                 }
 
                 if (Request.Params["MAHALLE"] != null)
@@ -49,19 +41,9 @@ namespace bsy.Controllers
                     mahalle = Request.Params["MAHALLE"];
                 }
 
-                if (Request.Params["CADDE"] != null)
+                if (Request.Params["ADRES"] != null)
                 {
-                    cadde = Request.Params["CADDE"];
-                }
-
-                if (Request.Params["SOKAK"] != null)
-                {
-                    sokak = Request.Params["SOKAK"];
-                }
-
-                if (Request.Params["APARTMAN"] != null)
-                {
-                    apartman = Request.Params["APARTMAN"];
+                    adres = Request.Params["ADRES"];
                 }
 
                 if (Request.Params["HANEKODU"] != null)
@@ -74,22 +56,16 @@ namespace bsy.Controllers
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreSEHIR"] = sehir.ToUpper();
-                Session["filtreILCE"] = ilce.ToUpper();
+                Session["filtreSEHIRILCE"] = sehirIlce.ToUpper();
                 Session["filtreMAHALLE"] = mahalle.ToUpper();
-                Session["filtreCADDE"] = cadde.ToUpper();
-                Session["filtreSOKAK"] = sokak.ToUpper();
-                Session["filtreAPARTMAN"] = apartman.ToUpper();
+                Session["filtreADRES"] = adres.ToUpper();
                 Session["filtreHANEKODU"] = haneKodu.ToUpper();
             }
             else if (rapor == 1)
             {
-                sehir = (string)Session["filtreSEHIR"];
-                ilce = (string)Session["filtreILCE"];
+                sehirIlce = (string)Session["filtreSEHIRILCE"];
                 mahalle = (string)Session["filtreMAHALLE"];
-                cadde = (string)Session["filtreCADDE"];
-                sokak = (string)Session["filtreSOKAK"];
-                apartman = (string)Session["filtreAPARTMAN"];
+                adres = (string)Session["filtreADRES"];
                 haneKodu = (string)Session["filtreHANEKODU"];
             }
 
@@ -108,23 +84,17 @@ namespace bsy.Controllers
                          where
                             (user.gy.butunTurkiye == true || 
                             user.gy.mahalleler.Contains(h.MahalleID)) &&
-                            (sz.Aciklama + "").Contains(sehir) &&
-                            (sy.Aciklama + "").Contains(ilce) &&
+                            (sz.Aciklama + " " + sy.Aciklama + "").Contains(sehirIlce) &&
                             (sx.Aciklama + "").Contains(mahalle) &&
-                            (h.Cadde + "").Contains(cadde) &&
-                            (h.Sokak + "").Contains(sokak) &&
-                            (h.Apartman + "").Contains(apartman) &&
+                            (h.Cadde + " " + h.Sokak + " " + h.Apartman + "-" + h.Daire + "").Contains(adres) &&
                             (h.HaneKodu + "").Contains(haneKodu)
                          select new
                          {
                              h.id,
                              h.HaneKodu,
-                             sehirADI = sz.Aciklama,
-                             ilceADI = sy.Aciklama,
+                             sehirIlce = sz.Aciklama + "-" + sy.Aciklama,
                              mahalleADI = sx.Aciklama,
-                             h.Cadde,
-                             h.Sokak,
-                             ApartmanDaire = h.Apartman + "-" + h.Daire
+                             Adres = h.Cadde +  " " + h.Sokak + " "+ h.Apartman + " "+ h.Daire
                          });
 
             int totalRecords = query.Count();
@@ -137,12 +107,9 @@ namespace bsy.Controllers
                              {
                                  h.id,
                                  h.HaneKodu,
-                                 h.sehirADI,
-                                 h.ilceADI,
+                                 h.sehirIlce,
                                  h.mahalleADI,
-                                 h.Cadde,
-                                 h.Sokak,
-                                 h.ApartmanDaire,
+                                 h.Adres,
                                  Sec = 0,
                                  Gorusmeler = 0
                              }).ToList();
@@ -165,12 +132,9 @@ namespace bsy.Controllers
                       {
                                  h.id.ToString(),
                                  h.HaneKodu,
-                                 h.sehirADI,
-                                 h.ilceADI,
+                                 h.sehirIlce,
                                  h.mahalleADI,
-                                 h.Cadde,
-                                 h.Sokak,
-                                 h.ApartmanDaire,
+                                 h.Adres,
                                  h.Sec.ToString(),
                                  h.Gorusmeler.ToString()
                        }
@@ -183,24 +147,16 @@ namespace bsy.Controllers
         {
             User user = (User)Session["USER"];
 
-            string sehir = "";
-            string ilce = "";
+            string sehirIlce = "";
             string mahalle = "";
-            string cadde = "";
-            string sokak = "";
-            string apartman = "";
+            string adres = "";
             string haneKodu = "";
 
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["SEHIR"] != null)
+                if (Request.Params["SEHIRILCE"] != null)
                 {
-                    sehir = Request.Params["SEHIR"];
-                }
-
-                if (Request.Params["ILCE"] != null)
-                {
-                    ilce = Request.Params["ILCE"];
+                    sehirIlce = Request.Params["SEHIRILCE"];
                 }
 
                 if (Request.Params["MAHALLE"] != null)
@@ -208,19 +164,9 @@ namespace bsy.Controllers
                     mahalle = Request.Params["MAHALLE"];
                 }
 
-                if (Request.Params["CADDE"] != null)
+                if (Request.Params["ADRES"] != null)
                 {
-                    cadde = Request.Params["CADDE"];
-                }
-
-                if (Request.Params["SOKAK"] != null)
-                {
-                    sokak = Request.Params["SOKAK"];
-                }
-
-                if (Request.Params["APARTMAN"] != null)
-                {
-                    apartman = Request.Params["APARTMAN"];
+                    adres = Request.Params["ADRES"];
                 }
 
                 if (Request.Params["HANEKODU"] != null)
@@ -233,22 +179,16 @@ namespace bsy.Controllers
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreSEHIR"] = sehir.ToUpper();
-                Session["filtreILCE"] = ilce.ToUpper();
+                Session["filtreSEHIRILCE"] = sehirIlce.ToUpper();
                 Session["filtreMAHALLE"] = mahalle.ToUpper();
-                Session["filtreCADDE"] = cadde.ToUpper();
-                Session["filtreSOKAK"] = sokak.ToUpper();
-                Session["filtreAPARTMAN"] = apartman.ToUpper();
+                Session["filtreADRES"] = adres.ToUpper();
                 Session["filtreHANEKODU"] = haneKodu.ToUpper();
             }
             else if (rapor == 1)
             {
-                sehir = (string)Session["filtreSEHIR"];
-                ilce = (string)Session["filtreILCE"];
+                sehirIlce = (string)Session["filtreSEHIRILCE"];
                 mahalle = (string)Session["filtreMAHALLE"];
-                cadde = (string)Session["filtreCADDE"];
-                sokak = (string)Session["filtreSOKAK"];
-                apartman = (string)Session["filtreAPARTMAN"];
+                adres = (string)Session["filtreADRES"];
                 haneKodu = (string)Session["filtreHANEKODU"];
             }
 
@@ -269,24 +209,18 @@ namespace bsy.Controllers
                             (hg.HaneID == haneID || haneID == 0) &&
                             (user.gy.butunTurkiye == true ||
                             user.gy.mahalleler.Contains(hn.MahalleID)) &&
-                            (sz.Aciklama + "").Contains(sehir) &&
-                            (sy.Aciklama + "").Contains(ilce) &&
+                            (sz.Aciklama + " " + sy.Aciklama + "").Contains(sehirIlce) &&
                             (sx.Aciklama + "").Contains(mahalle) &&
-                            (hn.Cadde + "").Contains(cadde) &&
-                            (hn.Sokak + "").Contains(sokak) &&
-                            (hn.Apartman + "").Contains(apartman) &&
+                            (hn.Cadde + " " + hn.Sokak + " " + hn.Apartman + " " + hn.Daire + "").Contains(adres) &&
                             (hn.HaneKodu + "").Contains(haneKodu)
                          select new
                          {
                              hg.id,
                              haneID = hn.id,
                              hn.HaneKodu,
-                             sehirADI = sz.Aciklama,
-                             ilceADI = sy.Aciklama,
+                             sehirIlce = sz.Aciklama + "-" + sy.Aciklama,
                              mahalleADI = sx.Aciklama,
-                             hn.Cadde,
-                             hn.Sokak,
-                             ApartmanDaire = hn.Apartman + "-" + hn.Daire,
+                             Adres = hn.Cadde + " " + hn.Sokak + " "+ hn.Apartman + "-" + hn.Daire,
                              hg.GorusmeTarihi,
                              hg.Aciklama
                          });
@@ -302,12 +236,9 @@ namespace bsy.Controllers
                                  hg.id,
                                  hg.haneID,
                                  hg.HaneKodu,
-                                 hg.sehirADI,
-                                 hg.ilceADI,
+                                 hg.sehirIlce,
                                  hg.mahalleADI,
-                                 hg.Cadde,
-                                 hg.Sokak,
-                                 hg.ApartmanDaire,
+                                 hg.Adres,
                                  hg.GorusmeTarihi,
                                  hg.Aciklama,
                                  Ekle=0,
@@ -334,12 +265,9 @@ namespace bsy.Controllers
                                  hg.id.ToString(),
                                  hg.haneID.ToString(),
                                  hg.HaneKodu,
-                                 hg.sehirADI,
-                                 hg.ilceADI,
+                                 hg.sehirIlce,
                                  hg.mahalleADI,
-                                 hg.Cadde,
-                                 hg.Sokak,
-                                 hg.ApartmanDaire,
+                                 hg.Adres,
                                  hg.GorusmeTarihi.ToShortDateString(),
                                  hg.Aciklama,
                                  hg.Ekle.ToString(),
@@ -430,11 +358,11 @@ namespace bsy.Controllers
 
         private HaneGorusmeVM listeleriHazirla(HaneGorusmeVM hgVM)
         {
-            hgVM.Ihtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, hgVM.haneGorusme.Ihtiyaclar, 2);
-            hgVM.BelediyeYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, hgVM.haneGorusme.BelediyeYardimi, 2);
-            hgVM.EvMulkiyeti = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, hgVM.haneGorusme.EvMulkiyeti, 2);
-            hgVM.EvTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, hgVM.haneGorusme.EvTuru, 2);
-            hgVM.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hgVM.haneGorusme.HaneGelirDilimi, 2);
+            hgVM.haneListeleri.Ihtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, hgVM.haneGorusme.Ihtiyaclar, 2);
+            hgVM.haneListeleri.BelediyeYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, hgVM.haneGorusme.BelediyeYardimi, 2);
+            hgVM.haneListeleri.EvMulkiyeti = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, hgVM.haneGorusme.EvMulkiyeti, 2);
+            hgVM.haneListeleri.EvTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, hgVM.haneGorusme.EvTuru, 2);
+            hgVM.haneListeleri.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hgVM.haneGorusme.HaneGelirDilimi, 2);
 
             return hgVM;
         }

@@ -9,6 +9,7 @@ namespace bsy.ViewModels.Kisi
 {
     public class KisiVM
     {
+        public int kayitVar { get; set; }
         public Kunye kunye { get; set; }
         public KISI kisi { get; set; }
         public KISIHANE kisiHane { get; set; }

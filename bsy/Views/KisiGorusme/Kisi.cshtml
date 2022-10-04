@@ -11,10 +11,10 @@
 
     }
 
-    function haneGorusmeSil(id) {
-        var agree = confirm("Hane Görüşme Kaydını Silmek İstediğinizden Emin misiniz?");
+    function kisiGorusmeSil(id) {
+        var agree = confirm("Kisi Görüşme Kaydını Silmek İstediğinizden Emin misiniz?");
         if (agree) {
-            var frm = document.getElementById("frmHaneGorusmeSil");
+            var frm = document.getElementById("frmKisiGorusmeSil");
             document.getElementById("idSil").value = id;
             frm.submit();
         }
@@ -22,51 +22,52 @@
             return false;
     }
 
-    function haneGorusmeSilHazirla(cellvalue, options, rowObject) {
+    function kisiGorusmeSilHazirla(cellvalue, options, rowObject) {
         if (rowObject[0] == 0) {
             return "";
         }
 
-        return "<a href='#' onclick=haneGorusmeSil(" + rowObject[0] + ");>Sil</a>"
+        return "<a href='#' onclick=kisiGorusmeSil(" + rowObject[0] + ");>Sil</a>"
     }
 
-    function haneGorusmeGunle(cellvalue, options, rowObject)
+    function kisiGorusmeGunle(cellvalue, options, rowObject)
     {
         var mesaj = "Değiştir";
         if (rowObject[0] == 0) {
             mesaj = "Ekle";
         }
 
-        return "<a target='_blank' href='@Url.Action("YeniHaneGorusme","HaneGorusme")?id=" + rowObject[0] + "&yeniGorusme=0'>" + mesaj + "</a>";
+        return "<a target='_blank' href='@Url.Action("YeniKisiGorusme","KisiGorusme")?id=" + rowObject[0] + "&yeniGorusme=0'>" + mesaj + "</a>";
     }
 
-    function haneGorusmeEkle(cellvalue, options, rowObject)
+    function kisiGorusmeEkle(cellvalue, options, rowObject)
     {
         var mesaj = "Yeni Görüşme";
-        return "<a target='_blank' href='@Url.Action("YeniHaneGorusme","HaneGorusme")?id=" + rowObject[0] + "&yeniGorusme=1'>" + mesaj + "</a>";
+        return "<a target='_blank' href='@Url.Action("YeniKisiGorusme","KisiGorusme")?id=" + rowObject[0] + "&yeniGorusme=1'>" + mesaj + "</a>";
     }
 
     jQuery(document).ready(function () {
 
         jQuery("#liste").jqGrid({ //hangi tablo onun id si
-            url: '@Url.Action("ListeGorusmeler", "HaneGorusme")', //ilki action ikincisi controller
+            url: '@Url.Action("ListeGorusmeler", "KisiGorusme")', //ilki action ikincisi controller
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Hane ID', 'Hane Kodu', 'Şehir ve İlçe', 'Mahalle', 'Adres', 'Görüşme Tarihi', 'Görüşme Açıklaması', 'Ekle', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Kisi ID', 'Hane Kodu', 'Şehir ve İlçe','Mahalle', 'Adres', 'Ad Soyad', 'Görüşme Tarihi', 'Görüşme Açıklaması', 'Ekle', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
-              { name: 'haneID', index: 'haneID', hidden: true, width: 10, sortable: false },
+              { name: 'kisiID', index: 'kisiID', hidden: true, width: 10, sortable: false },
               { name: 'HANEKODU', index: 'HANEKODU', width: 50, search: true, sortable: false },
-              { name: 'SEHIRILCE', index: 'SEHIRILCE', width: 100, search: true, sortable: false },
-              { name: 'MAHALLE', index: 'MAHALLE', width: 150, search: true, sortable: false },
-              { name: 'ADRES', index: 'ADRES', width: 150, search: true, sortable: false },
+              { name: 'SEHIRILCE', index: 'SEHIRILCE', width: 75, search: true, sortable: false },
+              { name: 'MAHALLE', index: 'MAHALLE', width: 100, search: true, sortable: false },
+              { name: 'ADRES', index: 'CADDE', width: 150, search: true, sortable: false },
+              { name: 'ADSOYAD', index: 'ADSOYAD', width: 75, search: true, sortable: false },
               { name: 'GORUSMETARIHI', index: 'GORUSMETARIHI', width: 50, align: 'left', sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' } },
               { name: 'ACIKLAMA', index: 'ACIKLAMA', width: 150, search: true, sortable: false },
-              { name: 'Ekle', index: 'Ekle', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeEkle },
-              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeGunle },
-              { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: haneGorusmeSilHazirla }
+              { name: 'Ekle', index: 'Ekle', width: 25, align: 'left', search: false, sortable: false, formatter: kisiGorusmeEkle },
+              { name: 'Degistir', index: 'Degistir', width: 25, align: 'left', search: false, sortable: false, formatter: kisiGorusmeGunle },
+              { name: 'Sil', index: 'Sil', width: 25, align: 'left', search: false, sortable: false, formatter: kisiGorusmeSilHazirla }
             ],
             gridComplete: function ()
             {
@@ -80,15 +81,15 @@
             toppager: true,
             rowNum: 30,
             rowList: [5, 10, 15, 20, 30],
-            sortname: 'MAHALLE',
+            sortname: 'ADSOYAD',
             sortorder: "asc",
             viewrecords: true,
             height: '100%',
-            caption: 'Hane Görüşmeleri',
+            caption: 'Kisi Görüşmeleri',
             postData:
                 {
                    'ilkGiris': function () { return '@ViewBag.IlkGiris' },
-                   'haneID': function () { return '@ViewBag.haneID' }
+                   'kisiID': function () { return '@ViewBag.kisiID' }
                 }
         });
 
@@ -103,7 +104,7 @@
     });
 </script>
 
-<form method="get" action="@Url.Action("YeniHaneGorusme", "HaneGorusme")" id="frmYeniHaneGorusme">
+<form method="get" action="@Url.Action("YeniKisiGorusme", "KisiGorusme")" id="frmYeniKisiGorusme">
     <div id="divIslem">
         <input type="hidden" name="id" value="0" />
         <input type="hidden" name="yeniGorusme" value="1" />
@@ -114,7 +115,7 @@
 <table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
 <div id="pager" class="scroll" style="text-align:center;"></div>
 
-<form method="post" hidden="hidden" action="@Url.Action("HaneGorusmeSil", "HaneGorusme")" id="frmHaneGorusmeSil">
+<form method="post" hidden="hidden" action="@Url.Action("GorusmeSil", "KisiGorusme")" id="frmKisiGorusmeSil">
     @Html.AntiForgeryToken()
     <div id="divIslem">
         <input type="text" id="idSil" name="idSil" value="" hidden="hidden" />

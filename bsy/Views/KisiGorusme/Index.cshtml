@@ -11,43 +11,44 @@
 
     }
 
-    function haneGorusmeSec(cellvalue, options, rowObject)
+    function kisiGorusmeSec(cellvalue, options, rowObject)
     {
         var mesaj = "Seç";
         if (rowObject[0] == 0) {
             mesaj = "";
         }
 
-        return "<a target='_blank' href='@Url.Action("Hane","HaneGorusme")?haneID=" + rowObject[0] + "&haneSec=1" + "'>" + mesaj + "</a>";
+        return "<a target='_blank' href='@Url.Action("Kisi","KisiGorusme")?kisiID=" + rowObject[0] + "&kisiSec=1" + "'>" + mesaj + "</a>";
     }
 
-    function haneGorusmeGoster(cellvalue, options, rowObject)
+    function kisiGorusmeGoster(cellvalue, options, rowObject)
     {
         var mesaj = "Görüşmeler";
         if (rowObject[0] == 0) {
             mesaj = "";
         }
 
-        return "<a target='_blank' href='@Url.Action("Hane","HaneGorusme")?haneID=" + rowObject[0] + "&haneSec=0" + "'>" + mesaj + "</a>";
+        return "<a target='_blank' href='@Url.Action("Kisi","KisiGorusme")?kisiID=" + rowObject[0] + "&kisiSec=0" + "'>" + mesaj + "</a>";
     }
 
     jQuery(document).ready(function () {
 
         jQuery("#liste").jqGrid({ //hangi tablo onun id si
-            url: '@Url.Action("ListeHaneler", "HaneGorusme")', //ilki action ikincisi controller
+            url: '@Url.Action("ListeKisiler", "KisiGorusme")', //ilki action ikincisi controller
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Hane Kodu', 'Şehir ve İlçe', 'Mahalle', 'Adres', 'Seç', 'Görüşmeler'],
+            colNames: ['id', 'Hane Kodu', 'Şehir ve İlçe', 'Mahalle', 'Adres', 'Ad Soyad', 'Seç', 'Görüşmeler'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
               { name: 'HANEKODU', index: 'HANEKODU', width: 25, search: true, sortable: false },
               { name: 'SEHIRILCE', index: 'SEHIRILCE', width: 100, search: true, sortable: false },
               { name: 'MAHALLE', index: 'MAHALLE', width: 100, search: true, sortable: false },
-              { name: 'ADRES', index: 'ADRES', width: 200, search: true, sortable: false },
-              { name: 'Sec', index: 'Sec', width: 25, align: 'left', search: false, sortable: false, formatter: haneGorusmeSec },
-              { name: 'Gorusmeler', index: 'Gorusmeler', width: 25, align: 'left', search: false, sortable: false, formatter: haneGorusmeGoster }
+              { name: 'ADRES', index: 'ADRES', width: 150, search: true, sortable: false },
+              { name: 'ADSOYAD', index: 'ADSOYAD', width: 75, search: true, sortable: false },
+              { name: 'Sec', index: 'DegiSecstir', width: 50, align: 'left', search: false, sortable: false, formatter: kisiGorusmeSec },
+              { name: 'Gorusmeler', index: 'Gorusmeler', width: 50, align: 'left', search: false, sortable: false, formatter: kisiGorusmeGoster }
             ],
             gridComplete: function ()
             {
@@ -65,11 +66,11 @@
             sortorder: "asc",
             viewrecords: true,
             height: '100%',
-            caption: 'Haneler',
+            caption: 'Kisiler',
             postData:
                 {
                    'ilkGiris': function () { return '@ViewBag.IlkGiris' },
-                   'haneID': function () { return '@ViewBag.haneID' }
+                   'kisiID': function () { return '@ViewBag.kisiID' }
                 }
         });
 

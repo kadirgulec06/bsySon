@@ -373,6 +373,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IlceController.cs" />
     <Compile Include="Controllers\KisiController.cs" />
+    <Compile Include="Controllers\KisiGorusmeController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
     <Compile Include="Controllers\MahalleController.cs" />
     <Compile Include="Controllers\MesajController.cs" />
@@ -414,7 +415,10 @@
     <Compile Include="Models\ILCE.cs" />
     <Compile Include="Models\IPACMA.cs" />
     <Compile Include="Models\KISI.cs" />
+    <Compile Include="Models\KISIGORUSME.cs" />
     <Compile Include="Models\KISIHANE.cs" />
+    <Compile Include="Models\HaneListeleri.cs" />
+    <Compile Include="Models\KisiListeleri.cs" />
     <Compile Include="Models\KULLANICI.cs" />
     <Compile Include="Models\KULLANICIROL.cs" />
     <Compile Include="Models\Kunye.cs" />
@@ -441,6 +445,7 @@
     <Compile Include="ViewModels\HaneGorusme\HaneGorusmeVM.cs" />
     <Compile Include="ViewModels\Hane\HaneVM.cs" />
     <Compile Include="ViewModels\Ilce\IlceVM.cs" />
+    <Compile Include="ViewModels\KisiGorusme\KisiGorusmeVM.cs" />
     <Compile Include="ViewModels\Kisi\KisiVM.cs" />
     <Compile Include="ViewModels\Mahalle\MahalleVM.cs" />
     <Compile Include="ViewModels\Mesaj\SMSMesaji.cs" />
@@ -663,6 +668,9 @@
     <Content Include="Views\HaneGorusme\YeniHaneGorusme.cshtml" />
     <Content Include="Views\AnaSozluk\AnaSozluk.cshtml" />
     <Content Include="Views\AnaSozluk\YeniAnaSozluk.cshtml" />
+    <Content Include="Views\KisiGorusme\Index.cshtml" />
+    <Content Include="Views\KisiGorusme\Kisi.cshtml" />
+    <Content Include="Views\KisiGorusme\YeniKisiGorusme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
