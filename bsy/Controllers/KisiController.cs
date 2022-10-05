@@ -275,6 +275,7 @@ namespace bsy.Controllers
                                  kx.Adres,
                                  kx.AdSoyad,
                                  kx.TCNo,
+                                 Tasi=0,
                                  Gorusme=0,
                                  Degistir = 0,
                                  Sil = 0
@@ -303,12 +304,14 @@ namespace bsy.Controllers
                                  kx.Adres,
                                  kx.AdSoyad,
                                  kx.TCNo,
+                                 kx.Tasi.ToString(),
                                  kx.Gorusme.ToString(),
                                  kx.Degistir.ToString(),
                                  kx.Sil.ToString()
                        }
                   }).ToArray()
             };
+
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 

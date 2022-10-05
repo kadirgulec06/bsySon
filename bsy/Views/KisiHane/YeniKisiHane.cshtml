@@ -1,0 +1,168 @@
+﻿@model bsy.ViewModels.KisiHane.KisiHaneVM
+@{
+    ViewBag.Title = "Kişilerin İkamet Ettiği Haneler";
+}
+<style>
+</style>
+
+<script src="~/Scripts/spk-scripts.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $("#telefonBilgisi").mask("(999) 999-99-99");
+    });
+
+    function sehirDegisti(control) {
+        var sehir = control.value;
+        //alert(sehir);
+        $.ajax({
+            type: "POST",
+            data: { sehirID: sehir },
+            url: '@Url.Action("SehrinIlceleri", "Genel")',
+            dataType: 'json',
+            success: function (json) {
+
+                //alert("girdi");
+                var $el = $("#ilcelerSelect");
+                $el.empty(); // remove old options
+
+                //$el.append($("<option></option>")
+                //    .attr("value", '').text('_Bütün İlçeler'));
+
+                $.each(json, function (value, key) {
+                    //alert(value);
+                    //alert(key.text);
+                    //alert(key.value);
+                    $el.append($("<option></option>")
+                        .attr("value", key.value).text(key.text));
+                });
+            }
+        });
+
+        return;
+    }
+
+    function ilceDegisti(control) {
+        return;
+        var ilce = control.value;
+        var frm = document.getElementById("frmKisiIndex");
+        document.getElementById("ilceID").value = ilce;
+        frm.submit();
+    }
+
+    $(document).ready(function () {
+        /*
+        izinGorev = document.getElementById('IzinGorev').value;
+        */
+    });
+
+    function KisiHaneClickHandler() {
+        //document.getElementById("SicilNo").removeAttribute('disabled');
+
+        return true;
+
+    }
+
+</script>
+
+@using (Html.BeginForm("YeniKisiHane", "KisiHane", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => Model.id)
+
+    @Html.HiddenFor(model => Model.kunyeHane.kunyeID.BolgeID)
+    @Html.HiddenFor(model => Model.kunyeHane.kunyeID.SehirID)
+    @Html.HiddenFor(model => Model.kunyeHane.kunyeID.IlceID)
+    @Html.HiddenFor(model => Model.kunyeHane.kunyeID.MahalleID)
+    @Html.HiddenFor(model => Model.kunyeHane.kunyeID.HaneID)
+    @Html.HiddenFor(model => Model.kunyeKisi.kunyeID.KisiID)
+
+    <div id="divAna">
+        <font size="3" color=black><b>@ViewBag.Title</b></font>
+        <br />
+        <br />
+        <fieldset class="field_style cerceveKucuk">
+            <table>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Adı Soyadı :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunyeKisi.kunyeBilgi.AdSoyad, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Şehir :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunyeHane.kunyeBilgi.Sehir, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        İlçe :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunyeHane.kunyeBilgi.Ilce, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Mahalle :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunyeHane.kunyeBilgi.Mahalle, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Hane Kodu :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunyeHane.kunyeID.HaneKODU, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Adres :
+                    </td>
+                    <td align="left">
+                        @Html.TextBoxFor(model => model.kunyeHane.kunyeBilgi.Adres, new { @readonly = "readonly" })
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Başlangıç Tarihi :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.BasTar, "{0:dd-MM-yyyy}", new { @class = "datepicker" })
+                        @Html.ValidationMessageFor(model => model.BasTar)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="etiketSabit">
+                        Başlangıç Tarihi :
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.BitTar, "{0:dd-MM-yyyy}", new { @class = "datepicker" })
+                        @Html.ValidationMessageFor(model => model.BitTar)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <table>
+            <tr>
+                <td>
+                    <input type="submit" value="Kaydet" class="genelButton" name="btnSubmit" onclick="return KisiHaneClickHandler();" />
+                    <a class="genelButton" href='@Url.Action("Index", "KisiHane")?haneliHanesiz=1'>
+                        <input type="button" class="genelButton" name="btnHaneGorusme" value="Kişiler" />
+                    </a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+}
