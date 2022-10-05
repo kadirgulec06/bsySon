@@ -24,8 +24,7 @@ namespace bsy.Controllers
         {
             User user = (User)Session["USER"];
 
-            string sehirIlce = "";
-            string mahalle = "";
+            string sehirIlceMahalle = "";
             string haneKodu = "";
             string adres = "";
             string adSoyad = "";
@@ -33,14 +32,9 @@ namespace bsy.Controllers
 
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["SEHIRILCE"] != null)
+                if (Request.Params["SEHIRILCEMAHALLE"] != null)
                 {
-                    sehirIlce = Request.Params["SEHIRILCE"];
-                }
-
-                if (Request.Params["MAHALLE"] != null)
-                {
-                    mahalle = Request.Params["MAHALLE"];
+                    sehirIlceMahalle = Request.Params["SEHIRILCEMAHALLE"];
                 }
 
                 if (Request.Params["HANEKODU"] != null)
@@ -68,8 +62,7 @@ namespace bsy.Controllers
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreSEHIRILCE"] = sehirIlce.ToUpper();
-                Session["filtreMAHALLE"] = mahalle.ToUpper();
+                Session["filtreSEHIRILCEMAHALLE"] = sehirIlceMahalle.ToUpper();
                 Session["filtreHANEKODU"] = haneKodu.ToUpper();
                 Session["filtreADRES"] = adres.ToUpper();
                 Session["filtreADSOYAD"] = adSoyad.ToUpper();
@@ -77,8 +70,7 @@ namespace bsy.Controllers
             }
             else if (rapor == 1)
             {
-                sehirIlce = (string)Session["filtreSEHIRILCE"];
-                mahalle = (string)Session["filtreMAHALLE"];
+                sehirIlceMahalle = (string)Session["filtreSEHIRILCEMAHALLE"];
                 haneKodu = (string)Session["filtreHANEKODU"];
                 adres = (string)Session["filtreADRES"];
                 adSoyad = (string)Session["filtreADSOYAD"];
@@ -119,8 +111,7 @@ namespace bsy.Controllers
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
-                            (sm.Aciklama + "").Contains(mahalle) &&
-                            (sy.Aciklama + " " + sz.Aciklama + "").Contains(sehirIlce) &&
+                            (sy.Aciklama + " " + sz.Aciklama + " " + sm.Aciklama + "").Contains(sehirIlceMahalle) &&
                             (hn.HaneKodu + "").Contains(haneKodu) &&
                             (hn.Cadde + " " + hn.Sokak + " " + hn.Apartman + " " + hn.Daire + "").Contains(adres) &&
                             (kx.Ad + " " + kx.Soyad + "").Contains(adSoyad) &&
@@ -129,7 +120,7 @@ namespace bsy.Controllers
                          {
                              kx.id,
                              hn.HaneKodu,
-                             sehirIlce = sz.Aciklama + "-" + sy.Aciklama,
+                             sehirIlceMahalle = sz.Aciklama + "-" + sy.Aciklama + sm.Aciklama,
                              mahalleADI = sm.Aciklama,
                              Adres = hn.Cadde + " "+ hn.Sokak + " " + hn.Apartman + " " + hn.Daire,
                              AdSoyad = kx.Ad + " " + kx.Soyad,
@@ -146,7 +137,7 @@ namespace bsy.Controllers
                              {
                                  kx.id,
                                  kx.HaneKodu,
-                                 kx.sehirIlce,
+                                 kx.sehirIlceMahalle,
                                  kx.mahalleADI,
                                  kx.Adres,
                                  kx.AdSoyad,
@@ -173,8 +164,7 @@ namespace bsy.Controllers
                       {
                                  kx.id.ToString(),
                                  kx.HaneKodu,
-                                 kx.sehirIlce,
-                                 kx.mahalleADI,
+                                 kx.sehirIlceMahalle,
                                  kx.Adres,
                                  kx.AdSoyad,
                                  kx.TCNo,
@@ -190,8 +180,7 @@ namespace bsy.Controllers
         {
             User user = (User)Session["USER"];
 
-            string sehirIlce = "";
-            string mahalle = "";
+            string sehirIlceMahalle = "";
             string adres = "";
             string haneKodu = "";
             string adSoyad = "";
@@ -201,12 +190,7 @@ namespace bsy.Controllers
             {
                 if (Request.Params["SEHIRILCE"] != null)
                 {
-                    sehirIlce = Request.Params["SEHIRILCE"];
-                }
-
-                if (Request.Params["MAHALLE"] != null)
-                {
-                    mahalle = Request.Params["MAHALLE"];
+                    sehirIlceMahalle = Request.Params["SEHIRILCE"];
                 }
 
                 if (Request.Params["ADRES"] != null)
@@ -233,8 +217,7 @@ namespace bsy.Controllers
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreSEHIRILCE"] = sehirIlce.ToUpper();
-                Session["filtreMAHALLE"] = mahalle.ToUpper();
+                Session["filtreSEHIRILCEMAHALLE"] = sehirIlceMahalle.ToUpper();
                 Session["filtreADRES"] = adres.ToUpper();
                 Session["filtreHANEKODU"] = haneKodu.ToUpper();
                 Session["filtreADSOYAD"] = adSoyad.ToUpper();
@@ -242,8 +225,7 @@ namespace bsy.Controllers
             }
             else if (rapor == 1)
             {
-                sehirIlce = (string)Session["filtreSEHIRILCE"];
-                mahalle = (string)Session["filtreMAHALLE"];
+                sehirIlceMahalle = (string)Session["filtreSEHIRILCEMAHALLE"];
                 adres = (string)Session["filtreADRES"];
                 haneKodu = (string)Session["filtreHANEKODU"];
                 adSoyad = (string)Session["filtreADSOYAD"];
@@ -302,8 +284,7 @@ namespace bsy.Controllers
                             (kg.GorusmeTarihi >= kh.BasTar && kg.GorusmeTarihi <= kh.BitTar) &&
                             (user.gy.butunTurkiye == true ||
                             user.gy.mahalleler.Contains(hn.MahalleID)) &&
-                            (sz.Aciklama + " " + sy.Aciklama + "").Contains(sehirIlce) &&
-                            (sx.Aciklama + "").Contains(mahalle) &&
+                            (sz.Aciklama + " " + sy.Aciklama + " " + sx.Aciklama + "").Contains(sehirIlceMahalle) &&
                             (hn.Cadde + " " + hn.Sokak + " " + hn.Apartman + " " + hn.Daire ).Contains(adres) &&
                             (hn.HaneKodu + "").Contains(haneKodu) &&
                             (kx.Ad + " " +kx.Soyad + "").Contains(adSoyad) &&
@@ -314,8 +295,7 @@ namespace bsy.Controllers
                              kisiID = kx.id,
                              haneID = hn.id,
                              hn.HaneKodu,
-                             sehirIlce = sz.Aciklama + "-" + sy.Aciklama,
-                             mahalleADI = sx.Aciklama,
+                             sehirIlceMahalle = sz.Aciklama + "-" + sy.Aciklama + sx.Aciklama,
                              Adres = hn.Cadde + " " + hn.Sokak + " " + hn.Apartman + "-" + hn.Daire,
                              AdSoyad = kx.Ad + " " + kx.Soyad,
                              kg.GorusmeTarihi,
@@ -334,8 +314,7 @@ namespace bsy.Controllers
                                  kg.kisiID,
                                  kg.haneID,
                                  kg.HaneKodu,
-                                 kg.sehirIlce,
-                                 kg.mahalleADI,
+                                 kg.sehirIlceMahalle,
                                  kg.Adres,
                                  kg.AdSoyad,
                                  kg.GorusmeTarihi,
@@ -364,8 +343,7 @@ namespace bsy.Controllers
                                  kg.id.ToString(),
                                  kg.kisiID.ToString(),
                                  kg.HaneKodu,
-                                 kg.sehirIlce,
-                                 kg.mahalleADI,
+                                 kg.sehirIlceMahalle,
                                  kg.Adres,
                                  kg.AdSoyad,
                                  kg.GorusmeTarihi.ToShortDateString(),

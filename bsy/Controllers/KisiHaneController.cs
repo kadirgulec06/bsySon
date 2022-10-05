@@ -541,18 +541,34 @@ namespace bsy.Controllers
                 return View(khVM);
             }
 
+            DateTime bugun = DateTime.Now.Date;
             KISIHANE kisiHane = new KISIHANE();
 
             if (khVM.id == 0)
             {
                 var kh = (from khx in context.tblKisiHane
                           where khx.KisiID == khVM.kunyeKisi.kunyeID.KisiID &&
-                                khx.HaneID == khVM.kunyeHane.kunyeID.HaneID
+                                khx.HaneID == khVM.kunyeHane.kunyeID.HaneID &&
+                                khx.BitTar > bugun
                           select khx).FirstOrDefault();
 
                 if (kh != null)
                 {
                     m = new Mesaj("hata", "Kişi bu haneye kayıtlı");
+                    mesajlar.Add(m);
+                    Session["MESAJLAR"] = mesajlar;
+                    return View(khVM);
+                }
+
+                kh = (from khx in context.tblKisiHane
+                          where khx.KisiID == khVM.kunyeKisi.kunyeID.KisiID &&
+                                khx.HaneID != khVM.kunyeHane.kunyeID.HaneID &&
+                                khx.BitTar > bugun
+                          select khx).FirstOrDefault();
+
+                if (kh != null)
+                {
+                    m = new Mesaj("hata", "Kişi başka bir haneye kayıtlı");
                     mesajlar.Add(m);
                     Session["MESAJLAR"] = mesajlar;
                     return View(khVM);

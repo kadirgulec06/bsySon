@@ -66,20 +66,19 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Hane Kodu', 'Şehir ve İlçe', 'Mahalle', 'Adres', 'Adı Soyadı', 'TC No', 'Görüşmeler', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Hane Kodu', 'Şehir, İlçe ve Mahalle', 'Adres', 'Adı Soyadı', 'TC No', 'Görüşmeler', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
-              { name: 'HANEKODU', index: 'HANEKODU', width: 50, search: true, sortable: false },
-              { name: 'SEHIRILCE', index: 'SEHIRILCE', width: 75, search: true, sortable: false },
-              { name: 'MAHALLE', index: 'MAHALLE', width: 150, search: true, sortable: false },
+              { name: 'HANEKODU', index: 'HANEKODU', width: 25, search: true, sortable: false },
+              { name: 'SEHIRILCEMAHALLE', index: 'SEHIRILCEMAHALLE', width: 150, search: true, sortable: false },
               { name: 'ADRES', index: 'ADRES', width: 150, search: true, sortable: false },
               { name: 'ADSOYAD', index: 'ADSOYAD', width: 75, search: true, sortable: false },
-              { name: 'TCNO', index: 'TCNO', width: 20, search: true, sortable: false },
-              { name: 'Tasi', index: 'Tasi', width: 50, align: 'left', search: false, sortable: false, formatter: kisiTasi },
-              { name: 'Gorusme', index: 'Gorusme', width: 50, align: 'left', search: false, sortable: false, formatter: kisiGorusmeleri },
-              { name: 'Degistir', index: 'Degistir', width: 50, align: 'left', search: false, sortable: false, formatter: kisiGunle },
-              { name: 'Sil', index: 'Sil', width: 50, align: 'left', search: false, sortable: false, formatter: kisiSilHazirla }
+              { name: 'TCNO', index: 'TCNO', width: 25, search: true, sortable: false },
+              { name: 'Tasi', index: 'Tasi', width: 30, align: 'left', search: false, sortable: false, formatter: kisiTasi },
+              { name: 'Gorusme', index: 'Gorusme', width: 30, align: 'left', search: false, sortable: false, formatter: kisiGorusmeleri },
+              { name: 'Degistir', index: 'Degistir', width: 30, align: 'left', search: false, sortable: false, formatter: kisiGunle },
+              { name: 'Sil', index: 'Sil', width: 30, align: 'left', search: false, sortable: false, formatter: kisiSilHazirla }
             ],
             gridComplete: function ()
             {
