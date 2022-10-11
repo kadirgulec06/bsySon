@@ -14,13 +14,13 @@ namespace bsy.ViewModels.HaneGorusme
             yeniGorusme = 0;
             tabIndex = 0;
             kunye = new Kunye();
-            haneListeleri = new HaneListeleri();
+            haneListeleri = new HaneGorusmeListeleri();
             haneGorusme = new HANEGORUSME();
         }
         public int yeniGorusme { get; set; }
         public int tabIndex { get; set; }
         public Kunye kunye { get; set; }
-        public HaneListeleri haneListeleri { get; set; }
+        public HaneGorusmeListeleri haneListeleri { get; set; }
         public HANEGORUSME haneGorusme { get; set; }
     }
 }

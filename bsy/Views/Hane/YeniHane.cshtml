@@ -17,7 +17,7 @@
         //alert(sehir);
         $.ajax({
             type: "POST",
-            data: { sehirID: sehir },
+            data: { SehirID: sehir },
             url: '@Url.Action("SehrinIlceleri", "Genel")',
             dataType: 'json',
             success: function (json) {
@@ -47,7 +47,7 @@
         //alert(ilce);
         $.ajax({
             type: "POST",
-            data: { ilceID: ilce },
+            data: { IlceID: ilce },
             url: '@Url.Action("IlceninMahalleleri", "Genel")',
             dataType: 'json',
             success: function (json) {
@@ -216,6 +216,16 @@
                         @Html.ValidationMessageFor(model => model.hane.KayitTarihi)
                     </td>
                 </tr>
+                <tr class="veri">
+                    <td align="right" class="etiketSabit">
+                        Hane Tipi :
+                    </td>
+                    <td align="left">
+                        @Html.DropDownListFor(model => model.hane.HaneTipi, new SelectList(Model.haneListeleri.HaneTipi, "Value", "Text"), new { id = "haneTipiListesi", @style = "width:340px", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.hane.HaneTipi)
+                    </td>
+                </tr>
+
                 <tr>
                     <td align="right" class="etiketSabit">
                         Telefon :
@@ -227,11 +237,11 @@
                 </tr>
                 <tr>
                     <td align="right" class="etiketSabit">
-                        EPosta :
+                        eposta :
                     </td>
                     <td>
-                        @Html.TextBoxFor(model => model.hane.Eposta, new { @size = 100 })
-                        @Html.ValidationMessageFor(model => model.hane.Eposta)
+                        @Html.TextBoxFor(model => model.hane.eposta, new { @size = 100 })
+                        @Html.ValidationMessageFor(model => model.hane.eposta)
                     </td>
                 </tr>
                 <tr>
@@ -327,8 +337,8 @@
 <form method="post" hidden="hidden" action="@Url.Action("Index", "Hane")" id="frmHaneIndex">
     @Html.AntiForgeryToken()
     <div id="divIslem">
-        <input type="text" id="sehirID" name="sehirID" value="" hidden="hidden" />
-        <input type="text" id="ilceID" name="ilceID" value="" hidden="hidden" />
+        <input type="text" id="SehirID" name="SehirID" value="" hidden="hidden" />
+        <input type="text" id="IlceID" name="IlceID" value="" hidden="hidden" />
         <input type="text" id="mahalleID" name="mahalleID" value="" hidden="hidden" />
     </div>
 </form>

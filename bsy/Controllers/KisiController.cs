@@ -76,9 +76,9 @@ namespace bsy.Controllers
             var query = (from hn in context.tblHaneler
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sx in context.tblSozluk on mh.id equals sx.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
@@ -228,9 +228,9 @@ namespace bsy.Controllers
                          join hn in context.tblHaneler on kh.HaneID equals hn.id
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sm in context.tblSozluk on mh.id equals sm.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (kh.HaneID == haneID || haneID == 0) &&
@@ -380,7 +380,7 @@ namespace bsy.Controllers
 
         private KisiVM listeleriHazirla(KisiVM kisiVM)
         {
-            kisiVM.cinsiyetler = SozlukHelper.anaSozlukKalemleriDD(context, "CINSIYET", kisiVM.kisi.Cinsiyet, 0);
+            kisiVM.kisiListeleri.Cinsiyet = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.cinsiyetKodu, kisiVM.kisi.Cinsiyet, 2);
 
             return kisiVM;
         }
@@ -516,7 +516,7 @@ namespace bsy.Controllers
             eskiKisi.kisi.Soyad = yeniKisi.kisi.Soyad;
             eskiKisi.kisi.Cinsiyet = yeniKisi.kisi.Cinsiyet;
             eskiKisi.kisi.Telefon = yeniKisi.kisi.Telefon;
-            eskiKisi.kisi.Eposta = yeniKisi.kisi.Eposta;
+            eskiKisi.kisi.eposta = yeniKisi.kisi.eposta;
             eskiKisi.kisi.EkBilgi = yeniKisi.kisi.EkBilgi;
 
             eskiKisi.kisiHane.BasTar = yeniKisi.kisi.KayitTarihi;

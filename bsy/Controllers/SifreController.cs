@@ -36,9 +36,9 @@ namespace bsy.Controllers
             User user = (User)Session["USER"];
             SifreDegisVM sdVM = new SifreDegisVM();
 
-            sdVM.userID = user.id;
+            sdVM.UserID = user.id;
             sdVM.AdSoyad = user.AdSoyad;
-            sdVM.eposta = user.Eposta;
+            sdVM.eposta = user.eposta;
 
             return sdVM;
         }
@@ -65,7 +65,7 @@ namespace bsy.Controllers
             }
 
             User user = (User)Session["USER"];
-            bool sifreDogru = SifreHelper.SifreDogruMU(context, user.Eposta, sdVM.eskiSifre);
+            bool sifreDogru = SifreHelper.SifreDogruMU(context, user.eposta, sdVM.eskiSifre);
             if (!sifreDogru)
             {
                 m = new Mesaj("hata", "Şifre hatalı");
@@ -87,7 +87,7 @@ namespace bsy.Controllers
             }
 
             string sifreliSifre = SifreHelper.CreateSHA512(sdVM.yeniSifre);
-            KULLANICI kx = context.tblKullanicilar.Find(sdVM.userID);
+            KULLANICI kx = context.tblKullanicilar.Find(sdVM.UserID);
             kx.Sifre = sifreliSifre;
             context.Entry(kx).State = EntityState.Modified;
             bool sifreDegismeYaratildi = SifreHelper.SifreDegismeYarat(context, kx.id, user.AdSoyad + " tarafından şifre değiştirildi");
@@ -117,12 +117,12 @@ namespace bsy.Controllers
 
             User user = (User)Session["USER"];
 
-            string yeniSifre = SifreHelper.SifreSifirla(context, user.Eposta);
+            string yeniSifre = SifreHelper.SifreSifirla(context, user.eposta);
 
             m = new Mesaj("bilgi", "Yeni Sifreniz " + yeniSifre);
             mesajlar.Add(m);
             Session["MESAJLAR"] = mesajlar;
-            bool gonder = SifreHelper.sifrePostasiGonder(context, user.Eposta, yeniSifre);
+            bool gonder = SifreHelper.sifrepostasiGonder(context, user.eposta, yeniSifre);
 
             return View();
         }
@@ -136,21 +136,21 @@ namespace bsy.Controllers
 
         [Yetkili(Roles = "YONETICI")]
         [HttpPost]
-        public ActionResult SifreSifirlaYonetici(long userID)
+        public ActionResult SifreSifirlaYonetici(long UserID)
         {
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
             User user = (User)Session["USER"];
 
-            KULLANICI kx = context.tblKullanicilar.Find(userID);
+            KULLANICI kx = context.tblKullanicilar.Find(UserID);
 
             string yeniSifre = SifreHelper.SifreSifirla(context, kx.eposta);
 
             m = new Mesaj("bilgi", kx.eposta + " kullanıcısının yeni şifresi " + yeniSifre);
             mesajlar.Add(m);
             Session["MESAJLAR"] = mesajlar;
-            bool gonder = SifreHelper.sifrePostasiGonder(context, kx.eposta, yeniSifre);
+            bool gonder = SifreHelper.sifrepostasiGonder(context, kx.eposta, yeniSifre);
 
             Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kullanicilar/Index", false);
             return Content("OK");

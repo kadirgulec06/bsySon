@@ -11,7 +11,7 @@ namespace bsy.ViewModels.GorevSahasi
         public GorevSahasiVM()
         {
             id = 0;
-            userID = 0;
+            UserID = 0;
             eposta = "";
             Ad = "";
             Soyad = "";
@@ -25,8 +25,8 @@ namespace bsy.ViewModels.GorevSahasi
             Ilce = "";
             Mahalle = "";                        
         }
-        public long id { get; set; }   // Roller id
-        public long userID { get; set; }
+        public int id { get; set; }   // Roller id
+        public int UserID { get; set; }
         public string eposta { get; set; }
         public string Ad { get; set; }
         public String Soyad { get; set; }

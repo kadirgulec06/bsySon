@@ -13,7 +13,9 @@ namespace bsy.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long id { get; set; }
 
-        public long sehirID { get; set; }
+        public long SehirID { get; set; }
+
+        [MaxLength(400)]
         public string Aciklama { get; set; }
     }
 }

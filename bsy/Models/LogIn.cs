@@ -14,12 +14,14 @@ namespace bsy.Models
             sifre = "123";
         }
 
-        [Display(Name="EPosta Adresi")]
+        [Display(Name="eposta Adresi")]
         public string userName { get; set; }
 
         [Display(Name = "Şifre")]
         public string sifre { get; set; }
         public bool girisAktif { get; set; }
+
+        [MaxLength(50)]
         public string ip { get; set; }
         public string mesaj { get; set; }
     }

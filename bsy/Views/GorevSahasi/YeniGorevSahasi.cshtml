@@ -13,7 +13,7 @@
         //alert(sehir);
         $.ajax({
             type: "POST",
-            data: { sehirID: sehir },
+            data: { SehirID: sehir },
             url: '@Url.Action("SehrinIlceleri", "Genel")',
             dataType: 'json',
             success: function (json) {
@@ -43,7 +43,7 @@
         //alert(ilce);
         $.ajax({
             type: "POST",
-            data: { ilceID: ilce },
+            data: { IlceID: ilce },
             url: '@Url.Action("IlceninMahalleleri", "Genel")',
             dataType: 'json',
             success: function (json) {
@@ -113,7 +113,7 @@
     @Html.ValidationSummary(true)
 
     @Html.HiddenFor(model => Model.id)
-    @Html.HiddenFor(model => Model.userID)
+    @Html.HiddenFor(model => Model.UserID)
 
     <div id="divAna">
         <font size="3" color=black><b>@ViewBag.Title</b></font>

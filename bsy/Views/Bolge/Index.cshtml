@@ -37,7 +37,7 @@
         }
         //return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
 
-        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
+        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&UserID=" + rowObject[1] + "'>" + mesaj + "</a>";
         return "<a href='@Url.Action("YeniBolge","Bolge")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
     }
 

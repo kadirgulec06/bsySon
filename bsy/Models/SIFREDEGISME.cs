@@ -8,8 +8,8 @@ namespace bsy.Models
 {
     public class SIFREDEGISME
     {
-        public long id { get; set; }
-        public long userID { get; set; }
+        public int id { get; set; }
+        public int UserID { get; set; }
         public DateTime Tarih { get; set; }
 
         [MaxLength(400)]

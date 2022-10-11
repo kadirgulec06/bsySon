@@ -77,9 +77,9 @@ namespace bsy.Controllers
             var query = (from h in context.tblHaneler
                          join mh in context.tblMahalleler on h.MahalleID equals mh.id
                          join sx in context.tblSozluk on mh.id equals sx.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (user.gy.butunTurkiye == true || 
@@ -201,9 +201,9 @@ namespace bsy.Controllers
                          join hn in context.tblHaneler on hg.HaneID equals hn.id
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sx in context.tblSozluk on mh.id equals sx.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (hg.HaneID == haneID || haneID == 0) &&
@@ -358,11 +358,53 @@ namespace bsy.Controllers
 
         private HaneGorusmeVM listeleriHazirla(HaneGorusmeVM hgVM)
         {
-            hgVM.haneListeleri.Ihtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, hgVM.haneGorusme.Ihtiyaclar, 2);
-            hgVM.haneListeleri.BelediyeYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, hgVM.haneGorusme.BelediyeYardimi, 2);
-            hgVM.haneListeleri.EvMulkiyeti = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, hgVM.haneGorusme.EvMulkiyeti, 2);
-            hgVM.haneListeleri.EvTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, hgVM.haneGorusme.EvTuru, 2);
-            hgVM.haneListeleri.HaneGelirDilimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, hgVM.haneGorusme.HaneGelirDilimi, 2);
+            hgVM.haneListeleri.IkametYeri = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ikametYeriKodu, hgVM.haneGorusme.IkametYeri, 2);
+            hgVM.haneListeleri.GocSehri = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.gocSehriKodu, hgVM.haneGorusme.GocSehri, 2);
+            hgVM.haneListeleri.GocIlcesi = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.gocIlcesiKodu, hgVM.haneGorusme.GocIlcesi, 2);
+            hgVM.haneListeleri.GocSebebi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gocIlcesiKodu, hgVM.haneGorusme.GocSebebi, 2);
+            hgVM.haneListeleri.KonusulanDil = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.konusulanDilKodu, hgVM.haneGorusme.KonusulanDil, 2);
+            hgVM.haneListeleri.Calisanlar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.haneCalisanlariKodu, hgVM.haneGorusme.Calisanlar, 2);
+            hgVM.haneListeleri.SosyalDestekTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.sosyalDestekKodu, hgVM.haneGorusme.SosyalDestekTuru, 2);
+            hgVM.haneListeleri.KonutMulkiyetTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.konutMulkiyetKodu, hgVM.haneGorusme.KonutMulkiyetTuru, 2);
+            hgVM.haneListeleri.ElektrikErisimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.elektrikErisimiKodu, hgVM.haneGorusme.ElektrikErisimi, 2);
+            hgVM.haneListeleri.TemizSu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.temizSuKodu, hgVM.haneGorusme.TemizSu, 2);
+            hgVM.haneListeleri.SehirSuyu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.sehirSuyuKodu, hgVM.haneGorusme.SehirSuyu, 2);
+            hgVM.haneListeleri.Kanalizasyon = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.kanalizasyonGideriKodu, hgVM.haneGorusme.Kanalizasyon, 2);
+            hgVM.haneListeleri.BuzDolabi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.buzdolabiKodu, hgVM.haneGorusme.Buzdolabi, 2);
+            hgVM.haneListeleri.CamasirMakinesi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.camasirMakinesiKodu, hgVM.haneGorusme.CamasirMakinesi, 2);
+            hgVM.haneListeleri.BulasikMakinesi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.bulasikMakinesiKodu, hgVM.haneGorusme.BulasikMakinesi, 2);
+            hgVM.haneListeleri.Televizyon = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.televizyonKodu, hgVM.haneGorusme.Televizyon, 2);
+            hgVM.haneListeleri.Internet = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.internetImkaniKodu, hgVM.haneGorusme.Internet, 2);
+            hgVM.haneListeleri.BilgisayarTablet = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.bilgisayarTabletKodu, hgVM.haneGorusme.BilgisayarTablet, 2);
+            hgVM.haneListeleri.Mobilya = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.mobilyaKodu, hgVM.haneGorusme.Mobilya, 2);
+            hgVM.haneListeleri.Firin = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.firinKodu, hgVM.haneGorusme.Firin, 2);
+            hgVM.haneListeleri.IsinmaTuru = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.isinmaTuruKodu, hgVM.haneGorusme.IsinmaTuru, 2);
+            hgVM.haneListeleri.BeslenmeDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.beslenmeDurumuKodu, hgVM.haneGorusme.BeslenmeDurumu, 2);
+            hgVM.haneListeleri.BeslenmeIstekleri = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.beslenmeIstekleriKodu, hgVM.haneGorusme.BeslenmeIstekleri, 2);
+            hgVM.haneListeleri.CocukSutu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.cocukSutuKodu, hgVM.haneGorusme.CocukSutu, 2);
+            hgVM.haneListeleri.OgunAtlama = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ogunAtlamaKodu, hgVM.haneGorusme.OgunAtlama, 2);
+            hgVM.haneListeleri.OkulYemegi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okulYemegiKodu, hgVM.haneGorusme.OkulYemegi, 2);
+            hgVM.haneListeleri.OkulBeslenmesi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okulBeslenmesiKodu, hgVM.haneGorusme.OkulBeslenmesi, 2);
+            hgVM.haneListeleri.OkulBeslenmeIstekleri = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okulBeslenmeIstekleriKodu, hgVM.haneGorusme.OkulBeslenmeIstekleri, 2);
+            hgVM.haneListeleri.AlisVerisYeri = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.alisVerisYeriKodu, hgVM.haneGorusme.AlisVerisYeri, 2);
+            hgVM.haneListeleri.VeresiyeAlisveris = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.veresiyeAlisVerisKodu, hgVM.haneGorusme.VeresiyeAlisVeris, 2);
+            hgVM.haneListeleri.BezMama = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.bezMamaKodu, hgVM.haneGorusme.BezMama, 2);
+            hgVM.haneListeleri.OzelIhtiyaclar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ozelIhtiyaclarKodu, hgVM.haneGorusme.OzelIhtiyaclar, 2);
+            hgVM.haneListeleri.KadininMalVarligi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.kadininMalVarligiKodu, hgVM.haneGorusme.KadininMalVarligi, 2);
+            hgVM.haneListeleri.CocuklarEgitimBitirme = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.cocuklarEgitimBitirmeKodu, hgVM.haneGorusme.CocuklarEgitimBitirme, 2);
+            hgVM.haneListeleri.EgitimEngelleri = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.egitimEngelleriKodu, hgVM.haneGorusme.EgitimEngelleri, 2);
+            hgVM.haneListeleri.EgitimEngeliCozumleri = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.egitimEngeliCozumleriKodu, hgVM.haneGorusme.EgitimEngeliCozumleri, 2);
+            hgVM.haneListeleri.SorunDestegi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.sorunDestegiKodu, hgVM.haneGorusme.SorunDestegi, 2);
+            hgVM.haneListeleri.CevredeUniversiteli = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.cevredeUniversiteliKodu, hgVM.haneGorusme.CevredeUniversiteli, 2);
+            hgVM.haneListeleri.CocukVakitGecirme = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.cocukVakitGecirmeKodu, hgVM.haneGorusme.CocukVakitGecirme, 2);
+            hgVM.haneListeleri.AileVakitGecirme = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.aileVakitGecirmeKodu, hgVM.haneGorusme.AileVakitGecirme, 2);
+            hgVM.haneListeleri.DestekAlmaPaylasma = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.destekAlmaPaylasmaKodu, hgVM.haneGorusme.DestekAlmaPaylasma, 2);
+            hgVM.haneListeleri.CevreGuvenlimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.cevreGuvenlimiKodu, hgVM.haneGorusme.CevreGuvenlimi, 2);
+            hgVM.haneListeleri.FaturaDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.faturaDurumKodu, hgVM.haneGorusme.FaturaDurumu, 2);
+            hgVM.haneListeleri.KisiDestegi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.kisiDestegiKodu, hgVM.haneGorusme.KisiDestegi, 2);
+            hgVM.haneListeleri.KurumDestegi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.kurumDestegiKodu, hgVM.haneGorusme.KurumDestegi, 2);
+            hgVM.haneListeleri.YonlendirmeDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.yonlendirmeDurumuKodu, hgVM.haneGorusme.YonlendirmeDurumu, 2);
+            hgVM.haneListeleri.OzelDurum = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ozelDurumKodu, hgVM.haneGorusme.OzelDurum, 2);
 
             return hgVM;
         }
@@ -372,15 +414,10 @@ namespace bsy.Controllers
             HANEGORUSME yeniHG = new HANEGORUSME();
 
             yeniHG.Aciklama = eskiHG.Aciklama;
-            yeniHG.BelediyeYardimi = eskiHG.BelediyeYardimi;
             yeniHG.EkBilgi = eskiHG.EkBilgi;
-            yeniHG.EvMulkiyeti = eskiHG.EvMulkiyeti;
-            yeniHG.EvTuru = eskiHG.EvTuru;
             yeniHG.GorusmeTarihi = DateTime.Now.Date;
-            yeniHG.HaneGelirDilimi = eskiHG.HaneGelirDilimi;
             yeniHG.HaneID = eskiHG.HaneID;
             yeniHG.id = 0;
-            yeniHG.Ihtiyaclar = eskiHG.Ihtiyaclar;
             yeniHG.KiraTutari = eskiHG.KiraTutari;
 
             return yeniHG;
@@ -492,13 +529,8 @@ namespace bsy.Controllers
             eskiHane.haneGorusme.HaneID = yeniHane.kunye.kunyeID.HaneID;
             eskiHane.haneGorusme.GorusmeTarihi = yeniHane.haneGorusme.GorusmeTarihi;
             eskiHane.haneGorusme.Aciklama = yeniHane.haneGorusme.Aciklama;
-            eskiHane.haneGorusme.Ihtiyaclar = yeniHane.haneGorusme.Ihtiyaclar;
-            eskiHane.haneGorusme.BelediyeYardimi = yeniHane.haneGorusme.BelediyeYardimi;
-            eskiHane.haneGorusme.EvTuru = yeniHane.haneGorusme.EvTuru;
-            eskiHane.haneGorusme.EvMulkiyeti = yeniHane.haneGorusme.EvMulkiyeti;
             eskiHane.haneGorusme.KiraTutari = yeniHane.haneGorusme.KiraTutari;
             eskiHane.haneGorusme.EkBilgi = yeniHane.haneGorusme.EkBilgi;
-            eskiHane.haneGorusme.HaneGelirDilimi = yeniHane.haneGorusme.HaneGelirDilimi;
 
             return eskiHane;
         }

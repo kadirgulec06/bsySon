@@ -65,7 +65,8 @@ namespace bsy.Controllers
             context.SaveChanges();
             if (sifreDogru)
             {
-                Session["USER"] = KullaniciHelper.KullaniciBilgileri(context, li);
+                User user = KullaniciHelper.KullaniciBilgileri(context, li);
+                Session["USER"] = user;
                 Session["SifreDegistir"] = 1;
                 Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Home/Index", false);
                 return Content("OK");
@@ -78,11 +79,16 @@ namespace bsy.Controllers
             return View(li);
 
         }
+
+        private bool BiletSakla(User user)
+        {
+            return true;
+        }
         private User sabitKullanici()
         {
             User usr = new User();
             usr.AdSoyad = "Kadir Güleç";
-            usr.Eposta = "kgulec@spk.gov.tr";
+            usr.eposta = "kgulec@spk.gov.tr";
             usr.KimlikNo = "24461035746";
             usr.menuRolleri = "";
             usr.Roller = "YONETICI";

@@ -35,13 +35,13 @@ namespace bsy.Controllers
         {
             return View();
         }
-        public JsonResult SehrinIlceleri(long sehirID)
+        public JsonResult SehrinIlceleri(long SehirID)
         {
             User user = (User)Session["USER"];
 
             if (user.gy.butunTurkiye)
             {
-                IEnumerable<SelectListItem> ilceler = SozlukHelper.sehrinIlceleri(context, sehirID);
+                IEnumerable<SelectListItem> ilceler = SozlukHelper.sehrinIlceleri(context, SehirID);
                 var query = from ix in ilceler
                             select new { text = ix.Text, value = ix.Value };
                 return Json(query, JsonRequestBehavior.AllowGet);
@@ -49,33 +49,33 @@ namespace bsy.Controllers
 
             var tumIlceler = (from ix in context.tblSozluk
                            where ix.Turu == SozlukHelper.ilceKodu &&
-                                 ix.BabaID == sehirID
+                                 ix.BabaID == SehirID
                            select new
                            {
-                               ilceID = ix.id,
+                               IlceID = ix.id,
                                ilceADI = ix.Aciklama
                            }).ToList();
 
             List<long> gorevIlceleri = KullaniciHelper.gorevIlceleri(context, user.gy);
             var sonuc = from ix in tumIlceler
-                        join gi in gorevIlceleri on ix.ilceID equals gi
+                        join gi in gorevIlceleri on ix.IlceID equals gi
                         select new
                         {
                             text = ix.ilceADI,
-                            value = ix.ilceID.ToString()
+                            value = ix.IlceID.ToString()
                         };
 
             return Json(sonuc, JsonRequestBehavior.AllowGet);
 
         }
 
-        public JsonResult IlceninMahalleleri(long ilceID)
+        public JsonResult IlceninMahalleleri(long IlceID)
         {
             User user = (User)Session["USER"];
 
             if (user.gy.butunTurkiye)
             {
-                IEnumerable<SelectListItem> mahalleler = SozlukHelper.IlceninMahalleleri(context, ilceID, 0);
+                IEnumerable<SelectListItem> mahalleler = SozlukHelper.IlceninMahalleleri(context, IlceID, 0);
                 var query = from ix in mahalleler
                             select new { text = ix.Text, value = ix.Value };
                 return Json(query, JsonRequestBehavior.AllowGet);
@@ -83,7 +83,7 @@ namespace bsy.Controllers
 
             var tumMahalleler = (from ix in context.tblSozluk
                               where ix.Turu == SozlukHelper.mahalleKodu &&
-                                    ix.BabaID == ilceID
+                                    ix.BabaID == IlceID
                               select new
                               {
                                   mahalleID = ix.id,

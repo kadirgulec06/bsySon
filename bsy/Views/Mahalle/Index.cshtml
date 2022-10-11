@@ -37,7 +37,7 @@
         }
         //return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
 
-        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
+        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&UserID=" + rowObject[1] + "'>" + mesaj + "</a>";
         return "<a href='@Url.Action("YeniMahalle","Mahalle")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
     }
 
@@ -52,8 +52,8 @@
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
-              { name: 'ilceID', index: 'ilceID', hidden: true, width: 10, sortable: false },
-              { name: 'sehirID', index: 'sehirID', hidden: true, width: 10, sortable: false },
+              { name: 'IlceID', index: 'IlceID', hidden: true, width: 10, sortable: false },
+              { name: 'SehirID', index: 'SehirID', hidden: true, width: 10, sortable: false },
               { name: 'SEHIR', index: 'SEHIR', width: 75, search: true, sortable: false },
               { name: 'ILCE', index: 'ILCE', width: 75, search:true, sortable: false },
               { name: 'MAHALLEKODU', index: 'MAHALLEKODU', width: 50, sortable: false },
@@ -82,8 +82,8 @@
             postData:
                 {
                    'ilkGiris': function () { return '@ViewBag.IlkGiris' },
-                   'sehirID': function () { return '@ViewBag.sehirID' },
-                   'ilceID': function () { return '@ViewBag.ilceID' }
+                   'SehirID': function () { return '@ViewBag.SehirID' },
+                   'IlceID': function () { return '@ViewBag.IlceID' }
                 }
         });
 

@@ -30,7 +30,7 @@ namespace bsy.Models
         public AUDIT GetAudit(DbEntityEntry entry)
         {
             var audit = new AUDIT();
-            audit.UserId = HttpContext.Current != null ? HttpContext.Current.User.Identity.Name : "";
+            audit.UserID = HttpContext.Current != null ? HttpContext.Current.User.Identity.Name : "";
             //Change this line according to your needs
             audit.TableName = GetTableName(entry);
             if (audit.TableName.Contains("_"))
@@ -193,7 +193,7 @@ namespace bsy.Models
         public DbSet<GIRISDENEME> tblGirisDenemeleri { get; set; }
         public DbSet<SIFREDEGISME> tblSifreDegisme { get; set; }
         public DbSet<SIFRESIFIRLA> tblSifreSifirla { get; set; }
-        public DbSet<EPOSTAACMA> tblEPostaAcma { get; set; }
+        public DbSet<epostaACMA> tblepostaAcma { get; set; }
         public DbSet<IPACMA> tblIPAcma { get; set; }
         public DbSet<KULLANICIROL> tblKullaniciRolleri { get; set; }
         public DbSet<BOLGE> tblBolgeler { get; set; }
@@ -208,6 +208,7 @@ namespace bsy.Models
         public DbSet<KISIHANE> tblKisiHane { get; set; }
         public DbSet<KISIGORUSME> tblKisiGorusme { get; set; }
         public DbSet<SOZLUKTURU> tblSozlukTurleri { get; set; }
+        public DbSet<BILET> tblBiletler { get; set; }
 
         public override int SaveChanges()
         {
@@ -278,7 +279,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new SozlukConfiguration());
             modelBuilder.Configurations.Add(new KullaniciConfiguration());
             modelBuilder.Configurations.Add(new RollerConfiguration());
-            modelBuilder.Configurations.Add(new EPostaAcmaConfiguration());
+            modelBuilder.Configurations.Add(new epostaAcmaConfiguration());
             modelBuilder.Configurations.Add(new IPAcmaConfiguration());
             modelBuilder.Configurations.Add(new GirisDenemeleriConfiguration());
             modelBuilder.Configurations.Add(new SifreDegismeConfiguration());
@@ -296,6 +297,7 @@ namespace bsy.Models
             modelBuilder.Configurations.Add(new KisiHaneConfiguration());
             modelBuilder.Configurations.Add(new KisiGorusmeConfiguration());
             modelBuilder.Configurations.Add(new SozlukTuruConfiguration());
+            modelBuilder.Configurations.Add(new BiletConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -365,9 +367,9 @@ namespace bsy.Models
             }
         }
 
-        public class EPostaAcmaConfiguration : EntityTypeConfiguration<EPOSTAACMA>
+        public class epostaAcmaConfiguration : EntityTypeConfiguration<epostaACMA>
         {
-            public EPostaAcmaConfiguration()
+            public epostaAcmaConfiguration()
                 : base()
             {
                 HasKey(p => p.id);
@@ -553,6 +555,17 @@ namespace bsy.Models
                 HasKey(p => p.id);
                 Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 ToTable("SozlukTurleri");
+            }
+        }
+
+        public class BiletConfiguration : EntityTypeConfiguration<BILET>
+        {
+            public BiletConfiguration()
+                : base()
+            {
+                HasKey(p => p.id);
+                Property(p => p.id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                ToTable("Biletler");
             }
         }
 

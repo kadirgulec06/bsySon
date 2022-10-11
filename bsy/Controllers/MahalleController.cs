@@ -21,31 +21,31 @@ namespace bsy.Controllers
         // GET: Ilce
         public ActionResult Index()
         {
-            Session["sehirID"] = 0;
-            Session["ilceID"] = 0;
+            Session["SehirID"] = 0;
+            Session["IlceID"] = 0;
 
             ViewBag.IlkGiris = 1;
-            ViewBag.sehirID = 0;
-            ViewBag.ilceID = 0;
+            ViewBag.SehirID = 0;
+            ViewBag.IlceID = 0;
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(long sehirID = 0, long ilceID = 0)
+        public ActionResult Index(long SehirID = 0, long IlceID = 0)
         {
             ViewBag.IlkGiris = 0;
-            ViewBag.sehirID = sehirID;
-            ViewBag.ilceID = ilceID;
+            ViewBag.SehirID = SehirID;
+            ViewBag.IlceID = IlceID;
 
-            Session["sehirID"] = sehirID;
-            Session["ilceID"] = ilceID;
+            Session["SehirID"] = SehirID;
+            Session["IlceID"] = IlceID;
 
             return View();
         }
 
-        public ActionResult ListeMahalleler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long sehirID=0, long ilceID = 0)
+        public ActionResult ListeMahalleler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long SehirID=0, long IlceID = 0)
         {
             // filtre parametrelerini hazırla
 
@@ -93,12 +93,12 @@ namespace bsy.Controllers
             //pageSize = 5;
             var query = (from mh in context.tblMahalleler
                          join sx in context.tblSozluk on mh.id equals sx.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sh in context.tblSozluk on ic.sehirID equals sh.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sh in context.tblSozluk on ic.SehirID equals sh.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
                          where
-                            (mh.ilceID == ilceID || ilceID == 0) &&
-                            (ic.sehirID == sehirID || sehirID == 0) &&
+                            (mh.IlceID == IlceID || IlceID == 0) &&
+                            (ic.SehirID == SehirID || SehirID == 0) &&
                             (sx.Aciklama + "").Contains(mahalle) &&
                             (sy.Aciklama + "").Contains(ilce) &&
                             (sh.Aciklama + "").Contains(sehir)
@@ -107,10 +107,10 @@ namespace bsy.Controllers
                              mh.id,
                              mahalleKODU = mh.MahalleKodu,
                              mahalleADI = sx.Aciklama,
-                             mh.ilceID,
+                             mh.IlceID,
                              //ilceKODU = sy.Kodu,
                              ilceADI = sy.Aciklama,
-                             ic.sehirID,
+                             ic.SehirID,
                              //sehirKodu = sh.Kodu,
                              sehirADI = sh.Aciklama,
                              mh.Aciklama
@@ -127,10 +127,10 @@ namespace bsy.Controllers
                                  mhx.id,
                                  mhx.mahalleKODU,
                                  mhx.mahalleADI,
-                                 mhx.ilceID,
+                                 mhx.IlceID,
                                  //mhx.ilceKODU,
                                  mhx.ilceADI,
-                                 mhx.sehirID,
+                                 mhx.SehirID,
                                  //mhx.sehirKodu,
                                  mhx.sehirADI,
                                  mhx.Aciklama,
@@ -155,8 +155,8 @@ namespace bsy.Controllers
                       cell = new string[]
                       {
                                  mhx.id.ToString(),
-                                 mhx.ilceID.ToString(),
-                                 mhx.sehirID.ToString(),
+                                 mhx.IlceID.ToString(),
+                                 mhx.SehirID.ToString(),
                                  //mhx.sehirKodu,
                                  mhx.sehirADI,
                                  //mhx.ilceKODU,
@@ -200,7 +200,7 @@ namespace bsy.Controllers
             MahalleVM mahalleVM = new MahalleVM();
             mahalleVM = mahalleHazirla(soz, mahalle);
 
-            Session["sehirID"] = 0;
+            Session["SehirID"] = 0;
 
             return View(mahalleVM);
         }
@@ -209,13 +209,13 @@ namespace bsy.Controllers
         {
             MahalleVM mahalleVM = new MahalleVM();
 
-            soz.BabaID = mahalle.ilceID;
+            soz.BabaID = mahalle.IlceID;
             mahalleVM.sozluk = soz;
             mahalleVM.mahalle = mahalle;
 
             mahalleVM.sehirler = SozlukHelper.sozlukKalemleriDD(context, "SEHIR", 0, 0);
             mahalleVM.ilceler = SozlukHelper.sozlukKalemleriDD(context, "ILCE", 0, 0);
-            mahalleVM.ilceADI = SozlukHelper.sozlukAciklama(context, mahalle.ilceID);
+            mahalleVM.ilceADI = SozlukHelper.sozlukAciklama(context, mahalle.IlceID);
 
             return mahalleVM;
         }
@@ -250,8 +250,8 @@ namespace bsy.Controllers
                         yeniMahalle = true;
                         var mahalleKaydi = (from sz in context.tblSozluk
                                          join mh in context.tblMahalleler on sz.id equals mh.id
-                                         select new { sz.id, sz.Aciklama, mh.ilceID }).FirstOrDefault();
-                        if (mahalleKaydi != null && eskiMahalleVM.sozluk.Aciklama == mahalleKaydi.Aciklama && eskiMahalleVM.mahalle.ilceID == mahalleKaydi.ilceID)
+                                         select new { sz.id, sz.Aciklama, mh.IlceID }).FirstOrDefault();
+                        if (mahalleKaydi != null && eskiMahalleVM.sozluk.Aciklama == mahalleKaydi.Aciklama && eskiMahalleVM.mahalle.IlceID == mahalleKaydi.IlceID)
                         {
                             m = new Mesaj("hata", "Bu mahalle kaydı daha önce oluşturulmuş, tekrar eklenemez");
                             mesajlar.Add(m);
@@ -320,7 +320,7 @@ namespace bsy.Controllers
 
             mahalleVM.mahalle = eskiMahalle;
             mahalleVM.sozluk = eskiSozluk;
-            mahalleVM.ilceADI = SozlukHelper.sozlukAciklama(context, eskiMahalle.ilceID);
+            mahalleVM.ilceADI = SozlukHelper.sozlukAciklama(context, eskiMahalle.IlceID);
 
             return mahalleVM;
 
@@ -328,7 +328,7 @@ namespace bsy.Controllers
         private MahalleVM VMYeniToEski(MahalleVM eskiVM, MahalleVM yeniVM)
         {
             eskiVM.sozluk = SozlukYeniToEski(eskiVM.sozluk, yeniVM.sozluk);
-            eskiVM.sozluk.BabaID = yeniVM.mahalle.ilceID;
+            eskiVM.sozluk.BabaID = yeniVM.mahalle.IlceID;
             eskiVM.mahalle = MahalleYeniToEski(eskiVM.mahalle, yeniVM.mahalle);
             eskiVM.ilceADI = yeniVM.ilceADI;
 
@@ -349,7 +349,7 @@ namespace bsy.Controllers
         {
             eskiMahalle.id = yeniMahalle.id;
             eskiMahalle.MahalleKodu = yeniMahalle.MahalleKodu;
-            eskiMahalle.ilceID = yeniMahalle.ilceID;
+            eskiMahalle.IlceID = yeniMahalle.IlceID;
             eskiMahalle.Aciklama = yeniMahalle.Aciklama;
 
             return eskiMahalle;

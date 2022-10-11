@@ -8,13 +8,13 @@ namespace bsy.Models
 {
     public class GIRISDENEME
     {
-        public long id { get; set; }
+        public int id { get; set; }
 
         [MaxLength(200)]
         public string eposta { get; set; }
         public DateTime Tarih { get; set; }
 
-        [MaxLength(40)]
+        [MaxLength(50)]
         public string ip { get; set; }
         public bool Durum { get; set; }
 

@@ -21,27 +21,27 @@ namespace bsy.Controllers
         // GET: Sehir
         public ActionResult Index()
         {
-            Session["bolgeID"] = 0;
+            Session["BolgeID"] = 0;
 
             ViewBag.IlkGiris = 1;
-            ViewBag.bolgeID = 0;
+            ViewBag.BolgeID = 0;
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(long bolgeID = 0)
+        public ActionResult Index(long BolgeID = 0)
         {
             ViewBag.IlkGiris = 0;
-            ViewBag.bolgeID = bolgeID;
+            ViewBag.BolgeID = BolgeID;
 
-            Session["bolgeID"] = bolgeID;
+            Session["BolgeID"] = BolgeID;
 
             return View();
         }
 
-        public ActionResult ListeSehirler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long bolgeID = 0)
+        public ActionResult ListeSehirler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long BolgeID = 0)
         {
             // filtre parametrelerini hazırla
 
@@ -76,19 +76,19 @@ namespace bsy.Controllers
 
             int pageSize = rows;
 
-            //long sehirID = (long)Session["sehirID"];
+            //long SehirID = (long)Session["SehirID"];
             //pageSize = 5;
             var query = (from il in context.tblSehirler
                          join sx in context.tblSozluk on il.id equals sx.id
-                         join sy in context.tblSozluk on il.bolgeID equals sy.id
+                         join sy in context.tblSozluk on il.BolgeID equals sy.id
                          where
-                            (il.bolgeID == bolgeID || bolgeID == 0) &&
+                            (il.BolgeID == BolgeID || BolgeID == 0) &&
                             (sy.Aciklama + "").Contains(bolge) &&
                             (sx.Aciklama + "").Contains(sehir)
                          select new
                          {
                              il.id,
-                             il.bolgeID,
+                             il.BolgeID,
                              //bolgeKODU = sy.Kodu,
                              bolgeADI = sy.Aciklama,
                              //sehirKODU = sx.Kodu,
@@ -105,7 +105,7 @@ namespace bsy.Controllers
                              select new
                              {
                                  icx.id,
-                                 icx.bolgeID,
+                                 icx.BolgeID,
                                  //icx.bolgeKODU,
                                  icx.bolgeADI,
                                  //icx.sehirKODU,
@@ -132,7 +132,7 @@ namespace bsy.Controllers
                       cell = new string[]
                       {
                                  kr.id.ToString(),
-                                 kr.bolgeID.ToString(),
+                                 kr.BolgeID.ToString(),
                                  //kr.bolgeKODU,
                                  kr.bolgeADI,
                                  //kr.sehirKODU,
@@ -174,7 +174,7 @@ namespace bsy.Controllers
             SehirVM sehirVM = new SehirVM();
             sehirVM = sehirHazirla(soz, sehir);
 
-            Session["sehirID"] = 0;
+            Session["SehirID"] = 0;
 
             return View(sehirVM);
         }
@@ -183,12 +183,12 @@ namespace bsy.Controllers
         {
             SehirVM sehirVM = new SehirVM();
 
-            soz.BabaID = sehir.bolgeID;
+            soz.BabaID = sehir.BolgeID;
             sehirVM.sozluk = soz;
             sehirVM.sehir = sehir;
 
             sehirVM.bolgeler = SozlukHelper.sozlukKalemleriDD(context, "BOLGE", 0, 0);
-            sehirVM.bolgeADI = SozlukHelper.sozlukAciklama(context, sehir.bolgeID);
+            sehirVM.bolgeADI = SozlukHelper.sozlukAciklama(context, sehir.BolgeID);
 
             return sehirVM;
         }
@@ -223,8 +223,8 @@ namespace bsy.Controllers
                         yeniSehir = true;
                         var sehirKaydi = (from sz in context.tblSozluk
                                          join ic in context.tblSehirler on sz.id equals ic.id
-                                         select new { sz.id, sz.Aciklama, ic.bolgeID }).FirstOrDefault();
-                        if (sehirKaydi != null && eskiSehirVM.sozluk.Aciklama == sehirKaydi.Aciklama && eskiSehirVM.sehir.bolgeID == sehirKaydi.bolgeID)
+                                         select new { sz.id, sz.Aciklama, ic.BolgeID }).FirstOrDefault();
+                        if (sehirKaydi != null && eskiSehirVM.sozluk.Aciklama == sehirKaydi.Aciklama && eskiSehirVM.sehir.BolgeID == sehirKaydi.BolgeID)
                         {
                             m = new Mesaj("hata", "Bu Şehir kaydı daha önce oluşturulmuş, tekrar eklenemez");
                             mesajlar.Add(m);
@@ -293,7 +293,7 @@ namespace bsy.Controllers
 
             sehirVM.sehir = eskiSehir;
             sehirVM.sozluk = eskiSozluk;
-            sehirVM.bolgeADI = SozlukHelper.sozlukAciklama(context, eskiSehir.bolgeID);
+            sehirVM.bolgeADI = SozlukHelper.sozlukAciklama(context, eskiSehir.BolgeID);
 
             return sehirVM;
 
@@ -301,7 +301,7 @@ namespace bsy.Controllers
         private SehirVM VMYeniToEski(SehirVM eskiVM, SehirVM yeniVM)
         {
             eskiVM.sozluk = SozlukYeniToEski(eskiVM.sozluk, yeniVM.sozluk);
-            eskiVM.sozluk.BabaID = yeniVM.sehir.bolgeID;
+            eskiVM.sozluk.BabaID = yeniVM.sehir.BolgeID;
             eskiVM.sehir = SehirYeniToEski(eskiVM.sehir, yeniVM.sehir);
             eskiVM.bolgeADI = yeniVM.bolgeADI;
 
@@ -321,7 +321,7 @@ namespace bsy.Controllers
         private SEHIR SehirYeniToEski(SEHIR eskiSehir, SEHIR yeniSehir)
         {
             eskiSehir.id = yeniSehir.id;
-            eskiSehir.bolgeID = yeniSehir.bolgeID;
+            eskiSehir.BolgeID = yeniSehir.BolgeID;
             eskiSehir.Aciklama = yeniSehir.Aciklama;
 
             return eskiSehir;

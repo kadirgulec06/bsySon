@@ -13,7 +13,7 @@ namespace bsy.ViewModels.Roller
     }
     public class RollerVM
     {
-        public long userID { get; set; }
+        public int UserID { get; set; }
         public string eposta { get; set; }
         public string Ad { get; set; }
         public String Soyad { get; set; }

@@ -20,7 +20,7 @@ namespace bsy.ViewModels.Kisi
         public Kunye kunye { get; set; }
         public KISI kisi { get; set; }
         public KISIHANE kisiHane { get; set; }
-        public IEnumerable<SelectListItem> cinsiyetler { get; set; }
+        public KisiListeleri kisiListeleri { get; set; }
 
     }
 }

@@ -10,15 +10,15 @@ namespace bsy.Models
         public GOREVSAHASI()
         {
             id = 0;
-            userID = 0;
+            UserID = 0;
             BasTar = DateTime.Now;
             BitTar = new DateTime(3000, 1, 1);
             SehirID = 0;
             IlceID = 0;
             MahalleID = 0;
         }
-        public long id { get; set; }
-        public long userID { get; set; }
+        public int id { get; set; }
+        public int UserID { get; set; }
         public DateTime BasTar { get; set; }
         public DateTime BitTar { get; set; }
         public long SehirID { get; set; }

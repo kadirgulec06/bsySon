@@ -400,6 +400,7 @@
     <Compile Include="Helpers\TCKimlikNoValidation.cs" />
     <Compile Include="Models\ANASOZLUK.cs" />
     <Compile Include="Models\AUDIT.cs" />
+    <Compile Include="Models\BILET.cs" />
     <Compile Include="Models\BOLGE.cs" />
     <Compile Include="Models\bsyContext.cs" />
     <Compile Include="Models\BSYMENUSU.cs" />
@@ -413,12 +414,14 @@
     <Compile Include="Models\GorevYerleri.cs" />
     <Compile Include="Models\HANE.cs" />
     <Compile Include="Models\HANEGORUSME.cs" />
+    <Compile Include="Models\HaneListeleri.cs" />
     <Compile Include="Models\ILCE.cs" />
     <Compile Include="Models\IPACMA.cs" />
     <Compile Include="Models\KISI.cs" />
     <Compile Include="Models\KISIGORUSME.cs" />
     <Compile Include="Models\KISIHANE.cs" />
-    <Compile Include="Models\HaneListeleri.cs" />
+    <Compile Include="Models\HaneGorusmeListeleri.cs" />
+    <Compile Include="Models\KisiGorusmeListeleri.cs" />
     <Compile Include="Models\KisiListeleri.cs" />
     <Compile Include="Models\KULLANICI.cs" />
     <Compile Include="Models\KULLANICIROL.cs" />

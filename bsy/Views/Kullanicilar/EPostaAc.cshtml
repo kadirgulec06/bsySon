@@ -29,15 +29,15 @@
     jQuery(document).ready(function () {
 
         jQuery("#liste").jqGrid({ //hangi tablo onun id si
-            url: '@Url.Action("ListeKapaliEPosta", "Kullanicilar")', //ilki action ikincisi controller
+            url: '@Url.Action("ListeKapalieposta", "Kullanicilar")', //ilki action ikincisi controller
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'EPosta', 'Tarih', 'Aç'],
+            colNames: ['id', 'eposta', 'Tarih', 'Aç'],
             colModel:
             [
               { name: 'id', index: 'id', hidden: true, width: 100, sortable: false },
-              { name: 'EPOSTA', index: 'EPOSTA', width: 200, sortable: false, search: true },
+              { name: 'eposta', index: 'eposta', width: 200, sortable: false, search: true },
                     { name: 'TARIH', index: 'TARIH', width: 50, align: 'left', search: false, sortable: false, formatter: 'date', formatoptions: { srcformat: 'd/m/Y', newformat: 'd-m-Y' }},
                     { name: 'AC', index: 'AC', width: 50, align: 'left', search: false, sortable: false, formatter: hesapAcHazirla }
             ],
@@ -78,7 +78,7 @@
 <table id="liste" class="scroll" cellpadding="0" cellspacing="0" width="100%"></table>
 <div id="pager" class="scroll" style="text-align:center;"></div>
 
-<form method="post" hidden="hidden" action="@Url.Action("EPostaHesabiAc", "Kullanicilar")" id="frmHesapAc">
+<form method="post" hidden="hidden" action="@Url.Action("epostaHesabiAc", "Kullanicilar")" id="frmHesapAc">
     @Html.AntiForgeryToken()
     <div id="divIslem">
         <input type="text" id="idAc" name="idAc" value="" hidden="hidden" />

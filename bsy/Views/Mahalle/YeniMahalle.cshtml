@@ -13,7 +13,7 @@
         //alert(sehir);
         $.ajax({
             type: "POST",
-            data: { sehirID: sehir },
+            data: { SehirID: sehir },
             url: '@Url.Action("SehrinIlceleri", "Genel")',
             dataType: 'json',
             success: function (json) {
@@ -42,7 +42,7 @@
         return;
         var ilce = control.value;
         var frm = document.getElementById("frmMahalleIndex");
-        document.getElementById("ilceID").value = ilce;
+        document.getElementById("IlceID").value = ilce;
         frm.submit();
     }
 
@@ -92,8 +92,8 @@
                         Şehir :
                     </td>
                     <td align="left">
-                        @Html.DropDownListFor(model => model.sehirID, new SelectList(Model.sehirler, "Value", "Text"), new { @style = "width:340px", @onchange = "sehirDegisti(this)", @class = "veri" })
-                        @Html.ValidationMessageFor(model => model.sehirID)
+                        @Html.DropDownListFor(model => model.SehirID, new SelectList(Model.sehirler, "Value", "Text"), new { @style = "width:340px", @onchange = "sehirDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.SehirID)
                     </td>
                 </tr>
                 <tr class="veri">
@@ -101,8 +101,8 @@
                         İlçe :
                     </td>
                     <td align="left">
-                        @Html.DropDownListFor(model => model.mahalle.ilceID, new SelectList(Model.ilceler, "Value", "Text"), new { id = "ilcelerSelect", @style = "width:340px", @onchange = "ilceDegisti(this)", @class = "veri" })
-                        @Html.ValidationMessageFor(model => model.mahalle.ilceID)
+                        @Html.DropDownListFor(model => model.mahalle.IlceID, new SelectList(Model.ilceler, "Value", "Text"), new { id = "ilcelerSelect", @style = "width:340px", @onchange = "ilceDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.mahalle.IlceID)
                     </td>
                 </tr>
             </table>
@@ -155,7 +155,7 @@
 <form method="post" hidden="hidden" action="@Url.Action("Index", "Mahalle")" id="frmMahalleIndex">
     @Html.AntiForgeryToken()
     <div id="divIslem">
-        <input type="text" id="sehirID" name="sehirID" value="" hidden="hidden" />
-        <input type="text" id="ilceID" name="ilceID" value="" hidden="hidden" />
+        <input type="text" id="SehirID" name="SehirID" value="" hidden="hidden" />
+        <input type="text" id="IlceID" name="IlceID" value="" hidden="hidden" />
     </div>
 </form>

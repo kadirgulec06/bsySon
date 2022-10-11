@@ -8,7 +8,7 @@ namespace bsy.ViewModels
 {
     public class SifreDegisVM
     {
-        public long userID { get; set; }
+        public long UserID { get; set; }
         public string eposta { get; set; }
         public string AdSoyad { get; set; }
 

@@ -19,7 +19,7 @@ namespace bsy.Models
             DogumTarihi = DateTime.Now.Date;
             Cinsiyet = 0;
             Telefon = "";
-            Eposta = "";
+            eposta = "";
             EkBilgi = "";
         }
 
@@ -37,13 +37,13 @@ namespace bsy.Models
         [MaxLength(80)]
         public string Soyad { get; set; }
         public DateTime DogumTarihi { get; set; }
-        public long Cinsiyet { get; set; }
+        public short Cinsiyet { get; set; }
 
         [MaxLength(20)]
         public string Telefon { get; set; }
 
         [MaxLength(200)]
-        public string Eposta { get; set; }
+        public string eposta { get; set; }
 
         [MaxLength(1000)]
         public string EkBilgi { get; set; }

@@ -37,7 +37,7 @@
         }
         //return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
 
-        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
+        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&UserID=" + rowObject[1] + "'>" + mesaj + "</a>";
         return "<a href='@Url.Action("YeniSehir","Sehir")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
     }
 
@@ -52,7 +52,7 @@
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
-              { name: 'bolgeID', index: 'bolgeID', hidden: true, width: 10, sortable: false },
+              { name: 'BolgeID', index: 'BolgeID', hidden: true, width: 10, sortable: false },
               { name: 'BOLGE', index: 'BOLGE', width: 75, search: true, sortable: false },
               { name: 'SEHIR', index: 'SEHIR', width: 200, search:true, sortable: false },
               { name: 'ACIKLAMA', index: 'ACIKLAMA', width: 75, search: false, sortable: false },
@@ -79,7 +79,7 @@
             postData:
                 {
                    'ilkGiris': function () { return '@ViewBag.IlkGiris' },
-                   'bolgeID': function () { return '@ViewBag.bolgeID' }
+                   'BolgeID': function () { return '@ViewBag.BolgeID' }
                 }
         });
 

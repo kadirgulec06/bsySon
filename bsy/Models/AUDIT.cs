@@ -14,7 +14,7 @@ namespace bsy.Models
         public string TableName { get; set; }
 
         [MaxLength(100)]
-        public string UserId { get; set; }
+        public string UserID { get; set; }
         public string Actions { get; set; }
         public string OldData { get; set; }
         public string NewData { get; set; }

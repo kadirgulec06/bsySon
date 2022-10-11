@@ -62,8 +62,8 @@
                         Şehir :
                     </td>
                     <td align="left">
-                        @Html.DropDownListFor(model => model.ilce.sehirID, new SelectList(Model.sehirler, "Value", "Text"), new { @style = "width:340px", @onchange = "sehirDegisti(this)", @class = "veri" })
-                        @Html.ValidationMessageFor(model => model.ilce.sehirID)
+                        @Html.DropDownListFor(model => model.ilce.SehirID, new SelectList(Model.sehirler, "Value", "Text"), new { @style = "width:340px", @onchange = "sehirDegisti(this)", @class = "veri" })
+                        @Html.ValidationMessageFor(model => model.ilce.SehirID)
                     </td>
                 </tr>
             </table>
@@ -107,6 +107,6 @@
 <form method="post" hidden="hidden" action="@Url.Action("Index", "Ilce")" id="frmIlceIndex">
     @Html.AntiForgeryToken()
     <div id="divIslem">
-        <input type="text" id="sehirID" name="sehirID" value="" hidden="hidden" />
+        <input type="text" id="SehirID" name="SehirID" value="" hidden="hidden" />
     </div>
 </form>

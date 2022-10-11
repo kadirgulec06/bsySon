@@ -8,10 +8,6 @@ namespace bsy.Models
 {
     public class HaneListeleri
     {
-        public IEnumerable<SelectListItem> Ihtiyaclar { get; set; }
-        public IEnumerable<SelectListItem> BelediyeYardimi { get; set; }
-        public IEnumerable<SelectListItem> EvTuru { get; set; }
-        public IEnumerable<SelectListItem> EvMulkiyeti { get; set; }
-        public IEnumerable<SelectListItem> HaneGelirDilimi { get; set; }
+        public IEnumerable<SelectListItem> HaneTipi { get; set; }
     }
 }

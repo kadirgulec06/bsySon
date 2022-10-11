@@ -207,9 +207,9 @@ namespace bsy.Controllers
             var query = (from h in context.tblHaneler
                          join mh in context.tblMahalleler on h.MahalleID equals mh.id
                          join sx in context.tblSozluk on mh.id equals sx.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (h.MahalleID == mahalleID || mahalleID == 0) &&
@@ -386,9 +386,9 @@ namespace bsy.Controllers
                          join hn in context.tblHaneler on kh.HaneID equals hn.id
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sm in context.tblSozluk on mh.id equals sm.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (kx.id == kisiID || kisiID == 0) &&

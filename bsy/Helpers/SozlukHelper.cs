@@ -10,18 +10,99 @@ namespace bsy.Helpers
     public static class SozlukHelper
     {
         public static string rolTuru = "ROL";
-        public static string ihtiyaclarTuru = "IHTIYACLAR";
-        public static string belediyeYardimiTuru = "BELEDIYEYARDIMI";
-        public static string evTuru = "EVTURU";
-        public static string evMulkiyetiTuru = "EVMULKIYETI";
-        public static string gelirDilimiTuru = "GELIRDILIMI";
-
         public static string bolgeKodu = "BOLGE";
         public static string sehirKodu = "SEHIR";
         public static string ilceKodu = "ILCE";
         public static string mahalleKodu = "MAHALLE";
         public static string haneKodu = "HANE";
         public static string kisiKodu = "KISI";
+
+        // Hane Sözlük Kodları
+
+        public static string haneTipiKodu = "HANETIPI";
+
+            public static string gocSehriKodu = "SEHIR";
+            public static string gocIlcesiKodu = "ILCE";
+            public static string ikametYeriKodu = "IKAMET";
+            public static string gocSebebiKodu = "GOCSEBEBI";
+            public static string konusulanDilKodu= "DIL";
+            public static string haneCalisanlariKodu = "HANECALISAN";
+            public static string sosyalDestekKodu = "SOSYALDESTEK";
+            public static string konutMulkiyetKodu = "KONUTMULKIYETI";
+            public static string elektrikErisimiKodu = "ELEKTRIKERISIMI";
+            public static string temizSuKodu = "TEMIZSU";
+            public static string sehirSuyuKodu = "SEHIRSUYU";
+            public static string kanalizasyonGideriKodu = "KANALIZASYONGIDERI";
+            public static string buzdolabiKodu = "BUZDOLABI";
+            public static string camasirMakinesiKodu = "CAMASIRMAKINESİ";
+            public static string bulasikMakinesiKodu = "BULASIKMAKINESI";
+            public static string televizyonKodu = "TELEVIZYON";
+            public static string internetImkaniKodu = "INTERNETIMKANI";
+            public static string bilgisayarTabletKodu  = "BILGISAYARTABLET";
+            public static string mobilyaKodu = "MOBILYA";
+            public static string firinKodu = "FIRIN";
+            public static string isinmaTuruKodu = "ISINMATURU";
+            public static string beslenmeDurumuKodu = "BESLENME";
+            public static string beslenmeIstekleriKodu = "BESLENMEISTEGI";
+            public static string cocukSutuKodu = "COCUKSUTU";
+            public static string ogunAtlamaKodu = "OGUNATLAMA";
+            public static string okulYemegiKodu = "OKULYEMEGI";
+            public static string okulBeslenmesiKodu = "OKULBESLENMESI";
+            public static string okulBeslenmeIstekleriKodu = "OKULBESLENMEISTEGI";
+            public static string alisVerisYeriKodu = "ALISVERISYERI";
+            public static string veresiyeAlisVerisKodu = "VERESIYEALISVERIS";
+            public static string bezMamaKodu = "BEZMAMA";
+            public static string ozelIhtiyaclarKodu = "OZELIHTIYAC";
+            public static string kadininMalVarligiKodu = "KADINMALVARLIGI";
+            public static string cocuklarEgitimBitirmeKodu = "EGITIMBITIRME";
+            public static string egitimEngelleriKodu = "EGITIMENGELI";
+            public static string egitimEngeliCozumleriKodu = "EGITIMENGELIZCOZUMU";
+            public static string sorunDestegiKodu = "SORUNDESTEGI";
+            public static string cevredeUniversiteliKodu = "CEVREDEUNIVERSITELI";
+            public static string cocukVakitGecirmeKodu = "COCUKVAKITGECİRME";
+            public static string aileVakitGecirmeKodu = "AILEVAKITGECIRME";
+            public static string destekAlmaPaylasmaKodu = "DESTEKALMAPAYLASMA";
+            public static string cevreGuvenlimiKodu = "CEVREGUVENLIGI";
+            public static string faturaDurumKodu = "FATURADURUMU";
+            public static string kisiDestegiKodu = "KISIDESTEGI";
+            public static string kurumDestegiKodu = "KURUMDESTEGI";
+            public static string yonlendirmeDurumuKodu = "YONLENDIRME";
+            public static string ozelDurumKodu = "OZELDURUM";
+
+        // Kişi Sözlük Kodları
+
+            public static string cinsiyetKodu = "CINSIYET";
+
+            public static string medeniDurumKodu  = "MEDENIDURUM";
+            public static string okurYazarKodu = "OKURYAZAR";
+            public static string egitimDurumuKodu = "EGITIMDURUMU";
+            public static string egitimSonKodu = "EGITIMSON";
+            public static string okulDurumuKodu = "OKULDURUMU";
+            public static string okulaDevamKodu = "OKULADEVAM";
+            public static string sinifTekrariKodu = "SINIFTEKRARI";
+            public static string cocukOdasiKodu = "COCUKODASI";
+            public static string odevYardimiKodu = "ODEVYARDIMI";
+            public static string okulIstegiKodu = "OKULISTEGI";
+            public static string okulServisiKodu = "OKULSERVISI";
+            public static string dersDestegiIhtiyaciKodu = "DERSDESTEGIIHTIYACI";
+            public static string calismaDurumuKodu = "CALISMADURUMU";
+            public static string meslekKodu = "MESLEK";
+            public static string isKodu = "IS";
+            public static string calismaIstegiKodu = "CALISMAISTEGI";
+            public static string sosyalGuvenceKodu = "SOSYALGUVENCE";
+            public static string saglikSigortasiKodu = "SAGLIKSIGORTASI";
+            public static string saglikDurumuKodu = "SAGLIKDURUMU";
+            public static string kronikDurumuKodu = "KRONIKDURUMU";
+            public static string duzenliIlacIhtiyaciKodu = "DUZENLIILACIHTIYACI";
+            public static string ilacTeminDurumuKodu = "ILACTEMINI";
+            public static string psikolojikDestekIhtiyaciKodu = "PSIKOLOJIKDESTEKIHTIYACI";
+            public static string psikolojikDestekCozumuKodu = "PSIKOLOJIKDESTEKCOZUMU";
+            public static string sagliktaGittigiYerKodu = "SAGLIKTAGITTIGIYER";
+            public static string saglikYeriSorunuKodu = "SAGLIKYERISORUNU";
+            public static string dogumKontroluIhtiyaciKodu = "DOGUMKONTROLUIHTIYACI";
+            public static string dogumKontroluIstegiKodu = "DOGUMKONTROLUISTEGI";
+            public static string hamilelikKontrolleriKodu = "HAMILELIKKONTROLU";
+            public static string asiDurumuKodu = "ASIDURUMU";
 
         public static string rolTuruBul(long id, string rolTuru)
         {
@@ -76,7 +157,7 @@ namespace bsy.Helpers
               {
                   Value = s.id.ToString(),
                   Text = s.Aciklama,
-                  Selected = s.id.Equals(secilen)
+                  Selected = s.id == secilen
               })).ToList();
 
             SelectListItem hepsiHicbiri = new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false };
@@ -119,11 +200,11 @@ namespace bsy.Helpers
             return sozlukListesi;
         }
 
-        public static IEnumerable<SelectListItem> sehrinIlceleri(bsyContext ctx, long sehirID, long secilen = 0)
+        public static IEnumerable<SelectListItem> sehrinIlceleri(bsyContext ctx, long SehirID, long secilen = 0)
         {
             var ilceler = (from sx in ctx.tblSozluk
                           join icx in ctx.tblIlceler on sx.id equals icx.id
-                          where icx.sehirID == sehirID
+                          where icx.SehirID == SehirID
                           select new { sx.id, sx.Aciklama }).ToList();
 
             ilceler.Add(new { id = (long)0, Aciklama = "_Bütün İlçeler" });
@@ -139,11 +220,11 @@ namespace bsy.Helpers
             return sozlukListesi;
         }
 
-        public static IEnumerable<SelectListItem> IlceninMahalleleri(bsyContext ctx, long ilceID, long secilen = 0)
+        public static IEnumerable<SelectListItem> IlceninMahalleleri(bsyContext ctx, long IlceID, long secilen = 0)
         {
             var mahalleler = (from sx in ctx.tblSozluk
                           join icx in ctx.tblMahalleler on sx.id equals icx.id
-                          where icx.ilceID == ilceID
+                          where icx.IlceID == IlceID
                           select new { sx.id, sx.Aciklama }).ToList();
 
             mahalleler.Add(new { id = (long)0, Aciklama = "_Bütün Mahalleler" });

@@ -13,7 +13,7 @@ namespace bsy.ViewModels.Mahalle
         public MAHALLE mahalle { get; set; }
         public IEnumerable<SelectListItem> sehirler { get; set; }
         public string sehirADI { get; set; }
-        public long sehirID { get; set; }
+        public long SehirID { get; set; }
         public IEnumerable<SelectListItem> ilceler { get; set; }
         public string ilceADI { get; set; }
 

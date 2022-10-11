@@ -11,12 +11,12 @@ namespace bsy.Models
         public KULLANICIROL()
         {
             id = 0;
-            userID = 0;
+            UserID = 0;
             Rolleri = "";
             Tarih = DateTime.Now;
         }
-        public long id { get; set; }
-        public long userID { get; set; }
+        public int id { get; set; }
+        public int UserID { get; set; }
 
         [MaxLength(400)]
         public string Rolleri { get; set; }

@@ -35,9 +35,9 @@ namespace bsy.ContgorevSahasis
             string soyad = "";
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["EPOSTA"] != null)
+                if (Request.Params["eposta"] != null)
                 {
-                    eposta = Request.Params["EPOSTA"];
+                    eposta = Request.Params["eposta"];
                 }
 
                 if (Request.Params["AD"] != null)
@@ -55,13 +55,13 @@ namespace bsy.ContgorevSahasis
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreEPOSTA"] = eposta.ToUpper();
+                Session["filtreeposta"] = eposta.ToUpper();
                 Session["filtreAD"] = ad.ToUpper();
                 Session["filtreSOYAD"] = soyad.ToUpper();
             }
             else if (rapor == 1)
             {
-                eposta = (string)Session["filtreEPOSTA"];
+                eposta = (string)Session["filtreeposta"];
                 ad = (string)Session["filtreAD"];
                 soyad = (string)Session["filtreSOYAD"];
             }
@@ -73,7 +73,7 @@ namespace bsy.ContgorevSahasis
             DateTime simdi = DateTime.Now;
             //pageSize = 5;
             var query = (from kx in context.tblKullanicilar
-                         join gs in context.tblGorevSahasi on kx.id equals gs.userID into gsj
+                         join gs in context.tblGorevSahasi on kx.id equals gs.UserID into gsj
                          from gse in gsj.DefaultIfEmpty()
                          where
                             (kx.eposta + "").Contains(eposta) ||
@@ -82,7 +82,7 @@ namespace bsy.ContgorevSahasis
                          select new
                          {
                              id = gse == null ? 0 : gse.id,
-                             userID=kx.id,
+                             UserID=kx.id,
                              SehirID = gse == null ? 0 : gse.SehirID,
                              IlceID = gse == null ? 0 : gse.IlceID,
                              MahalleID = gse == null ? 0 : gse.MahalleID,
@@ -108,7 +108,7 @@ namespace bsy.ContgorevSahasis
                              select new
                              {
                                  kr.id,
-                                 kr.userID,
+                                 kr.UserID,
                                  kr.SehirID,
                                  kr.IlceID,
                                  kr.MahalleID,
@@ -140,7 +140,7 @@ namespace bsy.ContgorevSahasis
                       cell = new string[]
                       {
                                  kr.id.ToString(),
-                                 kr.userID.ToString(),
+                                 kr.UserID.ToString(),
                                  kr.eposta,
                                  kr.Ad,
                                  kr.Soyad,
@@ -157,54 +157,54 @@ namespace bsy.ContgorevSahasis
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult YeniGorevSahasi(long id, long userID)
+        public ActionResult YeniGorevSahasi(int id, int UserID)
         {
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
-            GorevSahasiVM gorevSahasiVM = GorevSahasiHazirla(id, userID);
+            GorevSahasiVM gorevSahasiVM = GorevSahasiHazirla(id, UserID);
 
             return View(gorevSahasiVM);
         }
 
-        private GorevSahasiVM GorevSahasiHazirla(long id, long userID)
+        private GorevSahasiVM GorevSahasiHazirla(int id, int UserID)
         {
             GorevSahasiVM gorevSahasiVM = new GorevSahasiVM();
 
             try
             {
-                var user = context.tblKullanicilar.Find(userID);
+                var user = context.tblKullanicilar.Find(UserID);
 
                 gorevSahasiVM.id = id;
-                gorevSahasiVM.userID = userID;
+                gorevSahasiVM.UserID = UserID;
                 gorevSahasiVM.Ad = user.Ad;
                 gorevSahasiVM.eposta = user.eposta;
                 gorevSahasiVM.Soyad = user.Soyad;
 
-                long sehirID = 0;
-                long ilceID = 0;
+                long SehirID = 0;
+                long IlceID = 0;
                 long mahalleID = 0;
                 var gorevSahasi = context.tblGorevSahasi.Find(id);
                 if (gorevSahasi != null)
                 {
-                    sehirID = gorevSahasi.SehirID;
-                    ilceID = gorevSahasi.IlceID;
+                    SehirID = gorevSahasi.SehirID;
+                    IlceID = gorevSahasi.IlceID;
                     mahalleID = gorevSahasi.MahalleID;
 
                     gorevSahasiVM.BasTar = gorevSahasi.BasTar;
                     gorevSahasiVM.BitTar = gorevSahasi.BitTar;
                 }
 
-                gorevSahasiVM.SehirID = sehirID;
-                gorevSahasiVM.IlceID = ilceID;
+                gorevSahasiVM.SehirID = SehirID;
+                gorevSahasiVM.IlceID = IlceID;
                 gorevSahasiVM.MahalleID = mahalleID;
 
-                gorevSahasiVM.Sehir = SozlukHelper.sozlukKalemi(context, sehirID);
-                gorevSahasiVM.Ilce = SozlukHelper.sozlukKalemi(context, ilceID);
+                gorevSahasiVM.Sehir = SozlukHelper.sozlukKalemi(context, SehirID);
+                gorevSahasiVM.Ilce = SozlukHelper.sozlukKalemi(context, IlceID);
                 gorevSahasiVM.Mahalle = SozlukHelper.sozlukKalemi(context, mahalleID);
 
-                gorevSahasiVM.sehirler = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.sehirKodu, sehirID, 1);
-                gorevSahasiVM.ilceler = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.ilceKodu, ilceID, 1);
+                gorevSahasiVM.sehirler = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.sehirKodu, SehirID, 1);
+                gorevSahasiVM.ilceler = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.ilceKodu, IlceID, 1);
                 gorevSahasiVM.mahalleler = SozlukHelper.sozlukKalemleriDD(context, SozlukHelper.mahalleKodu, mahalleID, 1);
             }
             catch
@@ -272,7 +272,7 @@ namespace bsy.ContgorevSahasis
             gs.IlceID = gsVM.IlceID;
             gs.MahalleID = gsVM.MahalleID;
             gs.SehirID = gsVM.SehirID;
-            gs.userID = gsVM.userID;
+            gs.UserID = gsVM.UserID;
 
             return gs;
         }

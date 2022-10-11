@@ -37,7 +37,7 @@
         }
         //return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
 
-        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
+        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&UserID=" + rowObject[1] + "'>" + mesaj + "</a>";
         return "<a href='@Url.Action("YeniIlce","Ilce")?id=" + rowObject[0] + "'>" + mesaj + "</a>";
     }
 
@@ -52,7 +52,7 @@
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
-              { name: 'sehirID', index: 'sehirID', hidden: true, width: 10, sortable: false },
+              { name: 'SehirID', index: 'SehirID', hidden: true, width: 10, sortable: false },
               { name: 'SEHIR', index: 'SEHIR', width: 75, search: true, sortable: false },
               { name: 'ILCE', index: 'ILCE', width: 200, search:true, sortable: false },
               { name: 'ACIKLAMA', index: 'ACIKLAMA', width: 75, search: false, sortable: false },
@@ -79,7 +79,7 @@
             postData:
                 {
                    'ilkGiris': function () { return '@ViewBag.IlkGiris' },
-                   'sehirID': function () { return '@ViewBag.sehirID' }
+                   'SehirID': function () { return '@ViewBag.SehirID' }
                 }
         });
 

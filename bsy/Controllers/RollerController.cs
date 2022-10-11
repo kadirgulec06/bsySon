@@ -35,9 +35,9 @@ namespace bsy.Controllers
             string soyad = "";
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["EPOSTA"] != null)
+                if (Request.Params["eposta"] != null)
                 {
-                    eposta = Request.Params["EPOSTA"];
+                    eposta = Request.Params["eposta"];
                 }
 
                 if (Request.Params["AD"] != null)
@@ -55,13 +55,13 @@ namespace bsy.Controllers
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreEPOSTA"] = eposta.ToUpper();
+                Session["filtreeposta"] = eposta.ToUpper();
                 Session["filtreAD"] = ad.ToUpper();
                 Session["filtreSOYAD"] = soyad.ToUpper();
             }
             else if (rapor == 1)
             {
-                eposta = (string)Session["filtreEPOSTA"];
+                eposta = (string)Session["filtreeposta"];
                 ad = (string)Session["filtreAD"];
                 soyad = (string)Session["filtreSOYAD"];
             }
@@ -72,7 +72,7 @@ namespace bsy.Controllers
 
             //pageSize = 5;
             var query = (from k in context.tblKullanicilar
-                         join r in context.tblKullaniciRolleri on k.id equals r.userID into rlj
+                         join r in context.tblKullaniciRolleri on k.id equals r.UserID into rlj
                          from re in rlj.DefaultIfEmpty()
                          where 
                             (k.eposta + "").Contains(eposta) ||
@@ -133,30 +133,30 @@ namespace bsy.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult YeniRolleri(long id, long userID)
+        public ActionResult YeniRolleri(long id, long UserID)
         {
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
-            RollerVM rollerVM = RolleriHazirla(id, userID);
+            RollerVM rollerVM = RolleriHazirla(id, UserID);
 
             return View(rollerVM);
         }
 
-        private RollerVM RolleriHazirla(long id, long userID)
+        private RollerVM RolleriHazirla(long id, long UserID)
         {
             RollerVM rolVM = new RollerVM();
 
             try
             {
-                var user = context.tblKullanicilar.Find(userID);
+                var user = context.tblKullanicilar.Find(UserID);
 
                 rolVM.Ad = user.Ad;
                 rolVM.eposta = user.eposta;
                 rolVM.id = id;
                 rolVM.Roller = new List<RolSatiriVM>();
                 rolVM.Soyad = user.Soyad;
-                rolVM.userID = user.id;
+                rolVM.UserID = user.id;
 
                 var roller = (from rs in context.tblSozluk
                               where rs.Turu == SozlukHelper.rolTuru
@@ -220,7 +220,7 @@ namespace bsy.Controllers
             string birlesikRoller = birlesikRolleri(yeniRolleri.Roller);
             eskiRolleri.Rolleri = birlesikRoller;
             eskiRolleri.Tarih = DateTime.Now;
-            eskiRolleri.userID = yeniRolleri.userID;
+            eskiRolleri.UserID = yeniRolleri.UserID;
 
             if (eskiRolleri.id == 0)
             {
@@ -275,7 +275,7 @@ namespace bsy.Controllers
         {
 
             eskiRolleri.id = yeniRolleri.id;
-            eskiRolleri.userID = yeniRolleri.userID;
+            eskiRolleri.UserID = yeniRolleri.UserID;
             eskiRolleri.Rolleri = yeniRolleri.Rolleri;
             eskiRolleri.Tarih = DateTime.Now;
 

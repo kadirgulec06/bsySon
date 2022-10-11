@@ -17,7 +17,7 @@
         //alert(sehir);
         $.ajax({
             type: "POST",
-            data: { sehirID: sehir },
+            data: { SehirID: sehir },
             url: '@Url.Action("SehrinIlceleri", "Genel")',
             dataType: 'json',
             success: function (json) {
@@ -46,7 +46,7 @@
         return;
         var ilce = control.value;
         var frm = document.getElementById("frmKisiIndex");
-        document.getElementById("ilceID").value = ilce;
+        document.getElementById("IlceID").value = ilce;
         frm.submit();
     }
 
@@ -192,7 +192,7 @@
                         Cinsiyet :
                     </td>
                     <td align="left">
-                        @Html.DropDownListFor(model => model.kisi.Cinsiyet, new SelectList(Model.cinsiyetler, "Value", "Text"), new { @style = "width:150px", @class = "veri" })
+                        @Html.DropDownListFor(model => model.kisi.Cinsiyet, new SelectList(Model.kisiListeleri.Cinsiyet, "Value", "Text"), new { @style = "width:150px", @class = "veri" })
                         @Html.ValidationMessageFor(model => model.kisi.Cinsiyet)
                     </td>
                 </tr>
@@ -207,11 +207,11 @@
                 </tr>
                 <tr>
                     <td align="right" class="etiketSabit">
-                        EPosta :
+                        eposta :
                     </td>
                     <td>
-                        @Html.TextBoxFor(model => model.kisi.Eposta, new { @size = 100 })
-                        @Html.ValidationMessageFor(model => model.kisi.Eposta)
+                        @Html.TextBoxFor(model => model.kisi.eposta, new { @size = 100 })
+                        @Html.ValidationMessageFor(model => model.kisi.eposta)
                     </td>
                 </tr>
                 <tr>
@@ -250,8 +250,8 @@
 <form method="post" hidden="hidden" action="@Url.Action("Index", "Kisi")" id="frmKisiIndex">
     @Html.AntiForgeryToken()
     <div id="divIslem">
-        <input type="text" id="sehirID" name="sehirID" value="" hidden="hidden" />
-        <input type="text" id="ilceID" name="ilceID" value="" hidden="hidden" />
+        <input type="text" id="SehirID" name="SehirID" value="" hidden="hidden" />
+        <input type="text" id="IlceID" name="IlceID" value="" hidden="hidden" />
         <input type="text" id="mahalleID" name="mahalleID" value="" hidden="hidden" />
         <input type="text" id="haneID" name="haneID" value="" hidden="hidden" />
     </div>

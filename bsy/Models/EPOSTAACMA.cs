@@ -6,9 +6,9 @@ using System.Web;
 
 namespace bsy.Models
 {
-    public class EPOSTAACMA
+    public class epostaACMA
     {
-        public long id { get; set; }
+        public int id { get; set; }
 
         [MaxLength(200)]
         public string eposta { get; set; }

@@ -77,7 +77,7 @@ namespace bsy.Helpers
             return yeniSifre;
         }
 
-        public static bool sifrePostasiGonder(bsyContext ctx, string eposta, string sifre)
+        public static bool sifrepostasiGonder(bsyContext ctx, string eposta, string sifre)
         {
             KULLANICI kx = ctx.tblKullanicilar.Where(ky => ky.eposta == eposta).FirstOrDefault();
 
@@ -94,7 +94,7 @@ namespace bsy.Helpers
             User user = (User)HttpContext.Current.Session["User"];
 
             var sifreDegisme = (from sdx in ctx.tblSifreDegisme
-                                where sdx.userID == user.id
+                                where sdx.UserID == user.id
                                 orderby sdx.Tarih descending
                                 select sdx).FirstOrDefault();
 
@@ -104,7 +104,7 @@ namespace bsy.Helpers
             }
 
             var sifreSifirla = (from sdx in ctx.tblSifreSifirla
-                                where sdx.userID == user.id
+                                where sdx.UserID == user.id
                                 orderby sdx.Tarih descending
                                 select sdx).FirstOrDefault();
 
@@ -121,14 +121,14 @@ namespace bsy.Helpers
             return false;
         }
 
-        public static bool SifreDegismeYarat(bsyContext ctx, long userID, string aciklama)
+        public static bool SifreDegismeYarat(bsyContext ctx, int UserID, string aciklama)
         {
             SIFREDEGISME sd = new SIFREDEGISME();
 
             sd.Aciklama = aciklama;
             sd.id = 0;
             sd.Tarih = DateTime.Now;
-            sd.userID = userID;
+            sd.UserID = UserID;
 
             ctx.tblSifreDegisme.Add(sd);
             return true;
@@ -143,7 +143,7 @@ namespace bsy.Helpers
             sd.Aciklama = aciklama;
             sd.id = 0;
             sd.Tarih = DateTime.Now;
-            sd.userID = kx.id;
+            sd.UserID = kx.id;
             ctx.tblSifreSifirla.Add(sd);
 
             return true;

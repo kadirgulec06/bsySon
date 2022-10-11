@@ -19,11 +19,11 @@
         frm.submit();
     }
 
-    function sifreSifirla(userID) {
+    function sifreSifirla(UserID) {
         var agree = confirm("Kullanıcı Şifresini Sıfırlamak İstediğinizden Emin misiniz?");
         if (agree) {
             var frm = document.getElementById("frmSifreSifirla");
-            document.getElementById("userID").value = userID;
+            document.getElementById("UserID").value = UserID;
             frm.submit();
         }
         else
@@ -65,11 +65,11 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'EPosta', 'Adı', 'Soyadı', 'Telefonu', 'TC No', 'Kayıt Tarihi', 'Durumu', 'Durum Tarihi', 'Şifre Sıfırla', 'Değiştir', 'Sil'],
+            colNames: ['id', 'eposta', 'Adı', 'Soyadı', 'Telefonu', 'TC No', 'Kayıt Tarihi', 'Durumu', 'Durum Tarihi', 'Şifre Sıfırla', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 100, sortable: false },
-              { name: 'EPOSTA', index: 'EPOSTA', width: 200, sortable: false },
+              { name: 'eposta', index: 'eposta', width: 200, sortable: false },
               { name: 'AD', index: 'AD', width: 75, sortable: false },
               { name: 'SOYAD', index: 'SOYAD', width: 75, sortable: false },
               { name: 'TELEFON', index: 'TELEFON', width: 50, sortable: false },
@@ -132,6 +132,6 @@
 <form method="post" hidden="hidden" action="@Url.Action("SifreSifirlaYonetici", "Sifre")" id="frmSifreSifirla">
     @Html.AntiForgeryToken()
     <div id="divIslem">
-        <input type="text" id="userID" name="userID" value="" hidden="hidden" />
+        <input type="text" id="UserID" name="UserID" value="" hidden="hidden" />
     </div>
 </form>

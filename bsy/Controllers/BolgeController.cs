@@ -32,7 +32,7 @@ namespace bsy.Controllers
             return View();
         }
 
-        public ActionResult ListeBolgeler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long sehirID = 0)
+        public ActionResult ListeBolgeler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long SehirID = 0)
         {
             // filtre parametrelerini hazırla
 
@@ -60,7 +60,7 @@ namespace bsy.Controllers
 
             int pageSize = rows;
 
-            //long sehirID = (long)Session["sehirID"];
+            //long SehirID = (long)Session["SehirID"];
             //pageSize = 5;
             var query = (from ic in context.tblBolgeler
                          join sx in context.tblSozluk on ic.id equals sx.id

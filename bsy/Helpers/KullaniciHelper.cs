@@ -14,7 +14,7 @@ namespace bsy.Helpers
             User user = new User();
 
             user.AdSoyad = "Kadir Güleç";
-            user.Eposta = "kgulec@spk.gov.tr";
+            user.eposta = "kgulec@spk.gov.tr";
             user.KimlikNo = "24461035746";
             user.menuRolleri = "YONETICI";
             user.Roller = "YONETICI";
@@ -36,20 +36,45 @@ namespace bsy.Helpers
 
             user.id = kx.id;
             user.AdSoyad = kx.Ad + " " + kx.Soyad;
-            user.Eposta = li.userName;
+            user.eposta = li.userName;
             user.KimlikNo = kx.KimlikNo.ToString();
             user.menuRolleri = "";
-            user.UserName = user.Eposta;
+            user.UserName = user.eposta;
             user.Roller = KullaniciRolleri(ctx, kx.id);
             user.gy = gorevYerleriHazirla(ctx, user.id);
+            user.bilet = Guid.NewGuid().ToString();
+            bool biletSaklandi = BiletSakla(ctx, user);
 
             return user;
         }
 
-        public static string KullaniciRolleri(bsyContext ctx, long userID)
+        public static bool BiletSakla(bsyContext ctx, User user)
+        {
+            BILET eskiBilet = ctx.tblBiletler.Where(bx => bx.UserID == user.id).FirstOrDefault();
+            if (eskiBilet == null)
+            {
+                eskiBilet = new BILET();
+            }
+
+            eskiBilet.UserID = user.id;
+            eskiBilet.Bilet = user.bilet;
+            if (eskiBilet.id == 0)
+            {
+                ctx.tblBiletler.Add(eskiBilet);
+            }
+            else
+            {
+                ctx.Entry(eskiBilet).State = System.Data.Entity.EntityState.Modified;
+            }
+
+            ctx.SaveChanges();
+
+            return true;
+        }
+        public static string KullaniciRolleri(bsyContext ctx, long UserID)
         {
             KULLANICIROL rolleri = (from kr in ctx.tblKullaniciRolleri
-                                    where kr.userID == userID
+                                    where kr.UserID == UserID
                                     select kr).FirstOrDefault();
             if (rolleri == null)
             {
@@ -64,8 +89,8 @@ namespace bsy.Helpers
             DateTime ipSonAcmaTarihi = SonAcmaTarihiIP(ctx, li.ip);
             DateTime ipSonGirisTarihi = SonGirisTarihiIP(ctx, li.ip);
 
-            DateTime epostaSonAcmaTarihi = SonAcmaTarihiEPosta(ctx, li.userName);
-            DateTime epostaSonGirisTarihi = SonGirisTarihiEPosta(ctx, li.userName);
+            DateTime epostaSonAcmaTarihi = SonAcmaTarihieposta(ctx, li.userName);
+            DateTime epostaSonGirisTarihi = SonGirisTarihieposta(ctx, li.userName);
 
             int ipDenemeSayisi = (from gdx in ctx.tblGirisDenemeleri
                                   where gdx.ip == li.ip && gdx.Durum == false &&
@@ -111,9 +136,9 @@ namespace bsy.Helpers
             return sonGirisTarihi;
         }
 
-        public static DateTime SonAcmaTarihiEPosta(bsyContext ctx, string eposta)
+        public static DateTime SonAcmaTarihieposta(bsyContext ctx, string eposta)
         {
-            EPOSTAACMA sonAcma = (from gax in ctx.tblEPostaAcma
+            epostaACMA sonAcma = (from gax in ctx.tblepostaAcma
                                   where gax.eposta == eposta
                                   select gax).OrderByDescending(i => i.Tarih).FirstOrDefault();
 
@@ -126,7 +151,7 @@ namespace bsy.Helpers
             return sonAcmaTarihi;
         }
 
-        public static DateTime SonGirisTarihiEPosta(bsyContext ctx, string eposta)
+        public static DateTime SonGirisTarihieposta(bsyContext ctx, string eposta)
         {
             GIRISDENEME sonGiris = (from gdx in ctx.tblGirisDenemeleri
                                     where gdx.eposta == eposta && gdx.Durum == true
@@ -155,10 +180,10 @@ namespace bsy.Helpers
             return true;
         }
 
-        public static GorevYerleri gorevYerleriHazirla(bsyContext ctx, long userID)
+        public static GorevYerleri gorevYerleriHazirla(bsyContext ctx, long UserID)
         {
             GorevYerleri gyx = new GorevYerleri();
-            gyx.gy = gorevYerleri(ctx, userID);
+            gyx.gy = gorevYerleri(ctx, UserID);
             int gyt = gorevYeriTuru(gyx.gy);
             if (gyt <= 0)
             {
@@ -187,14 +212,14 @@ namespace bsy.Helpers
 
             return sim;
         }
-        public static List<GorevYeri> gorevYerleri(bsyContext ctx, long userID)
+        public static List<GorevYeri> gorevYerleri(bsyContext ctx, long UserID)
         {
             List<GorevYeri> gy = (from gs in ctx.tblGorevSahasi
-                                  where gs.userID == userID
+                                  where gs.UserID == UserID
                                   select new GorevYeri
                                   {
-                                      sehirID = gs.SehirID,
-                                      ilceID = gs.IlceID,
+                                      SehirID = gs.SehirID,
+                                      IlceID = gs.IlceID,
                                       mahalleID = gs.MahalleID
                                   }).Distinct().ToList();
             return gy;
@@ -203,11 +228,11 @@ namespace bsy.Helpers
         public static int gorevYeriTuru(List<GorevYeri> gy)
         {
             var gyt = (from gz in gy
-                       where gz.sehirID == 0 && gz.ilceID == 0 && gz.mahalleID == 0
+                       where gz.SehirID == 0 && gz.IlceID == 0 && gz.mahalleID == 0
                        select gz).FirstOrDefault();
 
             var gyd = (from gx in gy
-                       where gx.sehirID != 0 || gx.ilceID != 0 || gx.mahalleID != 0
+                       where gx.SehirID != 0 || gx.IlceID != 0 || gx.mahalleID != 0
                        select gx).FirstOrDefault();
 
             if (gyt != null && gyd != null)
@@ -241,8 +266,8 @@ namespace bsy.Helpers
             }
 
             sehirler = (from sh in gy.gy
-                           where sh.sehirID != 0
-                           select sh.sehirID).
+                           where sh.SehirID != 0
+                           select sh.SehirID).
                            Distinct().ToList();
 
             return sehirler;
@@ -264,14 +289,14 @@ namespace bsy.Helpers
                                   where ic.Turu == SozlukHelper.ilceKodu
                                   select new
                                   {
-                                      ilceID = ic.id,
-                                      sehirID = ic.BabaID
+                                      IlceID = ic.id,
+                                      SehirID = ic.BabaID
                                   }).Distinct().ToList();
 
             ilceler = (from ix in sehirIlceler
-                          join gx in gy.gy on ix.sehirID equals gx.sehirID
-                          where gx.ilceID == 0 || gx.ilceID == ix.ilceID
-                          select ix.ilceID).ToList();
+                          join gx in gy.gy on ix.SehirID equals gx.SehirID
+                          where gx.IlceID == 0 || gx.IlceID == ix.IlceID
+                          select ix.IlceID).ToList();
 
             return ilceler;
         }
@@ -288,19 +313,19 @@ namespace bsy.Helpers
 
             foreach (GorevYeri gyx in gy.gy)
             {
-                if (gyx.sehirID != 0)
+                if (gyx.SehirID != 0)
                 {
-                    if (gyx.ilceID == 0)
+                    if (gyx.IlceID == 0)
                     {
-                        mahalleler = sehrinMahalleleri(ctx, gyx.sehirID);
+                        mahalleler = sehrinMahalleleri(ctx, gyx.SehirID);
                     }
 
-                    if (gyx.sehirID != 0 && gyx.ilceID != 0 && gyx.mahalleID == 0)
+                    if (gyx.SehirID != 0 && gyx.IlceID != 0 && gyx.mahalleID == 0)
                     {
-                        mahalleler = ilceninMahalleleri(ctx, gyx.ilceID);
+                        mahalleler = ilceninMahalleleri(ctx, gyx.IlceID);
                     }
 
-                    if (gyx.sehirID != 0 && gyx.ilceID != 0 && gyx.mahalleID != 0)
+                    if (gyx.SehirID != 0 && gyx.IlceID != 0 && gyx.mahalleID != 0)
                     {
                         mahalleler.Add(gyx.mahalleID);
                     }
@@ -323,17 +348,17 @@ namespace bsy.Helpers
                                where sx.Turu == SozlukHelper.sehirKodu
                                select new
                                {
-                                   sehirID = sx.id,
+                                   SehirID = sx.id,
                                    sehirADI = sx.Aciklama
                                }).ToList();
 
             IEnumerable<SelectListItem> sehirlerDD = (from sx in tumSehirler
-                                                      join sy in sehirler on sx.sehirID equals sy
+                                                      join sy in sehirler on sx.SehirID equals sy
                                                       select new SelectListItem
                                                       {
                                                           Text = sx.sehirADI,
-                                                          Value = sx.sehirID.ToString(),
-                                                          Selected = sx.sehirID == secilen
+                                                          Value = sx.SehirID.ToString(),
+                                                          Selected = sx.SehirID == secilen
                                                       }).ToList();
             return sehirlerDD;
         }
@@ -345,17 +370,17 @@ namespace bsy.Helpers
                               where ix.Turu == SozlukHelper.ilceKodu
                               select new
                               {
-                                  ilceID = ix.id,
+                                  IlceID = ix.id,
                                   ilceADI = ix.Aciklama
                               }).ToList();
 
             IEnumerable <SelectListItem> sozlukListesi = (from ti in tumIlceler
-                                                           join gi in ilceleri on ti.ilceID equals gi
+                                                           join gi in ilceleri on ti.IlceID equals gi
                                                            select new SelectListItem
                                                            {
-                                                               Value = ti.ilceID.ToString(),
+                                                               Value = ti.IlceID.ToString(),
                                                                Text = ti.ilceADI,
-                                                               Selected = ti.ilceID.Equals(secilen)
+                                                               Selected = ti.IlceID.Equals(secilen)
                                                            }).ToList();
 
             SelectListItem hepsiHicbiri = new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false };
@@ -408,20 +433,20 @@ namespace bsy.Helpers
             return sozlukListesi;
         }
 
-        public static List<long> sehrinMahalleleri(bsyContext ctx, long sehirID)
+        public static List<long> sehrinMahalleleri(bsyContext ctx, long SehirID)
         {
             List<long> sm = (from ix in ctx.tblIlceler
-                  join mx in ctx.tblMahalleler on ix.id equals mx.ilceID
-                  where ix.sehirID == sehirID
+                  join mx in ctx.tblMahalleler on ix.id equals mx.IlceID
+                  where ix.SehirID == SehirID
                   select mx.id).ToList();
 
             return sm;
         }
 
-        public static List<long> ilceninMahalleleri(bsyContext ctx, long ilceID)
+        public static List<long> ilceninMahalleleri(bsyContext ctx, long IlceID)
         {
             List<long> im = (from mx in ctx.tblMahalleler
-                             where mx.ilceID == ilceID
+                             where mx.IlceID == IlceID
                              select mx.id).ToList();
 
             return im;

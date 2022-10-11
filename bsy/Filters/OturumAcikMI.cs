@@ -10,11 +10,21 @@ namespace bsy.Filters
 {
     public class OturumAcikMI : ActionFilterAttribute
     {
-
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            User user = (User)filterContext.HttpContext.Session["USER"];
+            bool girisYapmis = false;
+            if (user != null)
+            {
+                bsyContext ctx = new bsyContext();
+                BILET bilet = ctx.tblBiletler.Where(bx => bx.UserID == user.id).FirstOrDefault();
+                if (bilet != null && bilet.Bilet == user.bilet)
+                {
+                    girisYapmis = true;
+                }
+            }
 
-            if (filterContext.HttpContext.Session["USER"] == null) //Session da USER kalmamışsa
+            if (!girisYapmis) //Session da USER kalmamışsa ya da giriş yapmamışsa
             {
                 List<Mesaj> mesajlar = new List<Mesaj>();
                 Mesaj m = new Mesaj("hata", "Oturumun Açık Kalma Süresini Aştığınız için Tekrar Giriş Yapmanız Gerekmektedir!!!");

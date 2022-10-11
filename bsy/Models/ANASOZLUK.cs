@@ -15,7 +15,7 @@ namespace bsy.Models
             Aciklama = "";
             EkBilgi = "";
         }
-        public long id { get; set; }
+        public short id { get; set; }
 
         [MaxLength(50)]
         public string Turu { get; set; }

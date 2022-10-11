@@ -21,27 +21,27 @@ namespace bsy.Controllers
         // GET: Ilce
         public ActionResult Index()
         {
-            Session["sehirID"] = 0;
+            Session["SehirID"] = 0;
 
             ViewBag.IlkGiris = 1;
-            ViewBag.sehirID = 0;
+            ViewBag.SehirID = 0;
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(long sehirID = 0)
+        public ActionResult Index(long SehirID = 0)
         {
             ViewBag.IlkGiris = 0;
-            ViewBag.sehirID = sehirID;
+            ViewBag.SehirID = SehirID;
 
-            Session["sehirID"] = sehirID;
+            Session["SehirID"] = SehirID;
 
             return View();
         }
 
-        public ActionResult ListeIlceler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long sehirID = 0)
+        public ActionResult ListeIlceler(string sidx, string sord, int page, int rows, byte ilkGiris = 0, long SehirID = 0)
         {
             // filtre parametrelerini hazırla
 
@@ -76,13 +76,13 @@ namespace bsy.Controllers
 
             int pageSize = rows;
 
-            //long sehirID = (long)Session["sehirID"];
+            //long SehirID = (long)Session["SehirID"];
             //pageSize = 5;
             var query = (from ic in context.tblIlceler
                          join sx in context.tblSozluk on ic.id equals sx.id
-                         join sy in context.tblSozluk on ic.sehirID equals sy.id
+                         join sy in context.tblSozluk on ic.SehirID equals sy.id
                          where
-                            (ic.sehirID == sehirID || sehirID == 0) &&
+                            (ic.SehirID == SehirID || SehirID == 0) &&
                             (sx.Aciklama + "").Contains(ilce) &&
                             (sy.Aciklama + "").Contains(sehir)
                          select new
@@ -90,7 +90,7 @@ namespace bsy.Controllers
                              ic.id,
                              //ilceKODU = sx.Kodu,
                              ilceADI = sx.Aciklama,
-                             ic.sehirID,
+                             ic.SehirID,
                              //sehirKodu = sy.Kodu,
                              sehirADI = sy.Aciklama,
                              ic.Aciklama
@@ -107,7 +107,7 @@ namespace bsy.Controllers
                                  icx.id,
                                  //icx.ilceKODU,
                                  icx.ilceADI,
-                                 icx.sehirID,
+                                 icx.SehirID,
                                  icx.sehirADI,
                                  //icx.sehirKodu,
                                  icx.Aciklama,
@@ -132,7 +132,7 @@ namespace bsy.Controllers
                       cell = new string[]
                       {
                                  kr.id.ToString(),
-                                 kr.sehirID.ToString(),
+                                 kr.SehirID.ToString(),
                                  //kr.sehirKodu,
                                  kr.sehirADI,
                                  //kr.ilceKODU,
@@ -174,7 +174,7 @@ namespace bsy.Controllers
             IlceVM ilceVM = new IlceVM();
             ilceVM = ilceHazirla(soz, ilce);
 
-            Session["sehirID"] = 0;
+            Session["SehirID"] = 0;
 
             return View(ilceVM);
         }
@@ -183,12 +183,12 @@ namespace bsy.Controllers
         {
             IlceVM ilceVM = new IlceVM();
 
-            soz.BabaID = ilce.sehirID;
+            soz.BabaID = ilce.SehirID;
             ilceVM.sozluk = soz;
             ilceVM.ilce = ilce;
 
             ilceVM.sehirler = SozlukHelper.sozlukKalemleriDD(context, "SEHIR", 0);
-            ilceVM.sehirADI = SozlukHelper.sozlukAciklama(context, ilce.sehirID);
+            ilceVM.sehirADI = SozlukHelper.sozlukAciklama(context, ilce.SehirID);
 
             return ilceVM;
         }
@@ -223,8 +223,8 @@ namespace bsy.Controllers
                         yeniIlce = true;
                         var ilceKaydi = (from sz in context.tblSozluk
                                          join ic in context.tblIlceler on sz.id equals ic.id
-                                         select new { sz.id, sz.Aciklama, ic.sehirID }).FirstOrDefault();
-                        if (ilceKaydi != null && eskiIlceVM.sozluk.Aciklama == ilceKaydi.Aciklama && eskiIlceVM.ilce.sehirID == ilceKaydi.sehirID)
+                                         select new { sz.id, sz.Aciklama, ic.SehirID }).FirstOrDefault();
+                        if (ilceKaydi != null && eskiIlceVM.sozluk.Aciklama == ilceKaydi.Aciklama && eskiIlceVM.ilce.SehirID == ilceKaydi.SehirID)
                         {
                             m = new Mesaj("hata", "Bu ilçe kaydı daha önce oluşturulmuş, tekrar eklenemez");
                             mesajlar.Add(m);
@@ -293,7 +293,7 @@ namespace bsy.Controllers
 
             ilceVM.ilce = eskiIlce;
             ilceVM.sozluk = eskiSozluk;
-            ilceVM.sehirADI = SozlukHelper.sozlukAciklama(context, eskiIlce.sehirID);
+            ilceVM.sehirADI = SozlukHelper.sozlukAciklama(context, eskiIlce.SehirID);
 
             return ilceVM;
 
@@ -302,7 +302,7 @@ namespace bsy.Controllers
         {
             eskiVM.sozluk = SozlukYeniToEski(eskiVM.sozluk, yeniVM.sozluk);
             eskiVM.ilce = IlceYeniToEski(eskiVM.ilce, yeniVM.ilce);
-            eskiVM.sozluk.BabaID = yeniVM.ilce.sehirID;
+            eskiVM.sozluk.BabaID = yeniVM.ilce.SehirID;
             eskiVM.sehirADI = yeniVM.sehirADI;
 
             return eskiVM;
@@ -321,7 +321,7 @@ namespace bsy.Controllers
         private ILCE IlceYeniToEski(ILCE eskiIlce, ILCE yeniIlce)
         {
             eskiIlce.id = yeniIlce.id;
-            eskiIlce.sehirID = yeniIlce.sehirID;
+            eskiIlce.SehirID = yeniIlce.SehirID;
             eskiIlce.Aciklama = yeniIlce.Aciklama;
 
             return eskiIlce;

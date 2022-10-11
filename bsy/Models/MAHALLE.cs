@@ -13,9 +13,9 @@ namespace bsy.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long id { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string MahalleKodu { get; set; }
-        public long ilceID { get; set; }
+        public long IlceID { get; set; }
         public string Aciklama { get; set; }
 
     }

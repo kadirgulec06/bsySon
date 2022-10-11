@@ -237,20 +237,20 @@ namespace bsy.Controllers
 
         private bool GiriseAcmaYarat(KULLANICI user)
         {
-            EPOSTAACMA ga = new EPOSTAACMA();
+            epostaACMA ga = new epostaACMA();
 
             ga.Aciklama = "İlk kayıt";
             ga.id = 0;
             ga.eposta = user.eposta;
             ga.Tarih = user.KayitTarihi;
 
-            context.tblEPostaAcma.Add(ga);
+            context.tblepostaAcma.Add(ga);
             return true;
         }
 
         private bool epostaGonder(KULLANICI user, string sifre)
         {
-            bool gonderildi =  SifreHelper.sifrePostasiGonder(context, user.eposta, sifre);
+            bool gonderildi =  SifreHelper.sifrepostasiGonder(context, user.eposta, sifre);
 
             return gonderildi;
         }
@@ -313,9 +313,9 @@ namespace bsy.Controllers
             string ip = "";
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["EPOSTA"] != null)
+                if (Request.Params["eposta"] != null)
                 {
-                    eposta = Request.Params["EPOSTA"];
+                    eposta = Request.Params["eposta"];
                 }
 
                 if (Request.Params["IP"] != null)
@@ -327,12 +327,12 @@ namespace bsy.Controllers
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreEPOSTA"] = eposta.ToUpper();
+                Session["filtreeposta"] = eposta.ToUpper();
                 Session["filtreIP"] = ip.ToUpper();
             }
             else if (rapor == 1)
             {
-                eposta = (string)Session["filtreEPOSTA"];
+                eposta = (string)Session["filtreeposta"];
                 ip = (string)Session["filtreIP"];
             }
 
@@ -436,14 +436,14 @@ namespace bsy.Controllers
 
 
 
-        public ActionResult EPostaAc()
+        public ActionResult epostaAc()
         {
             ViewBag.IlkGiris = 1;
 
             return View();
         }
 
-        public ActionResult ListeKapaliEPosta(string sidx, string sord, int page, int rows, byte ilkGiris = 0)
+        public ActionResult ListeKapalieposta(string sidx, string sord, int page, int rows, byte ilkGiris = 0)
         {
             // filtre parametrelerini hazırla
 
@@ -451,20 +451,20 @@ namespace bsy.Controllers
             string ip = "";
             if (Request.Params["_search"] == "true")
             {
-                if (Request.Params["EPOSTA"] != null)
+                if (Request.Params["eposta"] != null)
                 {
-                    eposta = Request.Params["EPOSTA"];
+                    eposta = Request.Params["eposta"];
                 }
             }
 
             int rapor = 2;
             if (rapor == 0)
             {
-                Session["filtreEPOSTA"] = eposta.ToUpper();
+                Session["filtreeposta"] = eposta.ToUpper();
             }
             else if (rapor == 1)
             {
-                eposta = (string)Session["filtreEPOSTA"];
+                eposta = (string)Session["filtreeposta"];
             }
 
             int pageIndex = Convert.ToInt32(page) - 1;
@@ -479,7 +479,7 @@ namespace bsy.Controllers
                             select gdxGRP.OrderByDescending(gx => gx.Tarih).FirstOrDefault();
 
             var gdsHataAcmali = (from gdy in gdSonHata
-                                 join iax in context.tblEPostaAcma on gdy.eposta equals iax.eposta
+                                 join iax in context.tblepostaAcma on gdy.eposta equals iax.eposta
                                  where iax.Tarih > gdy.Tarih
                                  select gdy.eposta).ToList();
 
@@ -491,7 +491,7 @@ namespace bsy.Controllers
             int totalRecords = gdSonHata.Count();
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
-            var resultSetAfterOrderandPaging = gdSonHata.OrderBy("Tarih desc, Eposta").Skip(pageIndex * pageSize).Take(pageSize);
+            var resultSetAfterOrderandPaging = gdSonHata.OrderBy("Tarih desc, eposta").Skip(pageIndex * pageSize).Take(pageSize);
 
             var resultSet = (from k in resultSetAfterOrderandPaging
                              select new
@@ -529,7 +529,7 @@ namespace bsy.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult EPostaHesabiAc(long idAc)
+        public ActionResult epostaHesabiAc(long idAc)
         {
             long id = idAc;
 
@@ -537,7 +537,7 @@ namespace bsy.Controllers
             Mesaj m = null;
 
             GIRISDENEME gd = context.tblGirisDenemeleri.Find(id);
-            EPOSTAACMA ipa = new EPOSTAACMA();
+            epostaACMA ipa = new epostaACMA();
 
             User user = (User)Session["USER"];
 
@@ -546,22 +546,22 @@ namespace bsy.Controllers
             ipa.eposta = gd.eposta;
             ipa.Tarih = DateTime.Now;
 
-            context.tblEPostaAcma.Add(ipa);
+            context.tblepostaAcma.Add(ipa);
 
             try
             {
                 context.SaveChanges();
-                m = new Mesaj("tamam", "EPosta Hesabı girişlere açılmıştır");
+                m = new Mesaj("tamam", "eposta Hesabı girişlere açılmıştır");
             }
             catch (Exception e)
             {
-                m = new Mesaj("hata", "EPosta Hesabı açılamadı:" + GenelHelper.exceptionMesaji(e));
+                m = new Mesaj("hata", "eposta Hesabı açılamadı:" + GenelHelper.exceptionMesaji(e));
             }
 
             mesajlar.Add(m);
             Session["MESAJLAR"] = mesajlar;
 
-            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kullanicilar/EPostaAc", false);
+            Response.Redirect(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath + "/Kullanicilar/epostaAc", false);
             return Content("OK");
         }
 

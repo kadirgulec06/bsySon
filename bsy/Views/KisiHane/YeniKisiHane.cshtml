@@ -17,7 +17,7 @@
         //alert(sehir);
         $.ajax({
             type: "POST",
-            data: { sehirID: sehir },
+            data: { SehirID: sehir },
             url: '@Url.Action("SehrinIlceleri", "Genel")',
             dataType: 'json',
             success: function (json) {
@@ -46,7 +46,7 @@
         return;
         var ilce = control.value;
         var frm = document.getElementById("frmKisiIndex");
-        document.getElementById("ilceID").value = ilce;
+        document.getElementById("IlceID").value = ilce;
         frm.submit();
     }
 

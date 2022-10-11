@@ -44,8 +44,8 @@
         }
         //return "<a href='~/Kullanicilar/YeniKullanici?id=" + rowObject[0] + "'>Değiştir</a>";
 
-        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
-        return "<a href='@Url.Action("YeniRolleri","Roller")?id=" + rowObject[0] + "&userID=" + rowObject[1] + "'>" + mesaj + "</a>";
+        //return "<a href='~/Roller/YeniRolleri?id=" + rowObject[0] + "&UserID=" + rowObject[1] + "'>" + mesaj + "</a>";
+        return "<a href='@Url.Action("YeniRolleri","Roller")?id=" + rowObject[0] + "&UserID=" + rowObject[1] + "'>" + mesaj + "</a>";
 
     }
 
@@ -56,12 +56,12 @@
             datatype: 'json',
             mtype: 'POST',
             autowidth: true,
-            colNames: ['id', 'Kullanıcı ID', 'EPosta', 'Adı', 'Soyadı', 'Rolleri', 'Değiştir', 'Sil'],
+            colNames: ['id', 'Kullanıcı ID', 'eposta', 'Adı', 'Soyadı', 'Rolleri', 'Değiştir', 'Sil'],
             colModel:
             [
               { name: 'id', index: 'id', hidden:true, width: 10, sortable: false },
-              { name: 'userID', index: 'userID', hidden: true, width: 10, sortable: false },
-              { name: 'EPOSTA', index: 'EPOSTA', width: 200, sortable: false },
+              { name: 'UserID', index: 'UserID', hidden: true, width: 10, sortable: false },
+              { name: 'eposta', index: 'eposta', width: 200, sortable: false },
               { name: 'AD', index: 'AD', width: 75, sortable: false },
               { name: 'SOYAD', index: 'SOYAD', width: 75, sortable: false },
               { name: 'ROLLERI', index: 'ROLLERI', width: 400, sortable: false },

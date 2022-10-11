@@ -41,7 +41,7 @@ namespace bsy.Helpers
             string subject = konu;
             string body = mesaj;
 
-            System.Security.Principal.WindowsIdentity usrEPosta = System.Security.Principal.WindowsIdentity.GetCurrent();
+            System.Security.Principal.WindowsIdentity usreposta = System.Security.Principal.WindowsIdentity.GetCurrent();
             SmtpClient client = null;
 
             client = new SmtpClient("kurye.local.spk.gov.tr", 587);

@@ -7,8 +7,8 @@ namespace bsy.Models
 {
     public class GorevYeri
     {
-        public long sehirID { get; set; }
-        public long ilceID { get; set; }
+        public long SehirID { get; set; }
+        public long IlceID { get; set; }
         public long mahalleID { get; set; }
     }
 }

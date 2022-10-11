@@ -22,15 +22,16 @@ namespace bsy.Models
             OdaSayisi = 0;
             BrutAlan = 0;
             EkBilgi = "";
-            Eposta = "";
+            eposta = "";
             Telefon = "";
+            HaneTipi = 0;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long id { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string HaneKodu { get; set; }
         public long MahalleID { get; set; }
         public DateTime KayitTarihi { get; set; }
@@ -39,7 +40,7 @@ namespace bsy.Models
         public string Telefon { get; set; }
 
         [MaxLength(200)]
-        public string Eposta { get; set; }
+        public string eposta { get; set; }
 
         [MaxLength(200)]
         public string Cadde { get; set; }
@@ -47,7 +48,7 @@ namespace bsy.Models
         [MaxLength(200)]
         public string Sokak { get; set; }
 
-        [MaxLength(40)]
+        [MaxLength(50)]
         public string Apartman { get; set; }
 
         [MaxLength(20)]
@@ -57,6 +58,7 @@ namespace bsy.Models
 
         [MaxLength(1000)]
         public string EkBilgi { get; set; }
+        public short HaneTipi { get; set; }
 
     }
 }

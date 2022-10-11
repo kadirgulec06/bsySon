@@ -105,9 +105,9 @@ namespace bsy.Controllers
                          join hn in context.tblHaneler on kh.HaneID equals hn.id
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sm in context.tblSozluk on mh.id equals sm.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
@@ -275,9 +275,9 @@ namespace bsy.Controllers
                          join hn in context.tblHaneler on kh.HaneID equals hn.id
                          join mh in context.tblMahalleler on hn.MahalleID equals mh.id
                          join sx in context.tblSozluk on mh.id equals sx.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (kg.KisiID == kisiID || kisiID == 0) &&
@@ -436,21 +436,36 @@ namespace bsy.Controllers
 
         private KisiGorusmeVM listeleriHazirla(KisiGorusmeVM kgVM)
         {
-            kgVM.kisiListeleri.MedeniDurum = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, kgVM.kisiGorusme.MedeniDurumu, 2);
-            kgVM.kisiListeleri.EgitimDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, kgVM.kisiGorusme.EgitimDurumu, 2);
-            kgVM.kisiListeleri.SosyalGuvence = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, kgVM.kisiGorusme.SosyalGuvencesi, 2);
-            kgVM.kisiListeleri.SaglikSorunu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, kgVM.kisiGorusme.SaglikSorunu, 2);
-            kgVM.kisiListeleri.CalismaDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, kgVM.kisiGorusme.CalismaDurumu, 2);
-
-            kgVM.kisiListeleri.Meslek = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, kgVM.kisiGorusme.Meslegi, 2);
-            kgVM.kisiListeleri.OkulDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, kgVM.kisiGorusme.OkulDurumu, 2);
-            kgVM.kisiListeleri.SosyalDestek = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, kgVM.kisiGorusme.SosyalDestek, 2);
-            kgVM.kisiListeleri.AsiDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evTuru, kgVM.kisiGorusme.AsiDurumu, 2);
-            kgVM.kisiListeleri.OzelDurum = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.gelirDilimiTuru, kgVM.kisiGorusme.OzelDurum, 2);
-
-            kgVM.kisiListeleri.KronikRahatsizlik = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ihtiyaclarTuru, kgVM.kisiGorusme.KronikRahatsizlik, 2);
-            kgVM.kisiListeleri.YonlendirmeDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.belediyeYardimiTuru, kgVM.kisiGorusme.YonlendirmeDurumu, 2);
-            kgVM.kisiListeleri.OkurYazar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.evMulkiyetiTuru, kgVM.kisiGorusme.OkurYazar, 2);
+            kgVM.kisiListeleri.MedeniDurum = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.medeniDurumKodu, kgVM.kisiGorusme.MedeniDurumu, 2);
+            kgVM.kisiListeleri.OkurYazar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okurYazarKodu, kgVM.kisiGorusme.OkurYazar, 2);
+            kgVM.kisiListeleri.EgitimDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.egitimDurumuKodu, kgVM.kisiGorusme.EgitimDurumu, 2);
+            kgVM.kisiListeleri.EgitimSon = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.egitimSonKodu, kgVM.kisiGorusme.EgitimSon, 2);
+            kgVM.kisiListeleri.OkulDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ozelDurumKodu, kgVM.kisiGorusme.OkulDurumu, 2);
+            kgVM.kisiListeleri.OkulaDevam = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okulaDevamKodu, kgVM.kisiGorusme.OkulaDevam, 2);
+            kgVM.kisiListeleri.SinifTekrari = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.sinifTekrariKodu, kgVM.kisiGorusme.SinifTekrari, 2);
+            kgVM.kisiListeleri.CocukOdasi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.cocukOdasiKodu, kgVM.kisiGorusme.CocukOdasi, 2);
+            kgVM.kisiListeleri.OdevYardimi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.odevYardimiKodu, kgVM.kisiGorusme.OdevYardimi, 2);
+            kgVM.kisiListeleri.OkulIstegi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okulIstegiKodu, kgVM.kisiGorusme.OkulIstegi, 2);
+            kgVM.kisiListeleri.OkulServisi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okulServisiKodu, kgVM.kisiGorusme.OkulServisi, 2);
+            kgVM.kisiListeleri.DersDestegiIhtiyaci = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.dersDestegiIhtiyaciKodu, kgVM.kisiGorusme.DersDestegiIhtiyaci, 2);
+            kgVM.kisiListeleri.CalismaDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.calismaDurumuKodu, kgVM.kisiGorusme.CalismaDurumu, 2);
+            kgVM.kisiListeleri.Meslek = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.meslekKodu, kgVM.kisiGorusme.Meslek, 2);
+            kgVM.kisiListeleri.Is = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.isKodu, kgVM.kisiGorusme.Is, 2);
+            kgVM.kisiListeleri.CalismaIstegi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.calismaIstegiKodu, kgVM.kisiGorusme.CalismaIstegi, 2);
+            kgVM.kisiListeleri.SosyalGuvence = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.sosyalGuvenceKodu, kgVM.kisiGorusme.SosyalGuvence, 2);
+            kgVM.kisiListeleri.SaglikSigortasi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.saglikSigortasiKodu, kgVM.kisiGorusme.SaglikSigortasi, 2);
+            kgVM.kisiListeleri.SaglikDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.saglikDurumuKodu, kgVM.kisiGorusme.SaglikDurumu, 2);
+            kgVM.kisiListeleri.KronikDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.kronikDurumuKodu, kgVM.kisiGorusme.KronikDurumu, 2);
+            kgVM.kisiListeleri.DuzenliIlacIhtiyaci = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.duzenliIlacIhtiyaciKodu, kgVM.kisiGorusme.DuzenliIlacIhtiyaci, 2);
+            kgVM.kisiListeleri.IlacTeminDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ilacTeminDurumuKodu, kgVM.kisiGorusme.IlacTeminDurumu, 2);
+            kgVM.kisiListeleri.PsikolojikDestekIhtiyaci = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.psikolojikDestekCozumuKodu, kgVM.kisiGorusme.PsikolojikDestekIhtiyaci, 2);
+            kgVM.kisiListeleri.PsikolojikDestekCozumleri = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.psikolojikDestekCozumuKodu, kgVM.kisiGorusme.PsikolojikDestekCozumleri, 2);
+            kgVM.kisiListeleri.SagliktaGittigiYer = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.sagliktaGittigiYerKodu, kgVM.kisiGorusme.SagliktaGittigiYerler, 2);
+            kgVM.kisiListeleri.SaglikYeriSorunlari = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.saglikYeriSorunuKodu, kgVM.kisiGorusme.SaglikYeriSorunlari, 2);
+            kgVM.kisiListeleri.DogumKontroluIhtiyaci = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.dogumKontroluIhtiyaciKodu, kgVM.kisiGorusme.DogumKontroluIhtiyaci, 2);
+            kgVM.kisiListeleri.DogumKontroluIstegi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.dogumKontroluIstegiKodu, kgVM.kisiGorusme.DogumKontroluIstegi, 2);
+            kgVM.kisiListeleri.HamilelikKontrolleri = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.hamilelikKontrolleriKodu, kgVM.kisiGorusme.HamilelikKontrolleri, 2);
+            kgVM.kisiListeleri.AsiDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.asiDurumuKodu, kgVM.kisiGorusme.AsiDurumu, 2);
 
             return kgVM;
         }
@@ -459,31 +474,16 @@ namespace bsy.Controllers
         {
             KISIGORUSME yeniKG = new KISIGORUSME();
 
-            yeniKG.Aciklama = eskiKG.Aciklama;
-            yeniKG.AsiDurumu = eskiKG.AsiDurumu;
-            yeniKG.BorcBakkal = eskiKG.BorcBakkal;
-            yeniKG.BorcDiger = eskiKG.BorcDiger;
-            yeniKG.BorcElektrik = eskiKG.BorcElektrik;
-            yeniKG.BorcGaz = eskiKG.BorcGaz;
-            yeniKG.BorcInternet = eskiKG.BorcInternet;
-            yeniKG.BorcTelefon = eskiKG.BorcTelefon;
             yeniKG.CalismaDurumu = eskiKG.CalismaDurumu;
             yeniKG.EgitimDurumu = eskiKG.EgitimDurumu;
             yeniKG.EkBilgi = eskiKG.EkBilgi;
             yeniKG.GorusmeTarihi = eskiKG.GorusmeTarihi;
             yeniKG.id = 0;
             yeniKG.KisiID = eskiKG.KisiID;
-            yeniKG.KronikRahatsizlik = eskiKG.KronikRahatsizlik;
             yeniKG.KronikYuzdesi = eskiKG.KronikYuzdesi;
             yeniKG.MedeniDurumu = eskiKG.MedeniDurumu;
-            yeniKG.Meslegi = eskiKG.Meslegi;
             yeniKG.OkulDurumu = eskiKG.OkulDurumu;
             yeniKG.OkurYazar = eskiKG.OkurYazar;
-            yeniKG.OzelDurum = eskiKG.OzelDurum;
-            yeniKG.SaglikSorunu = eskiKG.SaglikSorunu;
-            yeniKG.SosyalDestek = eskiKG.SosyalDestek;
-            yeniKG.SosyalGuvencesi = eskiKG.SosyalGuvencesi;
-            yeniKG.YonlendirmeDurumu = eskiKG.YonlendirmeDurumu;
 
             return yeniKG;
         }
@@ -590,31 +590,17 @@ namespace bsy.Controllers
             }
 
             eskiKisi.yeniGorusme = yeniKisi.yeniGorusme;
-            eskiKisi.kisiGorusme.Aciklama = yeniKisi.kisiGorusme.Aciklama;
             eskiKisi.kisiGorusme.AsiDurumu = yeniKisi.kisiGorusme.AsiDurumu;
-            eskiKisi.kisiGorusme.BorcBakkal = yeniKisi.kisiGorusme.BorcBakkal;
-            eskiKisi.kisiGorusme.BorcDiger = yeniKisi.kisiGorusme.BorcDiger;
-            eskiKisi.kisiGorusme.BorcElektrik = yeniKisi.kisiGorusme.BorcElektrik;
-            eskiKisi.kisiGorusme.BorcGaz = yeniKisi.kisiGorusme.BorcGaz;
-            eskiKisi.kisiGorusme.BorcInternet = yeniKisi.kisiGorusme.BorcInternet;
-            eskiKisi.kisiGorusme.BorcTelefon = yeniKisi.kisiGorusme.BorcTelefon;
             eskiKisi.kisiGorusme.CalismaDurumu = yeniKisi.kisiGorusme.CalismaDurumu;
             eskiKisi.kisiGorusme.EgitimDurumu = yeniKisi.kisiGorusme.EgitimDurumu;
             eskiKisi.kisiGorusme.EkBilgi = yeniKisi.kisiGorusme.EkBilgi;
             eskiKisi.kisiGorusme.GorusmeTarihi = yeniKisi.kisiGorusme.GorusmeTarihi;
             eskiKisi.kisiGorusme.id = yeniKisi.kisiGorusme.id;
             eskiKisi.kisiGorusme.KisiID = yeniKisi.kunye.kunyeID.KisiID;
-            eskiKisi.kisiGorusme.KronikRahatsizlik = yeniKisi.kisiGorusme.KronikRahatsizlik;
             eskiKisi.kisiGorusme.KronikYuzdesi = yeniKisi.kisiGorusme.KronikYuzdesi;
             eskiKisi.kisiGorusme.MedeniDurumu = yeniKisi.kisiGorusme.MedeniDurumu;
-            eskiKisi.kisiGorusme.Meslegi = yeniKisi.kisiGorusme.Meslegi;
             eskiKisi.kisiGorusme.OkulDurumu = yeniKisi.kisiGorusme.OkulDurumu;
             eskiKisi.kisiGorusme.OkurYazar = yeniKisi.kisiGorusme.OkurYazar;
-            eskiKisi.kisiGorusme.OzelDurum = yeniKisi.kisiGorusme.OzelDurum;
-            eskiKisi.kisiGorusme.SaglikSorunu = yeniKisi.kisiGorusme.SaglikSorunu;
-            eskiKisi.kisiGorusme.SosyalDestek = yeniKisi.kisiGorusme.SosyalDestek;
-            eskiKisi.kisiGorusme.SosyalGuvencesi = yeniKisi.kisiGorusme.SosyalGuvencesi;
-            eskiKisi.kisiGorusme.YonlendirmeDurumu = yeniKisi.kisiGorusme.YonlendirmeDurumu;
 
             return eskiKisi;
         }

@@ -18,7 +18,7 @@ namespace bsy.Models
         }
         public long id { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string Turu { get; set; }
 
         [MaxLength(400)]

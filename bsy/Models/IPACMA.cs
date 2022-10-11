@@ -8,9 +8,9 @@ namespace bsy.Models
 {
     public class IPACMA
     {
-        public long id { get; set; }
+        public int id { get; set; }
 
-        [MaxLength(40)]
+        [MaxLength(50)]
         public string ip { get; set; }
         public DateTime Tarih { get; set; }
 

@@ -11,12 +11,12 @@ namespace bsy.Models
         public ROLLER()
         {
             id = 0;
-            userID = 0;
+            UserID = 0;
             Tarih = DateTime.Now;
             Rolleri = "";
         }
         public long id { get; set; }
-        public long userID { get; set; }
+        public int UserID { get; set; }
         public DateTime Tarih { get; set; }
 
         [MaxLength(400)]

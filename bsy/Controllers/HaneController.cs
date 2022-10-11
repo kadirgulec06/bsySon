@@ -70,9 +70,9 @@ namespace bsy.Controllers
             //pageSize = 5;
             var query = (from mh in context.tblMahalleler
                          join sx in context.tblSozluk on mh.id equals sx.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (user.gy.butunTurkiye == true || user.gy.mahalleler.Contains(mh.id)) &&
@@ -82,8 +82,8 @@ namespace bsy.Controllers
                          select new
                          {
                              mh.id,
-                             mh.ilceID,
-                             ic.sehirID,
+                             mh.IlceID,
+                             ic.SehirID,
                              mahalleKODU=mh.MahalleKodu,
                              sehirADI = sz.Aciklama,
                              ilceADI = sy.Aciklama,
@@ -100,8 +100,8 @@ namespace bsy.Controllers
                              select new
                              {
                                  mhx.id,
-                                 mhx.ilceID,
-                                 mhx.sehirID,
+                                 mhx.IlceID,
+                                 mhx.SehirID,
                                  mhx.mahalleKODU,
                                  mhx.sehirADI,
                                  mhx.ilceADI,
@@ -128,8 +128,8 @@ namespace bsy.Controllers
                       cell = new string[]
                       {
                                  mhx.id.ToString(),
-                                 //mhx.ilceID.ToString(),
-                                 //mhx.sehirID.ToString(),
+                                 //mhx.IlceID.ToString(),
+                                 //mhx.SehirID.ToString(),
                                  mhx.sehirADI,
                                  mhx.ilceADI,
                                  //mhx.mahalleKODU,
@@ -200,9 +200,9 @@ namespace bsy.Controllers
             var query = (from h in context.tblHaneler
                          join mh in context.tblMahalleler on h.MahalleID equals mh.id
                          join sx in context.tblSozluk on mh.id equals sx.id
-                         join ic in context.tblIlceler on mh.ilceID equals ic.id
-                         join sy in context.tblSozluk on mh.ilceID equals sy.id
-                         join sh in context.tblSehirler on ic.sehirID equals sh.id
+                         join ic in context.tblIlceler on mh.IlceID equals ic.id
+                         join sy in context.tblSozluk on mh.IlceID equals sy.id
+                         join sh in context.tblSehirler on ic.SehirID equals sh.id
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (
@@ -352,6 +352,13 @@ namespace bsy.Controllers
             return haneVM;
         }
 
+        private HaneVM listeleriHazirla(HaneVM haneVM)
+        {
+            haneVM.haneListeleri.HaneTipi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.haneTipiKodu, haneVM.hane.HaneTipi, 2);
+
+            return haneVM;
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult YeniHane(HaneVM yeniHane, string btnSubmit)
@@ -458,8 +465,9 @@ namespace bsy.Controllers
             eskiHane.kunye.kunyeID.HaneKODU = yeniHane.hane.HaneKodu;
 
             eskiHane.hane.id = yeniHane.hane.id;
+            eskiHane.hane.HaneTipi = yeniHane.hane.HaneTipi;
             eskiHane.hane.Telefon = yeniHane.hane.Telefon;
-            eskiHane.hane.Eposta = yeniHane.hane.Eposta;
+            eskiHane.hane.eposta = yeniHane.hane.eposta;
             eskiHane.hane.Apartman = yeniHane.hane.Apartman;
             eskiHane.hane.BrutAlan = yeniHane.hane.BrutAlan;
             eskiHane.hane.Cadde = yeniHane.hane.Cadde;
