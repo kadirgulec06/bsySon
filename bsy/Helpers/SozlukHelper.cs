@@ -164,7 +164,7 @@ namespace bsy.Helpers
             SelectListItem hepsiHicbiri = new SelectListItem { Value = "0", Text = "_Bütün Hepsi", Selected = false };
             if (bosHepsiHicbiri == 2)
             {
-                new SelectListItem { Value = "0", Text = "_Hiçbiri", Selected = false };
+                hepsiHicbiri = new SelectListItem { Value = "0", Text = "_Hiçbiri", Selected = false };
             }
 
             if (bosHepsiHicbiri > 0)
