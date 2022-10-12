@@ -203,7 +203,7 @@ namespace bsy.Models
         public DbSet<GOREVSAHASI> tblGorevSahasi { get; set; }
         public DbSet<AUDIT> tblAudits { get; set; }
         public DbSet<HANE> tblHaneler { get; set; }
-        public DbSet<HANEGORUSME> tblHaneGorusme { get; set; }
+        public DbSet<Column> tblHaneGorusme { get; set; }
         public DbSet<KISI> tblKisiler { get; set; }
         public DbSet<KISIHANE> tblKisiHane { get; set; }
         public DbSet<KISIGORUSME> tblKisiGorusme { get; set; }
@@ -504,7 +504,7 @@ namespace bsy.Models
             }
         }
 
-        public class HaneGorusmeConfiguration : EntityTypeConfiguration<HANEGORUSME>
+        public class HaneGorusmeConfiguration : EntityTypeConfiguration<Column>
         {
             public HaneGorusmeConfiguration()
                 : base()

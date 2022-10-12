@@ -13,6 +13,7 @@ namespace bsy.Models
         public IEnumerable<SelectListItem> EgitimDurumu { get; set; }
         public IEnumerable<SelectListItem> EgitimSon { get; set; }
         public IEnumerable<SelectListItem> OkulDurumu { get; set; }
+        public IEnumerable<SelectListItem> Sinif { get; set; }
         public IEnumerable<SelectListItem> OkulaDevam { get; set; }
         public IEnumerable<SelectListItem> SinifTekrari { get; set; }
         public IEnumerable<SelectListItem> CocukOdasi { get; set; }

@@ -130,7 +130,7 @@ namespace bsy.Controllers
             int totalRecords = query.Count();
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
-            var resultSetAfterOrderandPaging = query.OrderBy("Ad, Soyad").Skip(pageIndex * pageSize).Take(pageSize);
+            var resultSetAfterOrderandPaging = query.OrderBy("AdSoyad").Skip(pageIndex * pageSize).Take(pageSize);
 
             var resultSet = (from kx in resultSetAfterOrderandPaging
                              select new
@@ -281,7 +281,7 @@ namespace bsy.Controllers
                          join sz in context.tblSozluk on sh.id equals sz.id
                          where
                             (kg.KisiID == kisiID || kisiID == 0) &&
-                            (kg.GorusmeTarihi >= kh.BasTar && kg.GorusmeTarihi <= kh.BitTar) &&
+                            //(kg.GorusmeTarihi >= kh.BasTar && kg.GorusmeTarihi <= kh.BitTar) &&
                             (user.gy.butunTurkiye == true ||
                             user.gy.mahalleler.Contains(hn.MahalleID)) &&
                             (sz.Aciklama + " " + sy.Aciklama + " " + sx.Aciklama + "").Contains(sehirIlceMahalle) &&
@@ -436,11 +436,12 @@ namespace bsy.Controllers
 
         private KisiGorusmeVM listeleriHazirla(KisiGorusmeVM kgVM)
         {
-            kgVM.kisiListeleri.MedeniDurum = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.medeniDurumKodu, kgVM.kisiGorusme.MedeniDurumu, 2);
+            kgVM.kisiListeleri.MedeniDurum = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.medeniDurumKodu, kgVM.kisiGorusme.MedeniDurum, 2);
             kgVM.kisiListeleri.OkurYazar = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okurYazarKodu, kgVM.kisiGorusme.OkurYazar, 2);
             kgVM.kisiListeleri.EgitimDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.egitimDurumuKodu, kgVM.kisiGorusme.EgitimDurumu, 2);
             kgVM.kisiListeleri.EgitimSon = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.egitimSonKodu, kgVM.kisiGorusme.EgitimSon, 2);
             kgVM.kisiListeleri.OkulDurumu = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.ozelDurumKodu, kgVM.kisiGorusme.OkulDurumu, 2);
+            kgVM.kisiListeleri.Sinif = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.sinifKodu, kgVM.kisiGorusme.Sinif, 2);
             kgVM.kisiListeleri.OkulaDevam = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.okulaDevamKodu, kgVM.kisiGorusme.OkulaDevam, 2);
             kgVM.kisiListeleri.SinifTekrari = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.sinifTekrariKodu, kgVM.kisiGorusme.SinifTekrari, 2);
             kgVM.kisiListeleri.CocukOdasi = SozlukHelper.anaSozlukKalemleriDD(context, SozlukHelper.cocukOdasiKodu, kgVM.kisiGorusme.CocukOdasi, 2);
@@ -481,7 +482,7 @@ namespace bsy.Controllers
             yeniKG.id = 0;
             yeniKG.KisiID = eskiKG.KisiID;
             yeniKG.KronikYuzdesi = eskiKG.KronikYuzdesi;
-            yeniKG.MedeniDurumu = eskiKG.MedeniDurumu;
+            yeniKG.MedeniDurum = eskiKG.MedeniDurum;
             yeniKG.OkulDurumu = eskiKG.OkulDurumu;
             yeniKG.OkurYazar = eskiKG.OkurYazar;
 
@@ -598,7 +599,7 @@ namespace bsy.Controllers
             eskiKisi.kisiGorusme.id = yeniKisi.kisiGorusme.id;
             eskiKisi.kisiGorusme.KisiID = yeniKisi.kunye.kunyeID.KisiID;
             eskiKisi.kisiGorusme.KronikYuzdesi = yeniKisi.kisiGorusme.KronikYuzdesi;
-            eskiKisi.kisiGorusme.MedeniDurumu = yeniKisi.kisiGorusme.MedeniDurumu;
+            eskiKisi.kisiGorusme.MedeniDurum = yeniKisi.kisiGorusme.MedeniDurum;
             eskiKisi.kisiGorusme.OkulDurumu = yeniKisi.kisiGorusme.OkulDurumu;
             eskiKisi.kisiGorusme.OkurYazar = yeniKisi.kisiGorusme.OkurYazar;
 

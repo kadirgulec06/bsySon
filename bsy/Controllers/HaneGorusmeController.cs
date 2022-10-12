@@ -307,7 +307,7 @@ namespace bsy.Controllers
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
-            HANEGORUSME hane = null;
+            Column hane = null;
             try
             {
                 hane = context.tblHaneGorusme.Find(id);
@@ -319,7 +319,7 @@ namespace bsy.Controllers
 
             if (hane == null)
             {
-                hane = new HANEGORUSME();
+                hane = new Column();
             }
 
             HaneGorusmeVM haneVM = haneGorusmeHazirla(hane, yeniGorusme);
@@ -327,7 +327,7 @@ namespace bsy.Controllers
             return View(haneVM);
         }
 
-        private HaneGorusmeVM haneGorusmeHazirla(HANEGORUSME hane, int yeniGorusme)
+        private HaneGorusmeVM haneGorusmeHazirla(Column hane, int yeniGorusme)
         {
             long haneID = (long)Session["haneID"];
             HaneGorusmeVM haneVM = new HaneGorusmeVM();
@@ -409,16 +409,94 @@ namespace bsy.Controllers
             return hgVM;
         }
 
-        private HANEGORUSME HaneToHane(HANEGORUSME eskiHG)
+        private Column HaneToHane(Column eskiHG)
         {
-            HANEGORUSME yeniHG = new HANEGORUSME();
+            Column yeniHG = new Column();
 
             yeniHG.Aciklama = eskiHG.Aciklama;
+            yeniHG.AileVakitGecirme = eskiHG.AileVakitGecirme;
+            yeniHG.AlisVerisYeri = eskiHG.AlisVerisYeri;
+            yeniHG.AltmisBesUstuVar = eskiHG.AltmisBesUstuVar;
+            yeniHG.BebekGideri = eskiHG.BebekGideri;
+            yeniHG.BeslenmeDurumu = eskiHG.BeslenmeDurumu;
+            yeniHG.BeslenmeIstekleri = eskiHG.BeslenmeIstekleri;
+            yeniHG.BezMama = eskiHG.BezMama;
+            yeniHG.BilgisayarTablet = eskiHG.BilgisayarTablet;
+            yeniHG.BorcBakkal = eskiHG.BorcBakkal;
+            yeniHG.BorcDiger = eskiHG.BorcDiger;
+            yeniHG.BorcElektrik = eskiHG.BorcElektrik;
+            yeniHG.BorcGaz = eskiHG.BorcGaz;
+            yeniHG.BorcInternet = eskiHG.BorcInternet;
+            yeniHG.BorcKira = eskiHG.BorcKira;
+            yeniHG.BorcKredi = eskiHG.BorcKredi;
+            yeniHG.BorcSu = eskiHG.BorcSu;
+            yeniHG.BorcTelefon = eskiHG.BorcTelefon;
+            yeniHG.BulasikMakinesi = eskiHG.BulasikMakinesi;
+            yeniHG.Buzdolabi = eskiHG.Buzdolabi;
+            yeniHG.CalisanCocukSayisi = eskiHG.CalisanCocukSayisi;
+            yeniHG.CalisanGeliri = eskiHG.CalisanGeliri;
+            yeniHG.Calisanlar = eskiHG.Calisanlar;
+            yeniHG.CalisanSayisi = eskiHG.CalisanSayisi;
+            yeniHG.CamasirMakinesi = eskiHG.CamasirMakinesi;
+            yeniHG.CevredeUniversiteli = eskiHG.CevredeUniversiteli;
+            yeniHG.CevreGuvenlimi = eskiHG.CevreGuvenlimi;
+            yeniHG.CocuklarEgitimBitirme = eskiHG.CocuklarEgitimBitirme;
+            yeniHG.CocukOlumuVar = eskiHG.CocukOlumuVar;
+            yeniHG.CocukSayisi = eskiHG.CocukSayisi;
+            yeniHG.CocukSutu = eskiHG.CocukSutu;
+            yeniHG.CocukVakitGecirme = eskiHG.CocukVakitGecirme;
+            yeniHG.DestekAlmaPaylasma = eskiHG.DestekAlmaPaylasma;
+            yeniHG.DigerGiderler = eskiHG.DigerGiderler;
+            yeniHG.EgitimEngeliCozumleri = eskiHG.EgitimEngeliCozumleri;
+            yeniHG.EgitimEngelleri = eskiHG.EgitimEngelleri;
             yeniHG.EkBilgi = eskiHG.EkBilgi;
-            yeniHG.GorusmeTarihi = DateTime.Now.Date;
-            yeniHG.HaneID = eskiHG.HaneID;
-            yeniHG.id = 0;
+            yeniHG.ElektrikErisimi = eskiHG.ElektrikErisimi;
+            yeniHG.ElliAltiOlumVar = eskiHG.ElliAltiOlumVar;
+            yeniHG.EmekliMaasi = eskiHG.EmekliMaasi;
+            yeniHG.EngelliVar = eskiHG.EngelliVar;
+            yeniHG.EvdeYasanilanSure = eskiHG.EvdeYasanilanSure;
+            yeniHG.EvdeYasayanlar = eskiHG.EvdeYasayanlar;
+            yeniHG.FaturaDurumu = eskiHG.FaturaDurumu;
+            yeniHG.Faturalar = eskiHG.Faturalar;
+            yeniHG.Firin = eskiHG.Firin;
+            yeniHG.GidaMasraflari = eskiHG.GidaMasraflari;
+            yeniHG.GocIlcesi = eskiHG.GocIlcesi;
+            yeniHG.GocSebebi = eskiHG.GocSebebi;
+            yeniHG.GocSehri = eskiHG.GocSehri;
+            yeniHG.GocYili = eskiHG.GocYili;
+            yeniHG.GorusmeTarihi = eskiHG.GorusmeTarihi;
+            yeniHG.HaneID = eskiHG.HaneID; 
+            yeniHG.id = eskiHG.id;
+            yeniHG.IkametYeri = eskiHG.IkametYeri;
+            yeniHG.Internet = eskiHG.Internet;
+            yeniHG.IsinmaGideri = eskiHG.IsinmaGideri;
+            yeniHG.IsinmaTuru = eskiHG.IsinmaTuru;
+            yeniHG.KadininMalVarligi = eskiHG.KadininMalVarligi;
+            yeniHG.Kanalizasyon = eskiHG.Kanalizasyon;
             yeniHG.KiraTutari = eskiHG.KiraTutari;
+            yeniHG.KisiDestegi = eskiHG.KisiDestegi;
+            yeniHG.KonusulanDil = eskiHG.KonusulanDil;
+            yeniHG.KonutMulkiyetTuru = eskiHG.KonutMulkiyetTuru;
+            yeniHG.KronikEngelliSayisi = eskiHG.KronikEngelliSayisi;
+            yeniHG.KronikVar = eskiHG.KronikVar;
+            yeniHG.KurumDestegi = eskiHG.KurumDestegi;
+            yeniHG.Mobilya = eskiHG.Mobilya;
+            yeniHG.OgunAtlama = eskiHG.OgunAtlama;
+            yeniHG.OkulBeslenmeIstekleri = eskiHG.OkulBeslenmeIstekleri;
+            yeniHG.OkulBeslenmesi = eskiHG.OkulBeslenmesi;
+            yeniHG.OkulYemegi = eskiHG.OkulYemegi;
+            yeniHG.OrtalamaGelir = eskiHG.OrtalamaGelir;
+            yeniHG.OzelDurum = eskiHG.OzelDurum;
+            yeniHG.OzelIhtiyaclar = eskiHG.OzelIhtiyaclar;
+            yeniHG.SehirSuyu = eskiHG.SehirSuyu;
+            yeniHG.SorunDestegi = eskiHG.SorunDestegi;
+            yeniHG.SosyalDestekTuru = eskiHG.SosyalDestekTuru;
+            yeniHG.Taksitler = eskiHG.Taksitler;
+            yeniHG.Televizyon = eskiHG.Televizyon;
+            yeniHG.TemizSu = eskiHG.TemizSu;
+            yeniHG.VeresiyeAlisVeris = eskiHG.VeresiyeAlisVeris;
+            yeniHG.YetiskinSayisi = eskiHG.YetiskinSayisi;
+            yeniHG.YonlendirmeDurumu = eskiHG.YonlendirmeDurumu;
 
             return yeniHG;
         }
@@ -446,10 +524,10 @@ namespace bsy.Controllers
                 return View(yeniHane);
             }
 
-            HANEGORUSME hane = context.tblHaneGorusme.Find(yeniHane.haneGorusme.id);
+            Column hane = context.tblHaneGorusme.Find(yeniHane.haneGorusme.id);
             if (hane == null)
             {
-                hane = new HANEGORUSME();
+                hane = new Column();
             }
 
             HaneGorusmeVM eskiHane = haneGorusmeHazirla(hane, yeniHane.yeniGorusme);
@@ -524,13 +602,101 @@ namespace bsy.Controllers
                 eskiHane.kunye.kunyeID.HaneID = yeniHane.haneGorusme.HaneID;
             }
 
-            eskiHane.yeniGorusme = yeniHane.yeniGorusme;
             eskiHane.haneGorusme.id = yeniHane.haneGorusme.id;
             eskiHane.haneGorusme.HaneID = yeniHane.kunye.kunyeID.HaneID;
             eskiHane.haneGorusme.GorusmeTarihi = yeniHane.haneGorusme.GorusmeTarihi;
             eskiHane.haneGorusme.Aciklama = yeniHane.haneGorusme.Aciklama;
             eskiHane.haneGorusme.KiraTutari = yeniHane.haneGorusme.KiraTutari;
             eskiHane.haneGorusme.EkBilgi = yeniHane.haneGorusme.EkBilgi;
+
+            eskiHane.yeniGorusme = yeniHane.yeniGorusme;
+
+            eskiHane.haneGorusme.Aciklama = yeniHane.haneGorusme.Aciklama;
+            eskiHane.haneGorusme.AileVakitGecirme = yeniHane.haneGorusme.AileVakitGecirme;
+            eskiHane.haneGorusme.AlisVerisYeri = yeniHane.haneGorusme.AlisVerisYeri;
+            eskiHane.haneGorusme.AltmisBesUstuVar = yeniHane.haneGorusme.AltmisBesUstuVar;
+            eskiHane.haneGorusme.BebekGideri = yeniHane.haneGorusme.BebekGideri;
+            eskiHane.haneGorusme.BeslenmeDurumu = yeniHane.haneGorusme.BeslenmeDurumu;
+            eskiHane.haneGorusme.BeslenmeIstekleri = yeniHane.haneGorusme.BeslenmeIstekleri;
+            eskiHane.haneGorusme.BezMama = yeniHane.haneGorusme.BezMama;
+            eskiHane.haneGorusme.BilgisayarTablet = yeniHane.haneGorusme.BilgisayarTablet;
+            eskiHane.haneGorusme.BorcBakkal = yeniHane.haneGorusme.BorcBakkal;
+            eskiHane.haneGorusme.BorcDiger = yeniHane.haneGorusme.BorcDiger;
+            eskiHane.haneGorusme.BorcElektrik = yeniHane.haneGorusme.BorcElektrik;
+            eskiHane.haneGorusme.BorcGaz = yeniHane.haneGorusme.BorcGaz;
+            eskiHane.haneGorusme.BorcInternet = yeniHane.haneGorusme.BorcInternet;
+            eskiHane.haneGorusme.BorcKira = yeniHane.haneGorusme.BorcKira;
+            eskiHane.haneGorusme.BorcKredi = yeniHane.haneGorusme.BorcKredi;
+            eskiHane.haneGorusme.BorcSu = yeniHane.haneGorusme.BorcSu;
+            eskiHane.haneGorusme.BorcTelefon = yeniHane.haneGorusme.BorcTelefon;
+            eskiHane.haneGorusme.BulasikMakinesi = yeniHane.haneGorusme.BulasikMakinesi;
+            eskiHane.haneGorusme.Buzdolabi = yeniHane.haneGorusme.Buzdolabi;
+            eskiHane.haneGorusme.CalisanCocukSayisi = yeniHane.haneGorusme.CalisanCocukSayisi;
+            eskiHane.haneGorusme.CalisanGeliri = yeniHane.haneGorusme.CalisanGeliri;
+            eskiHane.haneGorusme.Calisanlar = yeniHane.haneGorusme.Calisanlar;
+            eskiHane.haneGorusme.CalisanSayisi = yeniHane.haneGorusme.CalisanSayisi;
+            eskiHane.haneGorusme.CamasirMakinesi = yeniHane.haneGorusme.CamasirMakinesi;
+            eskiHane.haneGorusme.CevredeUniversiteli = yeniHane.haneGorusme.CevredeUniversiteli;
+            eskiHane.haneGorusme.CevreGuvenlimi = yeniHane.haneGorusme.CevreGuvenlimi;
+            eskiHane.haneGorusme.CocuklarEgitimBitirme = yeniHane.haneGorusme.CocuklarEgitimBitirme;
+            eskiHane.haneGorusme.CocukOlumuVar = yeniHane.haneGorusme.CocukOlumuVar;
+            eskiHane.haneGorusme.CocukSayisi = yeniHane.haneGorusme.CocukSayisi;
+            eskiHane.haneGorusme.CocukSutu = yeniHane.haneGorusme.CocukSutu;
+            eskiHane.haneGorusme.CocukVakitGecirme = yeniHane.haneGorusme.CocukVakitGecirme;
+            eskiHane.haneGorusme.DestekAlmaPaylasma = yeniHane.haneGorusme.DestekAlmaPaylasma;
+            eskiHane.haneGorusme.DigerGiderler = yeniHane.haneGorusme.DigerGiderler;
+            eskiHane.haneGorusme.EgitimEngeliCozumleri = yeniHane.haneGorusme.EgitimEngeliCozumleri;
+            eskiHane.haneGorusme.EgitimEngelleri = yeniHane.haneGorusme.EgitimEngelleri;
+            eskiHane.haneGorusme.EkBilgi = yeniHane.haneGorusme.EkBilgi;
+            eskiHane.haneGorusme.ElektrikErisimi = yeniHane.haneGorusme.ElektrikErisimi;
+            eskiHane.haneGorusme.ElliAltiOlumVar = yeniHane.haneGorusme.ElliAltiOlumVar;
+            eskiHane.haneGorusme.EmekliMaasi = yeniHane.haneGorusme.EmekliMaasi;
+            eskiHane.haneGorusme.EngelliVar = yeniHane.haneGorusme.EngelliVar;
+            eskiHane.haneGorusme.EvdeYasanilanSure = yeniHane.haneGorusme.EvdeYasanilanSure;
+            eskiHane.haneGorusme.EvdeYasayanlar = yeniHane.haneGorusme.EvdeYasayanlar;
+            eskiHane.haneGorusme.FaturaDurumu = yeniHane.haneGorusme.FaturaDurumu;
+            eskiHane.haneGorusme.Faturalar = yeniHane.haneGorusme.Faturalar;
+            eskiHane.haneGorusme.Firin = yeniHane.haneGorusme.Firin;
+            eskiHane.haneGorusme.GidaMasraflari = yeniHane.haneGorusme.GidaMasraflari;
+            eskiHane.haneGorusme.GocIlcesi = yeniHane.haneGorusme.GocIlcesi;
+            eskiHane.haneGorusme.GocSebebi = yeniHane.haneGorusme.GocSebebi;
+            eskiHane.haneGorusme.GocSehri = yeniHane.haneGorusme.GocSehri;
+            eskiHane.haneGorusme.GocYili = yeniHane.haneGorusme.GocYili;
+            eskiHane.haneGorusme.GorusmeTarihi = yeniHane.haneGorusme.GorusmeTarihi;
+            //eskiHane.haneGorusme.HaneID = yeniHane.haneGorusme.HaneID;
+            eskiHane.haneGorusme.HaneID = yeniHane.kunye.kunyeID.HaneID;
+            eskiHane.haneGorusme.id = yeniHane.haneGorusme.id;
+            eskiHane.haneGorusme.IkametYeri = yeniHane.haneGorusme.IkametYeri;
+            eskiHane.haneGorusme.Internet = yeniHane.haneGorusme.Internet;
+            eskiHane.haneGorusme.IsinmaGideri = yeniHane.haneGorusme.IsinmaGideri;
+            eskiHane.haneGorusme.IsinmaTuru = yeniHane.haneGorusme.IsinmaTuru;
+            eskiHane.haneGorusme.KadininMalVarligi = yeniHane.haneGorusme.KadininMalVarligi;
+            eskiHane.haneGorusme.Kanalizasyon = yeniHane.haneGorusme.Kanalizasyon;
+            eskiHane.haneGorusme.KiraTutari = yeniHane.haneGorusme.KiraTutari;
+            eskiHane.haneGorusme.KisiDestegi = yeniHane.haneGorusme.KisiDestegi;
+            eskiHane.haneGorusme.KonusulanDil = yeniHane.haneGorusme.KonusulanDil;
+            eskiHane.haneGorusme.KonutMulkiyetTuru = yeniHane.haneGorusme.KonutMulkiyetTuru;
+            eskiHane.haneGorusme.KronikEngelliSayisi = yeniHane.haneGorusme.KronikEngelliSayisi;
+            eskiHane.haneGorusme.KronikVar = yeniHane.haneGorusme.KronikVar;
+            eskiHane.haneGorusme.KurumDestegi = yeniHane.haneGorusme.KurumDestegi;
+            eskiHane.haneGorusme.Mobilya = yeniHane.haneGorusme.Mobilya;
+            eskiHane.haneGorusme.OgunAtlama = yeniHane.haneGorusme.OgunAtlama;
+            eskiHane.haneGorusme.OkulBeslenmeIstekleri = yeniHane.haneGorusme.OkulBeslenmeIstekleri;
+            eskiHane.haneGorusme.OkulBeslenmesi = yeniHane.haneGorusme.OkulBeslenmesi;
+            eskiHane.haneGorusme.OkulYemegi = yeniHane.haneGorusme.OkulYemegi;
+            eskiHane.haneGorusme.OrtalamaGelir = yeniHane.haneGorusme.OrtalamaGelir;
+            eskiHane.haneGorusme.OzelDurum = yeniHane.haneGorusme.OzelDurum;
+            eskiHane.haneGorusme.OzelIhtiyaclar = yeniHane.haneGorusme.OzelIhtiyaclar;
+            eskiHane.haneGorusme.SehirSuyu = yeniHane.haneGorusme.SehirSuyu;
+            eskiHane.haneGorusme.SorunDestegi = yeniHane.haneGorusme.SorunDestegi;
+            eskiHane.haneGorusme.SosyalDestekTuru = yeniHane.haneGorusme.SosyalDestekTuru;
+            eskiHane.haneGorusme.Taksitler = yeniHane.haneGorusme.Taksitler;
+            eskiHane.haneGorusme.Televizyon = yeniHane.haneGorusme.Televizyon;
+            eskiHane.haneGorusme.TemizSu = yeniHane.haneGorusme.TemizSu;
+            eskiHane.haneGorusme.VeresiyeAlisVeris = yeniHane.haneGorusme.VeresiyeAlisVeris;
+            eskiHane.haneGorusme.YetiskinSayisi = yeniHane.haneGorusme.YetiskinSayisi;
+            eskiHane.haneGorusme.YonlendirmeDurumu = yeniHane.haneGorusme.YonlendirmeDurumu;
+
 
             return eskiHane;
         }
@@ -552,7 +718,7 @@ namespace bsy.Controllers
             List<Mesaj> mesajlar = new List<Mesaj>();
             Mesaj m = null;
 
-            HANEGORUSME hane = context.tblHaneGorusme.Find(id);
+            Column hane = context.tblHaneGorusme.Find(id);
             context.Entry(hane).State = EntityState.Deleted;
 
             try

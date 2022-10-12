@@ -78,6 +78,7 @@ namespace bsy.Helpers
             public static string egitimDurumuKodu = "EGITIMDURUMU";
             public static string egitimSonKodu = "EGITIMSON";
             public static string okulDurumuKodu = "OKULDURUMU";
+            public static string sinifKodu = "SINIF";
             public static string okulaDevamKodu = "OKULADEVAM";
             public static string sinifTekrariKodu = "SINIFTEKRARI";
             public static string cocukOdasiKodu = "COCUKODASI";

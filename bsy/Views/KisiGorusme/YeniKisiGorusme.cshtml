@@ -99,14 +99,13 @@
             <div id="tabView">
                 <ul id="tabKutulari" class="tabGrubu">
                     <li id="tab1" class="tab"><a id="a1" href="#frmKunye">Kimlik Bilgileri</a></li>
-                    <li id="tab2" class="tab"><a id="a2" href="#frmGorusme01">Bilgiler 01</a></li>
-                    <li id="tab3" class="tab"><a id="a3" href="#frmGorusme02">Bilgiler 02</a></li>
-                    <li id="tab4" class="tab"><a id="a4" href="#frmGorusme03">Bilgiler 03</a></li>
+                    <li id="tab2" class="tab"><a id="a2" href="#frmOzet">Özet</a></li>
+                    <li id="tab3" class="tab"><a id="a3" href="#frmIs">İş Bilgileri</a></li>
+                    <li id="tab4" class="tab"><a id="a4" href="#frmCocuk">Çocuk 03</a></li>
+                    <li id="tab5" class="tab"><a id="a5" href="#frmSaglik">Sağlık Bilgileri</a></li>
                 </ul>
 
                 <font size="3" color=black><b>@ViewBag.Title</b></font>
-                <br />
-                <br />
                 <div id="frmKunye" class="tabFormu active">
                     <div class="divForm" id="kunye">
                         <fieldset class="field_style cerceveKucuk">
@@ -164,90 +163,35 @@
                     </div>
                 </div> @*  END frmKunye *@
                 <br />
-                <div id="frmGorusme01" class="tabFormu">
+                <div id="frmOzet" class="tabFormu">
                     <div class="divForm">
-                        <h3>KisiGorusme Bilgileri</h3>
                         <fieldset class="field_style cerceveKucuk">
-                            <table id="kisiGorusmeTablosu">
+                            <table id="kisiGorusmeOzetTablosu">
                                 <tr>
                                     <td align="right" class="etiketSabit">
                                         Görüşme Tarihi :
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.kisiGorusme.GorusmeTarihi, "{0:dd-MM-yyyy}", new { @class = "datepicker veri" })
+                                        @Html.TextBoxFor(model => model.kisiGorusme.GorusmeTarihi, "{0:dd-MM-yyyy}", new { @class = "datepicker" })
                                         @Html.ValidationMessageFor(model => model.kisiGorusme.GorusmeTarihi)
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td align="right" class="etiketSabit">
-                                        Görüşme Açıklaması :
-                                    </td>
-                                    <td>
-                                        @Html.TextAreaFor(model => model.kisiGorusme.Aciklama, 4, 100, new { @size = 100, @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.Aciklama)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right" class="etiketSabit">
-                                        Ek Bilgiler :
-                                    </td>
-                                    <td>
-                                        @Html.TextAreaFor(model => model.kisiGorusme.EkBilgi, 10, 100, new { @size = 100, @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.EkBilgi)
-                                    </td>
-                                </tr>
-                            </table>
-                        </fieldset>
-                    </div>  @*  END frmGorusme01 *@
-                </div>
-
-                <div id="frmGorusme02" class="tabFormu">
-                    <div class="divForm">
-                        <fieldset class="field_style cerceveKucuk">
-                            <table>
                                 <tr class="veri">
                                     <td align="right" class="etiketSabit">
-                                        Aşı Durumu :
+                                        Boyu (cm) :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.AsiDurumu, new SelectList(Model.kisiListeleri.AsiDurumu, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.AsiDurumu)
+                                        @Html.TextBoxFor(model => model.kisiGorusme.Boy, new { @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.Boy)
                                     </td>
                                 </tr>
                                 <tr class="veri">
                                     <td align="right" class="etiketSabit">
-                                        Çalışma Durumu :
+                                        Kilosu (kg) :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.CalismaDurumu, new SelectList(Model.kisiListeleri.CalismaDurumu, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.CalismaDurumu)
-                                    </td>
-                                </tr>
-                                <tr class="veri">
-                                    <td align="right" class="etiketSabit">
-                                        Eğitim Durumu :
-                                    </td>
-                                    <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.EgitimDurumu, new SelectList(Model.kisiListeleri.EgitimDurumu, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.EgitimDurumu)
-                                    </td>
-                                </tr>
-                                <tr class="veri">
-                                    <td align="right" class="etiketSabit">
-                                        Kronik Rahatsizlik :
-                                    </td>
-                                    <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.KronikRahatsizlik, new SelectList(Model.kisiListeleri.KronikRahatsizlik, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.KronikRahatsizlik)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right" class="etiketSabit">
-                                        Kronik Yüzdesi :
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(model => model.kisiGorusme.KronikYuzdesi, new { @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.KronikYuzdesi)
+                                        @Html.TextBoxFor(model => model.kisiGorusme.Kilo, new { @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.Kilo)
                                     </td>
                                 </tr>
                                 <tr class="veri">
@@ -255,26 +199,8 @@
                                         Medeni Durumu :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.MedeniDurumu, new SelectList(Model.kisiListeleri.MedeniDurum, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.MedeniDurumu)
-                                    </td>
-                                </tr>
-                                <tr class="veri">
-                                    <td align="right" class="etiketSabit">
-                                        Meslegi :
-                                    </td>
-                                    <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.Meslegi, new SelectList(Model.kisiListeleri.Meslek, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.Meslegi)
-                                    </td>
-                                </tr>
-                                <tr class="veri">
-                                    <td align="right" class="etiketSabit">
-                                        Okul Durumu :
-                                    </td>
-                                    <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.OkulDurumu, new SelectList(Model.kisiListeleri.OkulDurumu, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.OkulDurumu)
+                                        @Html.DropDownListFor(model => model.kisiGorusme.MedeniDurum, new SelectList(Model.kisiListeleri.MedeniDurum, "Value", "Text"), new { id = "medeniDurumListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.MedeniDurum)
                                     </td>
                                 </tr>
                                 <tr class="veri">
@@ -282,114 +208,336 @@
                                         Okur Yazarlık Durumu :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.OkurYazar, new SelectList(Model.kisiListeleri.OkurYazar, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
+                                        @Html.DropDownListFor(model => model.kisiGorusme.OkurYazar, new SelectList(Model.kisiListeleri.OkurYazar, "Value", "Text"), new { id = "okurYazarListesi", @style = "width:340px", @class = "veri" })
                                         @Html.ValidationMessageFor(model => model.kisiGorusme.OkurYazar)
                                     </td>
                                 </tr>
                                 <tr class="veri">
                                     <td align="right" class="etiketSabit">
-                                        Özel Durum :
+                                        Eğitim Durumu :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.OzelDurum, new SelectList(Model.kisiListeleri.OzelDurum, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.OzelDurum)
+                                        @Html.DropDownListFor(model => model.kisiGorusme.EgitimDurumu, new SelectList(Model.kisiListeleri.EgitimDurumu, "Value", "Text"), new { id = "egitimDurumListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.EgitimDurumu)
                                     </td>
                                 </tr>
                                 <tr class="veri">
                                     <td align="right" class="etiketSabit">
-                                        Sağlık Sorunu :
+                                        Son Eğitimi :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.SaglikSorunu, new SelectList(Model.kisiListeleri.SaglikSorunu, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SaglikSorunu)
+                                        @Html.DropDownListFor(model => model.kisiGorusme.EgitimSon, new SelectList(Model.kisiListeleri.EgitimSon, "Value", "Text"), new { id = "egitimSonListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.EgitimSon)
                                     </td>
                                 </tr>
                                 <tr class="veri">
                                     <td align="right" class="etiketSabit">
-                                        Sosyal Destek :
+                                        Sosyal Güvence :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.SosyalDestek, new SelectList(Model.kisiListeleri.SosyalDestek, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SosyalDestek)
+                                        @Html.DropDownListFor(model => model.kisiGorusme.SosyalGuvence, new SelectList(Model.kisiListeleri.SosyalGuvence, "Value", "Text"), new { id = "sosyalGuvenceListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SosyalGuvence)
                                     </td>
                                 </tr>
                                 <tr class="veri">
                                     <td align="right" class="etiketSabit">
-                                        Sosyal Güvencesi :
+                                        Sağlık Sigortası :
                                     </td>
                                     <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.SosyalGuvencesi, new SelectList(Model.kisiListeleri.SosyalGuvence, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SosyalGuvencesi)
+                                        @Html.DropDownListFor(model => model.kisiGorusme.SaglikSigortasi, new SelectList(Model.kisiListeleri.SaglikSigortasi, "Value", "Text"), new { id = "saglikSigortasiListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SaglikSigortasi)
                                     </td>
                                 </tr>
-                                <tr class="veri">
+                                <tr>
                                     <td align="right" class="etiketSabit">
-                                        Yönlendirme Durumu :
+                                        Açıklama :
                                     </td>
-                                    <td align="left">
-                                        @Html.DropDownListFor(model => model.kisiGorusme.YonlendirmeDurumu, new SelectList(Model.kisiListeleri.YonlendirmeDurumu, "Value", "Text"), new { @style = "width:300px", @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.YonlendirmeDurumu)
+                                    <td>
+                                        @Html.TextAreaFor(model => model.kisiGorusme.Aciklama, 4, 100, new { @size = 100 })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.Aciklama)
                                     </td>
                                 </tr>
+
+                                <tr>
+                                    <td align="right" class="etiketSabit">
+                                        Ek Bilgiler :
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(model => model.kisiGorusme.EkBilgi, 20, 100, new { @size = 100 })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.EkBilgi)
+                                    </td>
+                                </tr>
+
                             </table>
                         </fieldset>
-                    </div>
-                </div>  @*  END frmGorusme02 *@
-                <br />
-                <div id="frmGorusme03" class="tabFormu">
+                    </div>  @*  END frmOzet *@
+                </div>
+                <div id="frmIs" class="tabFormu">
                     <div class="divForm">
-                        <h3>KisiGorusme Bilgileri</h3>
                         <fieldset class="field_style cerceveKucuk">
-                            <table id="kisiGorusmeTablosu">
-                                <tr>
+                            <table>
+                                <tr class="veri">
                                     <td align="right" class="etiketSabit">
-                                        Bakkal Borcu :
+                                        Çalışma Durumu :
                                     </td>
-                                    <td>
-                                        @Html.TextBoxFor(model => model.kisiGorusme.BorcBakkal, new { @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.BorcBakkal)
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.CalismaDurumu, new SelectList(Model.kisiListeleri.CalismaDurumu, "Value", "Text"), new { id = "calismaDurumListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.CalismaDurumu)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Mesleği :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.Meslek, new SelectList(Model.kisiListeleri.Meslek, "Value", "Text"), new { id = "meslekListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.Meslek)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Yaptığı İş :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.Is, new SelectList(Model.kisiListeleri.Is, "Value", "Text"), new { id = "yaptigiIsListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.Is)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Çalışmak İstiyor mu :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.CalismaIstegi, new SelectList(Model.kisiListeleri.CalismaIstegi, "Value", "Text"), new { id = "calismaIstegiListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.CalismaIstegi)
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="right" class="etiketSabit">
-                                        Elektrik Borcu :
+                                        Bir İş Gününün Hikayesi :
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.kisiGorusme.BorcElektrik, new { @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.BorcElektrik)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right" class="etiketSabit">
-                                        Doğal Gaz Borcu :
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(model => model.kisiGorusme.BorcGaz, new { @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.BorcGaz)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right" class="etiketSabit">
-                                        İnternet Borcu :
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(model => model.kisiGorusme.BorcInternet, new { @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.BorcInternet)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right" class="etiketSabit">
-                                        Telefon Borcu :
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(model => model.kisiGorusme.BorcTelefon, new { @class = "veri" })
-                                        @Html.ValidationMessageFor(model => model.kisiGorusme.BorcTelefon)
+                                        @Html.TextAreaFor(model => model.kisiGorusme.IsGunuHikayesi, 20, 100, new { @size = 100 })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.IsGunuHikayesi)
                                     </td>
                                 </tr>
                             </table>
                         </fieldset>
                     </div>
-                </div>  @*  END frmGorusme03 *@
+                </div>  @*  END frmIs *@
+                <br />
+                <div id="frmCocuk" class="tabFormu">
+                    <div class="divForm">
+                        <fieldset class="field_style cerceveKucuk">
+                            <table id="kisiCocukTablosu">
+
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Okul Durumu :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.OkulDurumu, new SelectList(Model.kisiListeleri.OkulDurumu, "Value", "Text"), new { id = "okulDurumuListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.OkulDurumu)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                       Okuma İsteği :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.OkulIstegi, new SelectList(Model.kisiListeleri.OkulIstegi, "Value", "Text"), new { id = "okumaIstegiListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.OkulIstegi)
+                                    </td>
+                                </tr>
+
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Sınıfı :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.Sinif, new SelectList(Model.kisiListeleri.Sinif, "Value", "Text"), new { id = "sinifListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.Sinif)
+                                    </td>
+                                </tr>
+
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Okula Devam Durumu :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.OkulaDevam, new SelectList(Model.kisiListeleri.OkulaDevam, "Value", "Text"), new { id = "okulaDevamListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.OkulaDevam)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Sınıf Tekrarı :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.SinifTekrari, new SelectList(Model.kisiListeleri.SinifTekrari, "Value", "Text"), new { id = "sinifTekrariListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SinifTekrari)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Ödevlere Yardım İhtiyacı :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.OdevYardimi, new SelectList(Model.kisiListeleri.OdevYardimi, "Value", "Text"), new { id = "odevYardimiListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.OdevYardimi)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Ders Desteği İhtiyacı :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.DersDestegiIhtiyaci, new SelectList(Model.kisiListeleri.DersDestegiIhtiyaci, "Value", "Text"), new { id = "dersDestegiListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.DersDestegiIhtiyaci)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                       Okul Servisi :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.OkulServisi, new SelectList(Model.kisiListeleri.OkulServisi, "Value", "Text"), new { id = "okulServisiListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.OkulServisi)
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>  @*  END frmCocuk *@
+
+                <div id="frmSaglik" class="tabFormu">
+                    <div class="divForm">
+                        <fieldset class="field_style cerceveKucuk">
+                            <table id="kisiSaglikTablosu">
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Sağlık Durumu  :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.SaglikDurumu, new SelectList(Model.kisiListeleri.SaglikDurumu, "Value", "Text"), new { id = "saglikDurumuListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SaglikDurumu)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Kronik Hastalık :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.KronikDurumu, new SelectList(Model.kisiListeleri.KronikDurumu, "Value", "Text"), new { id = "kronikDurumuListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.KronikDurumu)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Kroniklik Derecesi :
+                                    </td>
+                                    <td align="left">
+                                        @Html.TextBoxFor(model => model.kisiGorusme.KronikYuzdesi, new { @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.KronikYuzdesi)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Düzenli İlaç İhtiyacı :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.DuzenliIlacIhtiyaci, new SelectList(Model.kisiListeleri.DuzenliIlacIhtiyaci, "Value", "Text"), new { id = "duzenliIlacListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.DuzenliIlacIhtiyaci)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        İlaç Temin Durumu  :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.IlacTeminDurumu, new SelectList(Model.kisiListeleri.IlacTeminDurumu, "Value", "Text"), new { id = "ilacTeminListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.IlacTeminDurumu)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Psikolojik Destek İhtiyacı :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.PsikolojikDestekIhtiyaci, new SelectList(Model.kisiListeleri.PsikolojikDestekIhtiyaci, "Value", "Text"), new { id = "psikolojikIhtiyacListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.PsikolojikDestekIhtiyaci)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Psikolojik Destek Çözümleri :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.PsikolojikDestekCozumleri, new SelectList(Model.kisiListeleri.PsikolojikDestekCozumleri, "Value", "Text"), new { id = "psikolojikCozumlerListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.PsikolojikDestekCozumleri)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Sağlık Sorununda Gittiği Yerler :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.SagliktaGittigiYerler, new SelectList(Model.kisiListeleri.SagliktaGittigiYer, "Value", "Text"), new { id = "saglikYerleriListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SagliktaGittigiYerler)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Sağlık Kuruluşundaki Sorunlar :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.SaglikYeriSorunlari, new SelectList(Model.kisiListeleri.SaglikYeriSorunlari, "Value", "Text"), new { id = "saglikYeriSorunlariListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.SaglikYeriSorunlari)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Doğum Kontrolü İhtiyacı  :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.DogumKontroluIhtiyaci, new SelectList(Model.kisiListeleri.DogumKontroluIhtiyaci, "Value", "Text"), new { id = "dogumKontroluIhtiyaciListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.DogumKontroluIhtiyaci)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Doğum Kontrolü İsteği :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.DogumKontroluIstegi, new SelectList(Model.kisiListeleri.DogumKontroluIstegi, "Value", "Text"), new { id = "dogumKontroluIstegiListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.DogumKontroluIstegi)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Hamilelik Kontrolleri :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.HamilelikKontrolleri, new SelectList(Model.kisiListeleri.HamilelikKontrolleri, "Value", "Text"), new { id = "hamilelikKontrolleriListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.HamilelikKontrolleri)
+                                    </td>
+                                </tr>
+                                <tr class="veri">
+                                    <td align="right" class="etiketSabit">
+                                        Aşı Durumu :
+                                    </td>
+                                    <td align="left">
+                                        @Html.DropDownListFor(model => model.kisiGorusme.AsiDurumu, new SelectList(Model.kisiListeleri.AsiDurumu, "Value", "Text"), new { id = "asiDurumuListesi", @style = "width:340px", @class = "veri" })
+                                        @Html.ValidationMessageFor(model => model.kisiGorusme.AsiDurumu)
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>  @*  END frmSaglik *@
+
             </div>   @* END tabview *@
 
             <br />

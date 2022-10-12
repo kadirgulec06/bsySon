@@ -8,12 +8,16 @@ namespace bsy.Models
 {
     public class KISIGORUSME
     {
+        public KISIGORUSME()
+        {
+            GorusmeTarihi = DateTime.Now.Date;
+        }
         public long id { get; set; }
         public long KisiID { get; set; }
         public DateTime GorusmeTarihi { get; set; }
         public short Boy { get; set; }
         public short Kilo { get; set; }
-        public short MedeniDurumu { get; set; }
+        public short MedeniDurum { get; set; }
         public short OkurYazar { get; set; }
         public short EgitimDurumu { get; set; }
         public short EgitimSon { get; set; }

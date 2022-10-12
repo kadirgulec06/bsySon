@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace bsy.Models
 {
-    public class HANEGORUSME
+    public class Column
     {
-        public HANEGORUSME()
+        public Column()
         {
             GorusmeTarihi = DateTime.Now.Date;
         }
@@ -89,20 +90,26 @@ namespace bsy.Models
         public short OzelDurum { get; set; }
         public short CocukSayisi { get; set; }
         public short YetiskinSayisi { get; set; }
-        public bool EngelliVar { get; set; }
-        public bool AltmisBesUstuVar { get; set; }
-        public bool KronikVar { get; set; }
-        public bool ElliAltiOlumVar { get; set; }
-        public bool CocukOlumuVar { get; set; }
-        public bool BosBit6 { get; set; }
-        public bool BosBit7 { get; set; }
-        public bool BosBit8 { get; set; }
 
         [MaxLength(2000)]
         public string EkBilgi { get; set; }
 
         [MaxLength(400)]
         public string Aciklama { get; set; }
+        //[Column("EngelliVar", TypeName="bit(1)")]
+        public bool EngelliVar { get; set; }
+
+        //[NotMapped]
+        public bool KronikVar { get; set; }
+
+        //[NotMapped]
+        public bool AltmisBesUstuVar { get; set; }
+
+        //[NotMapped]
+        public bool ElliAltiOlumVar { get; set; }
+
+        //[NotMapped]
+        public bool CocukOlumuVar { get; set; }            
 
     }
 }
