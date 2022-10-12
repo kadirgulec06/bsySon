@@ -465,8 +465,8 @@ namespace bsy.Controllers
             yeniHG.GocSehri = eskiHG.GocSehri;
             yeniHG.GocYili = eskiHG.GocYili;
             yeniHG.GorusmeTarihi = eskiHG.GorusmeTarihi;
-            yeniHG.HaneID = eskiHG.HaneID; 
-            yeniHG.id = eskiHG.id;
+            yeniHG.HaneID = eskiHG.HaneID;
+            yeniHG.id = 0;  // eskiHG.id;
             yeniHG.IkametYeri = eskiHG.IkametYeri;
             yeniHG.Internet = eskiHG.Internet;
             yeniHG.IsinmaGideri = eskiHG.IsinmaGideri;
@@ -601,13 +601,6 @@ namespace bsy.Controllers
             {
                 eskiHane.kunye.kunyeID.HaneID = yeniHane.haneGorusme.HaneID;
             }
-
-            eskiHane.haneGorusme.id = yeniHane.haneGorusme.id;
-            eskiHane.haneGorusme.HaneID = yeniHane.kunye.kunyeID.HaneID;
-            eskiHane.haneGorusme.GorusmeTarihi = yeniHane.haneGorusme.GorusmeTarihi;
-            eskiHane.haneGorusme.Aciklama = yeniHane.haneGorusme.Aciklama;
-            eskiHane.haneGorusme.KiraTutari = yeniHane.haneGorusme.KiraTutari;
-            eskiHane.haneGorusme.EkBilgi = yeniHane.haneGorusme.EkBilgi;
 
             eskiHane.yeniGorusme = yeniHane.yeniGorusme;
 

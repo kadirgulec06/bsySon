@@ -476,15 +476,47 @@ namespace bsy.Controllers
             KISIGORUSME yeniKG = new KISIGORUSME();
 
             yeniKG.CalismaDurumu = eskiKG.CalismaDurumu;
+
+            yeniKG.Aciklama = eskiKG.Aciklama;
+            yeniKG.AsiDurumu = eskiKG.AsiDurumu;
+            yeniKG.Boy = eskiKG.Boy;
+            yeniKG.CalismaDurumu = eskiKG.CalismaDurumu;
+            yeniKG.CalismaIstegi = eskiKG.CalismaIstegi;
+            yeniKG.CocukOdasi = eskiKG.CocukOdasi;
+            yeniKG.DersDestegiIhtiyaci = eskiKG.DersDestegiIhtiyaci;
+            yeniKG.DogumKontroluIhtiyaci = eskiKG.DogumKontroluIhtiyaci;
+            yeniKG.DogumKontroluIstegi = eskiKG.DogumKontroluIstegi;
+            yeniKG.DuzenliIlacIhtiyaci = eskiKG.DuzenliIlacIhtiyaci;
             yeniKG.EgitimDurumu = eskiKG.EgitimDurumu;
+            yeniKG.EgitimSon = eskiKG.EgitimSon;
             yeniKG.EkBilgi = eskiKG.EkBilgi;
             yeniKG.GorusmeTarihi = eskiKG.GorusmeTarihi;
+            yeniKG.HamilelikKontrolleri = eskiKG.HamilelikKontrolleri;
             yeniKG.id = 0;
+            yeniKG.IlacTeminDurumu = eskiKG.IlacTeminDurumu;
+            yeniKG.Is = eskiKG.Is;
+            yeniKG.IsGunuHikayesi = eskiKG.IsGunuHikayesi;
+            yeniKG.Kilo = eskiKG.Kilo;
             yeniKG.KisiID = eskiKG.KisiID;
+            yeniKG.KronikDurumu = eskiKG.KronikDurumu;
             yeniKG.KronikYuzdesi = eskiKG.KronikYuzdesi;
             yeniKG.MedeniDurum = eskiKG.MedeniDurum;
+            yeniKG.Meslek = eskiKG.Meslek;
+            yeniKG.OdevYardimi = eskiKG.OdevYardimi;
+            yeniKG.OkulaDevam = eskiKG.OkulaDevam;
             yeniKG.OkulDurumu = eskiKG.OkulDurumu;
+            yeniKG.OkulIstegi = eskiKG.OkulIstegi;
+            yeniKG.OkulServisi = eskiKG.OkulServisi;
             yeniKG.OkurYazar = eskiKG.OkurYazar;
+            yeniKG.PsikolojikDestekCozumleri = eskiKG.PsikolojikDestekCozumleri;
+            yeniKG.PsikolojikDestekIhtiyaci = eskiKG.PsikolojikDestekIhtiyaci;
+            yeniKG.SaglikDurumu = eskiKG.SaglikDurumu;
+            yeniKG.SaglikSigortasi = eskiKG.SaglikSigortasi;
+            yeniKG.SagliktaGittigiYerler = eskiKG.SagliktaGittigiYerler;
+            yeniKG.SaglikYeriSorunlari = eskiKG.SaglikYeriSorunlari;
+            yeniKG.Sinif = eskiKG.Sinif;
+            yeniKG.SinifTekrari = eskiKG.SinifTekrari;
+            yeniKG.SosyalGuvence = eskiKG.SosyalGuvence;
 
             return yeniKG;
         }
@@ -591,17 +623,49 @@ namespace bsy.Controllers
             }
 
             eskiKisi.yeniGorusme = yeniKisi.yeniGorusme;
+
+            eskiKisi.kisiGorusme.Aciklama = yeniKisi.kisiGorusme.Aciklama;
             eskiKisi.kisiGorusme.AsiDurumu = yeniKisi.kisiGorusme.AsiDurumu;
+            eskiKisi.kisiGorusme.Boy = yeniKisi.kisiGorusme.Boy;
             eskiKisi.kisiGorusme.CalismaDurumu = yeniKisi.kisiGorusme.CalismaDurumu;
+            eskiKisi.kisiGorusme.CalismaIstegi = yeniKisi.kisiGorusme.CalismaIstegi;
+            eskiKisi.kisiGorusme.CocukOdasi = yeniKisi.kisiGorusme.CocukOdasi;
+            eskiKisi.kisiGorusme.DersDestegiIhtiyaci = yeniKisi.kisiGorusme.DersDestegiIhtiyaci;
+            eskiKisi.kisiGorusme.DogumKontroluIhtiyaci = yeniKisi.kisiGorusme.DogumKontroluIhtiyaci;
+            eskiKisi.kisiGorusme.DogumKontroluIstegi = yeniKisi.kisiGorusme.DogumKontroluIstegi;
+            eskiKisi.kisiGorusme.DuzenliIlacIhtiyaci = yeniKisi.kisiGorusme.DuzenliIlacIhtiyaci;
             eskiKisi.kisiGorusme.EgitimDurumu = yeniKisi.kisiGorusme.EgitimDurumu;
+            eskiKisi.kisiGorusme.EgitimSon = yeniKisi.kisiGorusme.EgitimSon;
             eskiKisi.kisiGorusme.EkBilgi = yeniKisi.kisiGorusme.EkBilgi;
             eskiKisi.kisiGorusme.GorusmeTarihi = yeniKisi.kisiGorusme.GorusmeTarihi;
+            eskiKisi.kisiGorusme.HamilelikKontrolleri = yeniKisi.kisiGorusme.HamilelikKontrolleri;
             eskiKisi.kisiGorusme.id = yeniKisi.kisiGorusme.id;
+            eskiKisi.kisiGorusme.IlacTeminDurumu = yeniKisi.kisiGorusme.IlacTeminDurumu;
+            eskiKisi.kisiGorusme.Is = yeniKisi.kisiGorusme.Is;
+            eskiKisi.kisiGorusme.IsGunuHikayesi = yeniKisi.kisiGorusme.IsGunuHikayesi;
+            eskiKisi.kisiGorusme.Kilo = yeniKisi.kisiGorusme.Kilo;
+            //eskiKisi.kisiGorusme.KisiID = yeniKisi.kisiGorusme.KisiID;
             eskiKisi.kisiGorusme.KisiID = yeniKisi.kunye.kunyeID.KisiID;
+            eskiKisi.kisiGorusme.KronikDurumu = yeniKisi.kisiGorusme.KronikDurumu;
             eskiKisi.kisiGorusme.KronikYuzdesi = yeniKisi.kisiGorusme.KronikYuzdesi;
             eskiKisi.kisiGorusme.MedeniDurum = yeniKisi.kisiGorusme.MedeniDurum;
+            eskiKisi.kisiGorusme.Meslek = yeniKisi.kisiGorusme.Meslek;
+            eskiKisi.kisiGorusme.OdevYardimi = yeniKisi.kisiGorusme.OdevYardimi;
+            eskiKisi.kisiGorusme.OkulaDevam = yeniKisi.kisiGorusme.OkulaDevam;
             eskiKisi.kisiGorusme.OkulDurumu = yeniKisi.kisiGorusme.OkulDurumu;
+            eskiKisi.kisiGorusme.OkulIstegi = yeniKisi.kisiGorusme.OkulIstegi;
+            eskiKisi.kisiGorusme.OkulServisi = yeniKisi.kisiGorusme.OkulServisi;
             eskiKisi.kisiGorusme.OkurYazar = yeniKisi.kisiGorusme.OkurYazar;
+            eskiKisi.kisiGorusme.PsikolojikDestekCozumleri = yeniKisi.kisiGorusme.PsikolojikDestekCozumleri;
+            eskiKisi.kisiGorusme.PsikolojikDestekIhtiyaci = yeniKisi.kisiGorusme.PsikolojikDestekIhtiyaci;
+            eskiKisi.kisiGorusme.SaglikDurumu = yeniKisi.kisiGorusme.SaglikDurumu;
+            eskiKisi.kisiGorusme.SaglikSigortasi = yeniKisi.kisiGorusme.SaglikSigortasi;
+            eskiKisi.kisiGorusme.SagliktaGittigiYerler = yeniKisi.kisiGorusme.SagliktaGittigiYerler;
+            eskiKisi.kisiGorusme.SaglikYeriSorunlari = yeniKisi.kisiGorusme.SaglikYeriSorunlari;
+            eskiKisi.kisiGorusme.Sinif = yeniKisi.kisiGorusme.Sinif;
+            eskiKisi.kisiGorusme.SinifTekrari = yeniKisi.kisiGorusme.SinifTekrari;
+            eskiKisi.kisiGorusme.SosyalGuvence = yeniKisi.kisiGorusme.SosyalGuvence;
+
 
             return eskiKisi;
         }
